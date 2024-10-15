@@ -3,12 +3,17 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import AppHeader from './app-header/app-header/'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+      <header>
+        <AppHeader /> 
+      </header>
+
       <Tab active={true} value={1} onClick={() => {}} />
       <div>
         <a href="https://vitejs.dev" target="_blank">
