@@ -1,0 +1,40 @@
+.ingredientsSection {
+   display: flex;
+   background-color: invisible;
+   padding: 20px;
+   text-align: center;
+   width: 50%;
+   flex-direction: column;
+
+ }
+ 
+ .title {
+   color: white;
+   font-size: 2rem;
+   font-weight: bold;
+ }
+ 
+ .icon{
+   size: 20px;
+ }
+
+ .burgerParts{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+ }
+
+ .mainName{
+  display: flex;
+  justify-content: flex-start;
+ }
+
+
+ .burgerPiecesSeparately{
+  color: white;
+  size: 20px;
+  display: flex;
+  justify-content: flex-start;
+ 
+
+ }
