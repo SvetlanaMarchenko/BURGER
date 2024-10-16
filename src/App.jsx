@@ -10,7 +10,7 @@ function App() {
 
 
   return (
-    <>
+    <body>
       <div>
         <AppHeader /> 
       </div>
@@ -19,7 +19,7 @@ function App() {
       <div>
         <BurgerIngredients/>
       </div>
-    </>
+    </body>
   )
 }
 

@@ -1,6 +1,6 @@
 .header {
    display: flex;
-   justify-content: space-between;
+   /* justify-content: space-between; */
    align-items: center;
    background-color: #282c34;
    padding: 20px;
@@ -15,20 +15,27 @@
    size: 20px;
  }
 
- .navigationBarLeft,
+ .navigationBarLeft{
+  display: flex;
+  justify-content: space-between;
+
+ }
+
  .navigationBarRight {
-    display: flex;
-    align-items: center;
-    flex-grow: 10; /* Даем элементам навигации возможность занимать пространство */
+  display: flex;
+  justify-content: right; 
+  position: absolute;
+  right: 10%;
+
  }
 
  .logoContainer {
   display: flex;
-  justify-content: center; /* Центрируем логотип по горизонтали */
+  justify-content: center; 
   position: absolute;
-  left: 50%; /* Сдвигаем на середину родителя */
-  transform: translateX(-50%); /* Чтобы логотип был точно по центру */
-}
+  left: 50%; 
+  transform: translateX(-50%);
+ }
 
 button {
   background-color: transparent !important;

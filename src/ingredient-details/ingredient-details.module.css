@@ -1,17 +1,11 @@
 .ingredientsSection {
    display: flex;
    background-color: invisible;
-   padding: 20px;
+   /* padding: 20px; */
    text-align: center;
    width: 50%;
    flex-direction: column;
 
- }
- 
- .title {
-   color: white;
-   font-size: 2rem;
-   font-weight: bold;
  }
  
  .icon{
