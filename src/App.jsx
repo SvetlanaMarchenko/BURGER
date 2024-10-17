@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from './app-header/app-header/'
 import BurgerIngredients from './ingredient-details/ingredient-details/'
+import BurgerConstructor from './ingredient-constructor/ingredient-constructor/'
 
 function App() {
 
@@ -16,9 +14,16 @@ function App() {
       </div>
       
 
-      <div>
-        <BurgerIngredients/>
+      <div className='ingredientsBox'>
+        <div>
+          <BurgerIngredients/>
+        </div>
+
+        <div className='ml-10'>
+          <BurgerConstructor/>
+        </div>
       </div>
+
     </body>
   )
 }
