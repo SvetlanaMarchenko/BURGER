@@ -5,19 +5,24 @@ import ingredients from '../utils/ingredients-info.json';
 import selectedBun from '../selectors'
 
 
+
 const BurgerConstructor = (selectedBun) => {
 
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {selectedBun && (
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${selectedBun.name} (верх)`}
-            price={selectedBun.price}
-            thumbnail={selectedBun.image}
-          />
-          )}
+         <div className="mt-25 ml-8"  style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+         {selectedBun && (
+            <div>
+               <ConstructorElement
+               type="top"
+               isLocked={true}
+               text={`${selectedBun.name} (верх)`}
+               price={selectedBun.price}
+               thumbnail={selectedBun.image}
+               />
+            </div>
+         )}
+
+
 
           
           <ConstructorElement

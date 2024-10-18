@@ -1,11 +1,9 @@
 .ingredientsSection {
    display: flex;
    background-color: invisible;
-   /* padding: 20px; */
    text-align: center;
-   width: 50%;
+   max-width: 640px;
    flex-direction: column;
-
  }
  
  .icon{
@@ -29,6 +27,30 @@
   size: 20px;
   display: flex;
   justify-content: flex-start;
- 
-
  }
+
+ .ingredientsList {
+  display: flex; 
+  justify-content: center;
+  max-height: 100vh;         
+  overflow-y: auto;          
+  flex-wrap: wrap;           
+  gap: 10px;   
+  box-sizing: border-box; 
+}
+
+ .ingredientsItem {
+  display: grid;              
+  gap: 24px;                   
+}
+
+.priceItem{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
