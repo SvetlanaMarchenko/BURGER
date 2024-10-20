@@ -17,6 +17,7 @@ const BurgerIngredients = () => {
          <div style={{  display: 'flex' }}>
             <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrent('Булки')}>
                Булки
+               {/* <Counter count={1} size="default" extraClass="m-1" color="white" /> */}
             </Tab>
             <Tab value="Соусы" active={current === 'Соусы'} onClick={() => setCurrent('Соусы')}>
                Соусы
