@@ -1,12 +1,18 @@
 .ingredientsSection {
    display: flex;
    background-color: invisible;
-   /* padding: 20px; */
    text-align: center;
-   width: 50%;
+   width: 200px;
+   height: 200px;
    flex-direction: column;
+   overflow-y: scroll;
 
  }
+
+
+.overflow {
+  min-height: 400px;
+}
  
  .icon{
    size: 20px;
@@ -29,6 +35,8 @@
   size: 20px;
   display: flex;
   justify-content: flex-start;
- 
+ }
 
+ .ingredientsItem{
+  width: 300px;
  }

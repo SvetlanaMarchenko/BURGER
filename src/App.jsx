@@ -8,8 +8,8 @@ function App() {
 
 
   return (
-    <body>
-      <div>
+    <div id="app">
+      <div> 
         <AppHeader /> 
       </div>
       
@@ -19,12 +19,12 @@ function App() {
           <BurgerIngredients/>
         </div>
 
-        <div className='ml-10'>
+        <div className='ingredient-constructor ml-10'>
           <BurgerConstructor/>
         </div>
       </div>
 
-    </body>
+    </div>
   )
 }
 

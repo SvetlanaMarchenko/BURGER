@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ingredient-constructor.module.css';
-import { ConstructorElement, Counter, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from '../utils/ingredients-info.json';
 
 

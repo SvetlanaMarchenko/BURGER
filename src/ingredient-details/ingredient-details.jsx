@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
-import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from '../utils/ingredients-info.json';
 
 
@@ -12,12 +12,12 @@ const BurgerIngredients = () => {
    };
 
    return (
-      <li className={styles.ingredientsSection}>
+      <div className={styles.ingredientsSection}>
          <h1 className="text text_type_main-large m-15">Соберите бургер</h1>
          <div style={{  display: 'flex' }}>
             <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrent('Булки')}>
                Булки
-               {/* <Counter count={1} size="default" extraClass="m-1" color="white" /> */}
+               <Counter count={1} size="default" extraClass="m-1" color="white" />
             </Tab>
             <Tab value="Соусы" active={current === 'Соусы'} onClick={() => setCurrent('Соусы')}>
                Соусы
@@ -50,7 +50,7 @@ const BurgerIngredients = () => {
                   </div>
                ))}
                {current === "Начинки" && filterIngredientsByType('main').map((item) => (
-                  <div key={item._id} className="ingredientsItem">
+                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`}>
                      <img src={item.image} alt={item.name} className={"ml-4 mb-1 mr-4"}  />
                      <p className='${styles.priceItem} mb-1'>{item.price} 
                        <CurrencyIcon type="primary" />
@@ -60,7 +60,7 @@ const BurgerIngredients = () => {
                ))}
             </section>
          </main>
-      </li>
+      </div>
    );
 };
 
