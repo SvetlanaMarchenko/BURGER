@@ -2,43 +2,57 @@ import React from 'react';
 import styles from './ingredient-constructor.module.css';
 import { ConstructorElement, Counter, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredients from '../utils/ingredients-info.json';
-import selectedBun from '../selectors'
 
 
 
-const BurgerConstructor = (selectedBun) => {
+
+
+const BurgerConstructor = () => {
+   
+      const filterIngredientsByType = (type) => {
+         return ingredients.filter((item) => item.type === type);
+      };
+
+      const bun = filterIngredientsByType('bun')[0];
+
+
+
+
+
 
       return (
-         <div className="mt-25 ml-8"  style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-         {selectedBun && (
-            <div>
-               <ConstructorElement
-               type="top"
-               isLocked={true}
-               text={`${selectedBun.name} (верх)`}
-               price={selectedBun.price}
-               thumbnail={selectedBun.image}
-               />
-            </div>
+         <div className="mt-25 ml-8" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+         {/* Top bun */}
+         {bun && (
+           <ConstructorElement
+             key={bun._id}
+             type="top"
+             isLocked={true}
+             text={`${bun.name} (верх)`}
+             price={bun.price}
+             thumbnail={bun.image}
+           />
          )}
 
 
 
+
           
-          <ConstructorElement
+          {/* <ConstructorElement
             text="Краторная булка N-200i (верх)"
             price={50}
             // thumbnail={img}
-          />
+          /> */}
           
 
-          {selectedBun && (
+          {bun && (
           <ConstructorElement
+            key={bun._id}
             type="bottom"
             isLocked={true}
-            text={`${selectedBun.name} (низ)`}
-            price={selectedBun.price}
-            thumbnail={selectedBun.image}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           /> 
           )}
                 
