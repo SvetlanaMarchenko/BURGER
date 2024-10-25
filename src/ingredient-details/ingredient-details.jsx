@@ -13,7 +13,7 @@ const BurgerIngredients = () => {
 
    return (
       <div className={styles.ingredientsSection}>
-         <h1 className="text text_type_main-large m-15">Соберите бургер</h1>
+         <h1 style={{  display: 'flex' }} className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
          <div style={{  display: 'flex' }}>
             <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrent('Булки')}>
                Булки
