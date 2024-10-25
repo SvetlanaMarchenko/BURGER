@@ -17,7 +17,6 @@ const BurgerIngredients = () => {
          <div style={{  display: 'flex' }}>
             <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrent('Булки')}>
                Булки
-               <Counter count={1} size="default" extraClass="m-1" color="white" />
             </Tab>
             <Tab value="Соусы" active={current === 'Соусы'} onClick={() => setCurrent('Соусы')}>
                Соусы
@@ -28,20 +27,29 @@ const BurgerIngredients = () => {
          </div>
 
          <main>
-               <h2 className={styles.mainName}>{current}</h2>
+               <h2 className={'${styles.mainName} mt-10'} style={{  display: 'flex' }} > {current}</h2>
                <section className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
 
-               {current === "Булки" && filterIngredientsByType('bun').map((item) => (
-                  <div key={item._id} className="ingredientsItem">
-                     <img src={item.image} alt={item.name} className={"ml-4 mb-1 mr-4"} />
-                     <p className={'${styles.priceItem} mb-1 '} >{item.price} 
-                           <CurrencyIcon type="primary" />
-                     </p>
-                     <p>{item.name}</p>
-                  </div>
+               {current === "Булки" && filterIngredientsByType('bun').map((item, index) => (
+               <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
+               
+                  {index === 0 && (
+                     <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
+                  )}
+                  
+                  <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
+                  <p className={`${styles.priceItem} mb-1`}>
+                     {item.price}
+                     <CurrencyIcon type="primary" />
+                  </p>
+                  <p>{item.name}</p>
+               </div>
                ))}
+
+
+
                {current === "Соусы" && filterIngredientsByType('sauce').map((item) => (
-                  <div key={item._id} className="ingredientsItem">
+                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
                      <img src={item.image} alt={item.name}  className={"ml-4 mb-1 mr-4"}  />
                      <p className='${styles.priceItem} mb-1'>{item.price} 
                        <CurrencyIcon type="primary" />
@@ -50,7 +58,7 @@ const BurgerIngredients = () => {
                   </div>
                ))}
                {current === "Начинки" && filterIngredientsByType('main').map((item) => (
-                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`}>
+                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
                      <img src={item.image} alt={item.name} className={"ml-4 mb-1 mr-4"}  />
                      <p className='${styles.priceItem} mb-1'>{item.price} 
                        <CurrencyIcon type="primary" />

@@ -39,7 +39,7 @@
  .ingredientsList {
   display: flex; 
   justify-content: center;
-  max-height: 100vh;         
+  /* max-height: 100vh;          */
   overflow-y: auto;          
   flex-wrap: wrap;           
   gap: 10px;   
@@ -47,14 +47,28 @@
 }
 
  .ingredientsItem {
-  display: grid;              
-  gap: 24px;                   
+  display: flex;   
+  flex-direction: column;     
+  justify-content: space-around;     
+  gap: 24px;   
+  max-width: 200px !important;   
+  margin-bottom: 0 !important;  
+  height: 208px;
+  width: 272px;
+  position: relative;
+}
+
+.counterTopRight {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .priceItem{
-  display: flex !important;
+  display: flex ;
   align-items: center;
-  justify-content: center;
+
+
 }
 
 
