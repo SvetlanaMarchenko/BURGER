@@ -38,7 +38,7 @@
 
  .ingredientsList {
   display: flex; 
-  justify-content: center;
+  justify-content: space-between;
   /* max-height: 100vh;          */
   overflow-y: auto;          
   flex-wrap: wrap;           
@@ -49,10 +49,9 @@
  .ingredientsItem {
   display: flex;   
   flex-direction: column;     
-  justify-content: space-around;     
-  gap: 24px;   
-  max-width: 200px !important;   
-  margin-bottom: 0 !important;  
+  /* justify-content: space-around;     
+  gap: 24px;    */
+  /* max-width: 200px !important;    */
   height: 208px;
   width: 272px;
   position: relative;

@@ -5,8 +5,7 @@
    width: 200px;
    height: 200px;
    flex-direction: column;
-   overflow-y: scroll;
-
+   /* overflow-y: scroll; */
  }
 
 
@@ -40,3 +39,5 @@
  .ingredientsItem{
   width: 300px;
  }
+
+ /* axHeight: '300px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column'  */
