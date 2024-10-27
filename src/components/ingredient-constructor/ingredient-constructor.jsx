@@ -15,7 +15,7 @@ const BurgerConstructor = ({ingredients}) => {
    };
 
    return (
-      <div className="mt-25 ml-8" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div className={`${styles.ingredientConstructor} mt-25 ml-8`}>
 
          {bun && (
             <div className={styles.constructorElementBlock}>
@@ -33,7 +33,7 @@ const BurgerConstructor = ({ingredients}) => {
          )}
 
          
-         <div style={{ maxHeight: '300px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column' }}>
+         <div className={styles.innerIngredients}>
          {mainIngredients.map((ingredient) => (
             <div key={ingredient._id}>
                <div className={styles.constructorElementBlock}>

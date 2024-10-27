@@ -8,6 +8,19 @@
    /* overflow-y: scroll; */
  }
 
+ .ingredientConstructor{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
+
+ .innerIngredients{
+  max-height: 200px;
+  overflow-y: scroll;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+ }
 
 .overflow {
   min-height: 400px;
