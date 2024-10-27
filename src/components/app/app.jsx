@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import AppHeader from './app-header/app-header/';
-import BurgerIngredients from './ingredient-details/ingredient-details/';
-import BurgerConstructor from './ingredient-constructor/ingredient-constructor/';
-import Modal from './modal/modal/';
-import ModalOverlay from './modal-overlay/modal-overlay/';
+import AppHeader from '../app-header/app-header/';
+import BurgerIngredients from '../ingredient-details/ingredient-details';
+import BurgerConstructor from '../ingredient-constructor/ingredient-constructor';
+import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
