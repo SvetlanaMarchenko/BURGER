@@ -13,31 +13,44 @@
   min-height: 400px;
 }
  
- .icon{
-   size: 20px;
- }
-
- .burgerParts{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
- }
-
- .mainName{
-  display: flex;
-  justify-content: flex-start;
- }
-
-
- .burgerPiecesSeparately{
-  color: white;
+.icon{
   size: 20px;
+}
+
+.burgerParts{
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+}
+
+.mainName{
+display: flex;
+justify-content: flex-start;
+}
+
+
+.burgerPiecesSeparately{
+color: white;
+size: 20px;
+display: flex;
+justify-content: flex-start;
+}
+
+.ingredientsItem{
+width: 300px;
+}
+
+.mainIngredientsStyle {
+  max-height: 300px;
+  overflow-y: scroll;
+  gap: 16px; 
   display: flex;
-  justify-content: flex-start;
- }
+  flex-direction: column;
+}
 
- .ingredientsItem{
-  width: 300px;
- }
-
- /* axHeight: '300px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column'  */
+.priceOrder {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+}

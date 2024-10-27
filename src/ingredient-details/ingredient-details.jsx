@@ -11,6 +11,16 @@ const BurgerIngredients = () => {
       return ingredients.filter((item) => item.type === type);
    };
 
+   const ingredientTypes = [
+      { type: 'bun', value: 'Булки' },
+      { type: 'sauce', value: 'Соусы' },
+      { type: 'main', value: 'Начинки' }
+   ];
+   // const sortedIngredients = [
+   //    ...ingredientTypes.filter((item) => item.value === current),
+   //    ...ingredientTypes.filter((item) => item.value !== current)
+   // ];
+
    return (
       <div className={styles.ingredientsSection}>
          <h1 style={{  display: 'flex' }} className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -30,42 +40,23 @@ const BurgerIngredients = () => {
                <h2 className={'${styles.mainName} mt-10'} style={{  display: 'flex' }} > {current}</h2>
                <section className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
 
-               {current === "Булки" && filterIngredientsByType('bun').map((item, index) => (
-               <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
-               
-                  {index === 0 && (
-                     <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
-                  )}
-                  
-                  <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
-                  <p className={`${styles.priceItem} mb-1`}>
-                     {item.price}
-                     <CurrencyIcon type="primary" />
-                  </p>
-                  <p>{item.name}</p>
-               </div>
-               ))}
-
-
-
-               {current === "Соусы" && filterIngredientsByType('sauce').map((item) => (
-                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
-                     <img src={item.image} alt={item.name}  className={"ml-4 mb-1 mr-4"}  />
-                     <p className='${styles.priceItem} mb-1'>{item.price} 
-                       <CurrencyIcon type="primary" />
-                     </p>
-                     <p>{item.name}</p>
-                  </div>
-               ))}
-               {current === "Начинки" && filterIngredientsByType('main').map((item) => (
-                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} style={{ marginBottom: '0 !important' }}>
-                     <img src={item.image} alt={item.name} className={"ml-4 mb-1 mr-4"}  />
-                     <p className='${styles.priceItem} mb-1'>{item.price} 
-                       <CurrencyIcon type="primary" />
-                     </p>
-                     <p>{item.name}</p>
-                  </div>
-               ))}
+               {ingredientTypes.map(({ type, value }) => (
+               <>
+                  {current === value && filterIngredientsByType(type).map((item, index) => (
+                     <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} >
+                        {index === 0 && (
+                           <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
+                        )}
+                        <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
+                        <p className={`${styles.priceItem} mb-1`}>
+                           {item.price}
+                           <CurrencyIcon type="primary" />
+                        </p>
+                        <p>{item.name}</p>
+                     </div>
+                  ))}
+               </>
+            ))}
             </section>
          </main>
       </div>
