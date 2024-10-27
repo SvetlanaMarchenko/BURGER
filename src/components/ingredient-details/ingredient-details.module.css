@@ -6,6 +6,10 @@
    flex-direction: column;
    height: 100%;
  }
+
+ .tabBar {
+  display: flex;
+ }
  
  .icon{
    size: 20px;

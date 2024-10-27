@@ -60,7 +60,7 @@ function App() {
         <div>
           <BurgerIngredients ingredients={ingredients} />
         </div>
-        <div className="ingredient-constructor ml-10">
+        <div className="ingredient-constructor ml-10 mr-4">
           <BurgerConstructor ingredients={ingredients} />
         </div>
       </main>

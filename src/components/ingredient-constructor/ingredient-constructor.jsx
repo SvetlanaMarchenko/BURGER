@@ -68,7 +68,7 @@ const BurgerConstructor = ({ingredients}) => {
             <p className="text text_type_digits-medium">610 </p>
             <CurrencyIcon type="primary" />
             <Button
-               style={{ marginLeft: "40px" }}
+               className={styles.orderButton}
                htmlType="button"
                type="primary"
                size="medium"

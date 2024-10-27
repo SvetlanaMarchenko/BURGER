@@ -22,6 +22,10 @@
   flex-direction: column;
  }
 
+ .orderButton {
+  margin-left: 40px;
+ }
+
 .overflow {
   min-height: 400px;
 }
