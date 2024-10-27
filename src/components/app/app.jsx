@@ -66,16 +66,16 @@ function App() {
       </main>
 
       {/* Кнопка для открытия модального окна */}
-      <Button htmlType="button" styles="display:none;" onClick={openModal}>Открыть модальное окно</Button>
+      {/* <Button htmlType="button" styles="display:none;" onClick={openModal}>Открыть модальное окно</Button> */}
 
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <>
           <ModalOverlay onClose={closeModal} />
           <Modal title="Модальное окно" onClose={closeModal}>
             <p>Содержимое модального окна</p>
           </Modal>
         </>
-      )}
+      )} */}
     </div>
   );
 }
