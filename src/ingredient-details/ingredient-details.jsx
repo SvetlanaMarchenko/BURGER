@@ -42,7 +42,7 @@ const BurgerIngredients = ({ingredients}) => {
                            <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
                         )}
                         <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
-                        <p className={`${styles.priceItem} mb-1`}>
+                        <p className={`${styles.priceItem} mb-1 text text_type_digits-default`}>
                            {item.price}
                            <CurrencyIcon type="primary" />
                         </p>
