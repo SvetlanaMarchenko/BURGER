@@ -66,7 +66,7 @@ function App() {
       </main>
 
       {/* Кнопка для открытия модального окна */}
-      <Button onClick={openModal}>Открыть модальное окно</Button>
+      <Button htmlType="button" styles="display:none;" onClick={openModal}>Открыть модальное окно</Button>
 
       {isModalOpen && (
         <>
