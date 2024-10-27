@@ -54,3 +54,15 @@ width: 300px;
   flex-wrap: wrap;
   align-items: center;
 }
+
+.constructorElementBlock {
+  display: flex;
+  flex-direction: row;
+}
+
+.dragIconWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 32px;
+}

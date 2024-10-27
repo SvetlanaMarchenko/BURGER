@@ -18,39 +18,51 @@ const BurgerConstructor = ({ingredients}) => {
       <div className="mt-25 ml-8" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
          {bun && (
-            <ConstructorElement
-               key={`${bun._id}-top`}
-               type="top"
-               isLocked={true}
-               text={`${bun.name} (верх)`}
-               price={bun.price}
-               thumbnail={bun.image}
-            />
+            <div className={styles.constructorElementBlock}>
+               <div className={styles.dragIconWrapper}/>
+               <ConstructorElement
+                  key={`${bun._id}-top`}
+                  type="top"
+                  isLocked={true}
+                  text={`${bun.name} (верх)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+               />
+            </div>
+
          )}
 
+         
          <div style={{ maxHeight: '300px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column' }}>
          {mainIngredients.map((ingredient) => (
             <div key={ingredient._id}>
-               
-               <ConstructorElement
-                     icon={<DragIcon type="primary" />}
-                     text={ingredient.name}
-                     price={ingredient.price}
-                     thumbnail={ingredient.image}
-               />
+               <div className={styles.constructorElementBlock}>
+                  <div className={styles.dragIconWrapper}>
+                     <DragIcon/>
+                  </div>
+                  <ConstructorElement
+                        icon={<DragIcon type="primary" />}
+                        text={ingredient.name}
+                        price={ingredient.price}
+                        thumbnail={ingredient.image}
+                  />
+               </div>
             </div>
          ))}
          </div>
 
          {bun && (
-            <ConstructorElement
-               key={`${bun._id}-bottom`}
-               type="bottom"
-               isLocked={true}
-               text={`${bun.name} (низ)`}
-               price={bun.price}
-               thumbnail={bun.image}
-            />
+            <div className={styles.constructorElementBlock}>
+            <div className={styles.dragIconWrapper}/>
+               <ConstructorElement
+                  key={`${bun._id}-bottom`}
+                  type="bottom"
+                  isLocked={true}
+                  text={`${bun.name} (низ)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+               />
+            </div>
          )}
          <section className={`${styles.priceOrder} mt-10`}>
             <p className="text text_type_digits-medium">610 </p>
