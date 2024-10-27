@@ -3,6 +3,9 @@ import './App.css';
 import AppHeader from './app-header/app-header/';
 import BurgerIngredients from './ingredient-details/ingredient-details/';
 import BurgerConstructor from './ingredient-constructor/ingredient-constructor/';
+import Modal from './modal/modal/';
+import ModalOverlay from './modal-overlay/modal-overlay/';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -10,6 +13,7 @@ function App() {
   const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -30,15 +34,28 @@ function App() {
     fetchIngredients();
   }, []);
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
   if (isLoading) return <p>Загружаемся...</p>;
   if (error) return <p>Упс... Произошла ошибка: {error}</p>;
 
   return (
     <div id="app">
-      <div> 
-        <AppHeader /> 
-      </div>
-
+      <AppHeader />
       <div className="ingredientsBox">
         <div>
           <BurgerIngredients ingredients={ingredients} />
@@ -47,6 +64,18 @@ function App() {
           <BurgerConstructor ingredients={ingredients} />
         </div>
       </div>
+
+      {/* Кнопка для открытия модального окна */}
+      <Button onClick={openModal}>Открыть модальное окно</Button>
+
+      {isModalOpen && (
+        <>
+          <ModalOverlay onClose={closeModal} />
+          <Modal title="Модальное окно" onClose={closeModal}>
+            <p>Содержимое модального окна</p>
+          </Modal>
+        </>
+      )}
     </div>
   );
 }
