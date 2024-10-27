@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import ingredients from '../utils/ingredients-info.json';
 
-
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ingredients}) => {
    const [current, setCurrent] = React.useState('Булки');
 
    const filterIngredientsByType = (type) => {
@@ -16,10 +14,6 @@ const BurgerIngredients = () => {
       { type: 'sauce', value: 'Соусы' },
       { type: 'main', value: 'Начинки' }
    ];
-   // const sortedIngredients = [
-   //    ...ingredientTypes.filter((item) => item.value === current),
-   //    ...ingredientTypes.filter((item) => item.value !== current)
-   // ];
 
    return (
       <div className={styles.ingredientsSection}>
@@ -37,11 +31,11 @@ const BurgerIngredients = () => {
          </div>
 
          <main>
-               <h2 className={'${styles.mainName} mt-10'} style={{  display: 'flex' }} > {current}</h2>
+               <h2 className={`${styles.mainName} mt-10`} style={{ display: 'flex' }}>{current}</h2>
                <section className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
 
                {ingredientTypes.map(({ type, value }) => (
-               <>
+               <React.Fragment key={type}>
                   {current === value && filterIngredientsByType(type).map((item, index) => (
                      <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} >
                         {index === 0 && (
@@ -55,7 +49,7 @@ const BurgerIngredients = () => {
                         <p>{item.name}</p>
                      </div>
                   ))}
-               </>
+               </React.Fragment>
             ))}
             </section>
          </main>

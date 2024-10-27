@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './ingredient-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ingredients from '../utils/ingredients-info.json';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ingredients}) => {
    const filterIngredientsByType = (type) => {
       return ingredients.filter((item) => item.type === type);
    };
@@ -29,18 +28,18 @@ const BurgerConstructor = () => {
             />
          )}
 
-         <div style={{ maxHeight: '250px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column' }}>
-            {mainIngredients.map((ingredient) => (
-               <React.Fragment key={ingredient._id}>
-               <DragIcon type="primary" />
+         <div style={{ maxHeight: '300px', overflowY: 'scroll', gap: '16px', display: 'flex', flexDirection: 'column' }}>
+         {mainIngredients.map((ingredient) => (
+            <div key={ingredient._id}>
+               
                <ConstructorElement
-                     key={ingredient._id}
+                     icon={<DragIcon type="primary" />}
                      text={ingredient.name}
                      price={ingredient.price}
                      thumbnail={ingredient.image}
                />
-               </React.Fragment>
-            ))}
+            </div>
+         ))}
          </div>
 
          {bun && (
