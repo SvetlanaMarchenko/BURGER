@@ -56,14 +56,14 @@ function App() {
   return (
     <div id="app">
       <AppHeader />
-      <div className="ingredientsBox">
+      <main className="ingredientsBox">
         <div>
           <BurgerIngredients ingredients={ingredients} />
         </div>
         <div className="ingredient-constructor ml-10">
           <BurgerConstructor ingredients={ingredients} />
         </div>
-      </div>
+      </main>
 
       {/* Кнопка для открытия модального окна */}
       <Button onClick={openModal}>Открыть модальное окно</Button>
