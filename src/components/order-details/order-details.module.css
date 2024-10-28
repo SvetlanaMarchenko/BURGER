@@ -6,16 +6,26 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  border-radius: 100px;
+  overflow: hidden; 
+  margin-top: 0;
 }
 
 .orderDetailsFrame{
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 720px;
-  height: 718px;
+  height: 100%;  
   top: 180px;
   left: 640px;
   border: 2px;
+}
+.orderDetailsID{
+white-space: nowrap; 
+}
+
+.orderDetailsWaiting{
+  white-space: nowrap; 
+  color: gray;
 }

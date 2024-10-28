@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './order-details.module.css';
-import { Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderDetails = ({ onClose }) => {
-
-
+  
    return (
-      
+    
      <div className={styles.orderDetailsFrame}>
-        <h2>Ваш заказ</h2>
-        <p>Спасибо за внимание!</p>
-        <p>Открывай меня, если станет скучно :)</p>
-        <Button onClick={onClose}>Закрыть</Button>
+        <p className={`${styles.countResult} mt-30 text text_type_digits-large`}>156473</p>
+        <p className={`${styles.orderDetailsID} mt-8 mb-15 text text_type_main-medium`}>идентификатор заказа</p>
+        <p className={`${styles.orderDetailsStatus} mb-2 text text_type_main-default`}>Ваш заказ начали готовить</p>
+        <p className={`${styles.orderDetailsWaiting} mb-30 text text_type_main-default`}>Дождитесь готовности на орбитальной станции</p>
      </div>
-  );
+   );
 };
 
 export default OrderDetails;
