@@ -17,7 +17,7 @@ const BurgerIngredients = ({ingredients}) => {
 
    return (
       <div className={styles.ingredientsSection}>
-         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
+         <h1 className={`${styles.mainTitle} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
          <div className={styles.tabBar}>
             <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrent('Булки')}>
                Булки
@@ -31,7 +31,7 @@ const BurgerIngredients = ({ingredients}) => {
          </div>
 
          <main>
-               <h2 className={`${styles.mainName} mt-10`}>{current}</h2>
+               <h2 className={`${styles.mainTitle} mt-10`}>{current}</h2>
                <section className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
 
                {ingredientTypes.map(({ type, value }) => (

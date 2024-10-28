@@ -27,7 +27,7 @@
   overflow-y: hidden;
  }
 
- .mainName{
+ .mainTitle{
   display: flex;
   justify-content: flex-start;
  }

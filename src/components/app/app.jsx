@@ -33,9 +33,7 @@ function App() {
 
     fetchIngredients();
   }, []);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -50,8 +48,10 @@ function App() {
     };
   }, []);
 
-  if (isLoading) return <p>Загружаемся...</p>;
-  if (error) return <p>Упс... Произошла ошибка: {error}</p>;
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+
 
   return (
     <div id="app">
@@ -59,23 +59,23 @@ function App() {
       <main className="ingredientsBox">
         <div>
           <BurgerIngredients ingredients={ingredients} />
+          <>
+          <Button onClick={openModal} htmlType="button">Открыть модальное окно</Button>
+      {isModalOpen && (
+        <>
+          <ModalOverlay onClose={closeModal} />
+          <Modal header="Внимание!" onClose={closeModal}>
+            <p>Спасибо за внимание!</p>
+            <p>Открывай меня, если станет скучно :)</p>
+          </Modal>
+        </>
+      )}
+      </>
         </div>
         <div className="ingredient-constructor ml-10 mr-4">
           <BurgerConstructor ingredients={ingredients} />
         </div>
       </main>
-
-      {/* Кнопка для открытия модального окна */}
-      {/* <Button htmlType="button" styles="display:none;" onClick={openModal}>Открыть модальное окно</Button> */}
-
-      {/* {isModalOpen && (
-        <>
-          <ModalOverlay onClose={closeModal} />
-          <Modal title="Модальное окно" onClose={closeModal}>
-            <p>Содержимое модального окна</p>
-          </Modal>
-        </>
-      )} */}
     </div>
   );
 }
