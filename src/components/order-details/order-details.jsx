@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './order-details.module.css';
-import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import { Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderDetails = ({ onClose }) => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
 
-   const openModal = () => setIsModalOpen(true);
-   const closeModal = () => setIsModalOpen(false);
 
    return (
       

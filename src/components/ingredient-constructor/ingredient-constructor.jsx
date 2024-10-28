@@ -65,7 +65,7 @@ const BurgerConstructor = ({ ingredients }) => {
 
          <section className={`${styles.priceOrder} mt-10`}>
             <p className="text text_type_digits-medium">610</p>
-            <CurrencyIcon type="primary" />
+            <CurrencyIcon type="primary" className="mr-10"/>
             <Button
                htmlType="button"
                type="primary"
