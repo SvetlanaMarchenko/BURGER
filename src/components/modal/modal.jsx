@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
-import { CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+
 const modalRoot = document.getElementById("react-modals");
 
 const ModalHeader = ({ onClose, children }) => {
@@ -16,22 +17,30 @@ const ModalHeader = ({ onClose, children }) => {
   );
 };
 
-class Modal extends React.Component {  
-  render() {
-    const { children, header, onClose } = this.props;
-    return ReactDOM.createPortal(
-            (
-                <>
-                    <div className="Modal">
-                    <ModalHeader onClose={onClose}>{header}</ModalHeader>
-                        {children}
-                    </div>
-                    <ModalOverlay/>
-                </>
-            ), 
-            modalRoot
-        );
-  }
-}
+const Modal = ({ children, header, onClose }) => {
+  const handleEsc = (event) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  };
 
-export default Modal
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
+  return ReactDOM.createPortal(
+    <>
+      <ModalOverlay onClose={onClose} />
+      <div className={styles.modal}>
+        <ModalHeader onClose={onClose}>{header}</ModalHeader>
+        {children}
+      </div>
+    </>,
+    modalRoot
+  );
+};
+
+export default Modal;

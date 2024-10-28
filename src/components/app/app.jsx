@@ -13,7 +13,7 @@ function App() {
   const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -33,24 +33,6 @@ function App() {
 
     fetchIngredients();
   }, []);
-  
-
-  useEffect(() => {
-    const handleEsc = (event) => {
-      if (event.key === 'Escape') {
-        closeModal();
-      }
-    };
-
-    window.addEventListener('keydown', handleEsc);
-    return () => {
-      window.removeEventListener('keydown', handleEsc);
-    };
-  }, []);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
 
 
   return (
@@ -59,18 +41,6 @@ function App() {
       <main className="ingredientsBox">
         <div>
           <BurgerIngredients ingredients={ingredients} />
-          <>
-          <Button onClick={openModal} htmlType="button">Открыть модальное окно</Button>
-      {isModalOpen && (
-        <>
-          <ModalOverlay onClose={closeModal} />
-          <Modal header="Внимание!" onClose={closeModal}>
-            <p>Спасибо за внимание!</p>
-            <p>Открывай меня, если станет скучно :)</p>
-          </Modal>
-        </>
-      )}
-      </>
         </div>
         <div className="ingredient-constructor ml-10 mr-4">
           <BurgerConstructor ingredients={ingredients} />

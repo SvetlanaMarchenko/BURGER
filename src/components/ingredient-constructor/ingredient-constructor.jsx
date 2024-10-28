@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './ingredient-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import OrderDetails from '../order-details/order-details'; 
 
 const BurgerConstructor = ({ ingredients }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,23 +17,10 @@ const BurgerConstructor = ({ ingredients }) => {
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
 
-   useEffect(() => {
-      const handleEsc = (event) => {
-         if (event.key === 'Escape') {
-            closeModal();
-         }
-      };
-
-      window.addEventListener('keydown', handleEsc);
-      return () => {
-         window.removeEventListener('keydown', handleEsc);
-      };
-   }, []);
-
    return (
-      <div className={`${styles.ingredientConstructor} mt-25 ml-8 mr-4`}>
+      <div className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
          {bun && (
-            <div className={styles.constructorElementBlock}>
+            <div className={`${styles.constructorElementBlock } ml-8`}>
                <ConstructorElement
                   key={`${bun._id}-top`}
                   type="top"
@@ -64,7 +51,7 @@ const BurgerConstructor = ({ ingredients }) => {
          </div>
 
          {bun && (
-            <div className={styles.constructorElementBlock}>
+            <div className={`${styles.constructorElementBlock } ml-8`}>
                <ConstructorElement
                   key={`${bun._id}-bottom`}
                   type="bottom"
@@ -90,13 +77,9 @@ const BurgerConstructor = ({ ingredients }) => {
          </section>
 
          {isModalOpen && (
-            <>
-               <ModalOverlay onClose={closeModal} />
-               <Modal header="Внимание!" onClose={closeModal}>
-                  <p>Спасибо за внимание!</p>
-                  <p>Открывай меня, если станет скучно :)</p>
-               </Modal>
-            </>
+            <Modal onClose={closeModal}>
+               <OrderDetails onClose={closeModal} />
+            </Modal>
          )}
       </div>
    );

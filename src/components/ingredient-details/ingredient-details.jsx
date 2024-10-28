@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import OrderDetails from '../order-details/order-details'; 
 
 const BurgerIngredients = ({ingredients}) => {
    const [current, setCurrent] = React.useState('Булки');
