@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from '../app-header/app-header/';
-import BurgerIngredients from '../ingredient-details/ingredient-details';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../ingredient-constructor/ingredient-constructor';
 import Modal from '../modal/modal';
 import ModalOverlay from '../modal-overlay/modal-overlay';
