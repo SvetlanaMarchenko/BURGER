@@ -39,12 +39,8 @@ function App() {
     <div id="app">
       <AppHeader />
       <main className="ingredientsBox">
-        <div>
           <BurgerIngredients ingredients={ingredients} />
-        </div>
-        <div className="ingredient-constructor ml-10 mr-4">
-          <BurgerConstructor ingredients={ingredients} />
-        </div>
+          <BurgerConstructor ingredients={ingredients}  className="ingredient-constructor ml-10 mr-4"/>
       </main>
     </div>
   );

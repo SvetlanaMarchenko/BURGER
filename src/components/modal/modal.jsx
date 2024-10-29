@@ -6,18 +6,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 const modalRoot = document.getElementById("react-modals");
 
-const ModalHeader = ({ onClose, children }) => {
-  return (
-    <div className={styles.header}>
-      <h2>{children}</h2>
-      <button onClick={onClose} className={styles.closeButton}>
-        <CloseIcon type="primary" />
-      </button>
-    </div>
-  );
-};
-
-const Modal = ({ children, header, onClose }) => {
+const Modal = ({ children, onClose }) => {
   const handleEsc = (event) => {
     if (event.key === 'Escape') {
       onClose();
@@ -35,7 +24,6 @@ const Modal = ({ children, header, onClose }) => {
     <>
       <ModalOverlay onClose={onClose} />
       <div className={styles.modal}>
-        <ModalHeader onClose={onClose}>{header}</ModalHeader>
         {children}
       </div>
     </>,
