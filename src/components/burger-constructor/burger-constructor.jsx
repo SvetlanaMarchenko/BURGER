@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './ingredient-constructor.module.css';
+import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'; 
