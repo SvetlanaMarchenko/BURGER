@@ -15,8 +15,7 @@
  }
 
  .innerIngredients{
-  max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   gap: 16px;
   display: flex;
   flex-direction: column;
@@ -51,18 +50,6 @@ color: white;
 size: 20px;
 display: flex;
 justify-content: flex-start;
-}
-
-.ingredientsItem{
-width: 300px;
-}
-
-.mainIngredientsStyle {
-  max-height: 300px;
-  overflow-y: scroll;
-  gap: 16px; 
-  display: flex;
-  flex-direction: column;
 }
 
 .priceOrder {
