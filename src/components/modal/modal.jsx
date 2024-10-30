@@ -11,7 +11,7 @@ const Modal = ({ children, onClose }) => {
       onClose();
     }
   };
-
+  
   React.useEffect(() => {
     window.addEventListener('keydown', handleEsc);
     return () => {

@@ -30,6 +30,7 @@ const BurgerIngredients = ({ ingredients }) => {
       setSelectedIngredient(null);
    };
 
+
    return (
       <div className={styles.ingredientsSection}>
          <h1 className={`${styles.mainTitle} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
@@ -42,22 +43,27 @@ const BurgerIngredients = ({ ingredients }) => {
          </div>
 
          <main>
-            <h2 className={`${styles.mainTitle} mt-10`}>{current}</h2>
-            <section className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
-               {filterIngredientsByType(ingredientTypes.find(type => type.value === current).type).map((item, index) => (
-                  <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} onClick={() => openModal(item)}>
-                     {index === 0 && (
-                        <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
-                     )}
-                     <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
-                     <p className={`${styles.priceItem} mb-1 text text_type_digits-default`}>
-                        {item.price}
-                        <CurrencyIcon type="primary" />
-                     </p>
-                     <p>{item.name}</p>
+            {ingredientTypes.map(({ type, value }) => (
+               <section key={type} className={`${styles.ingredientsSection} mt-10`}>
+                  <h2 className={`${styles.mainTitle} mt-10 mb-4`}>{value}</h2>
+                  
+                  <div className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
+                     {filterIngredientsByType(type).map((item, index) => (
+                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} onClick={() => openModal(item)}>
+                           {index === 0 && (
+                              <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
+                           )}
+                           <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
+                           <p className={`${styles.priceItem} mb-1 text text_type_digits-default`}>
+                              {item.price}
+                              <CurrencyIcon type="primary" />
+                           </p>
+                           <p>{item.name}</p>
+                        </div>
+                     ))}
                   </div>
-               ))}
-            </section>
+               </section>
+            ))}
          </main>
 
          {isModalOpen && selectedIngredient && createPortal(
