@@ -32,9 +32,9 @@ const BurgerIngredients = ({ ingredients }) => {
 
 
    return (
-      <div className={styles.ingredientsSection}>
-         <h1 className={`${styles.mainTitle} text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
-         <div className={styles.tabBar}>
+      <div className={`${styles.ingredientsSection} mt-10` }>
+         <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>
+         <div className={`${styles.tabBar} mt-5`}>
             {ingredientTypes.map(({ value }) => (
                <Tab key={value} value={value} active={current === value} onClick={() => setCurrent(value)}>
                   {value}
@@ -45,15 +45,15 @@ const BurgerIngredients = ({ ingredients }) => {
          <main>
             {ingredientTypes.map(({ type, value }) => (
                <section key={type} className={`${styles.ingredientsSection} mt-10`}>
-                  <h2 className={`${styles.mainTitle} mt-10 mb-4`}>{value}</h2>
+                  <h2 className={`${styles.mainTitle}`}>{value}</h2>
                   
-                  <div className={`${styles.ingredientsList} mt-6 ml-4 mb-10`}>
+                  <div className={`${styles.ingredientsList}`}>
                      {filterIngredientsByType(type).map((item, index) => (
-                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small`} onClick={() => openModal(item)}>
+                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => openModal(item)}>
                            {index === 0 && (
                               <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
                            )}
-                           <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4" />
+                           <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4 mt-6" />
                            <p className={`${styles.priceItem} mb-1 text text_type_digits-default`}>
                               {item.price}
                               <CurrencyIcon type="primary" />

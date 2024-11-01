@@ -30,6 +30,7 @@
  .mainTitle{
   display: flex;
   justify-content: flex-start;
+  margin: 0;
  }
 
 
@@ -45,14 +46,14 @@
   justify-content: space-between;
   overflow-y: auto;          
   flex-wrap: wrap;           
-  gap: 10px;   
+  gap: 24px;   
   box-sizing: border-box; 
 }
 
  .ingredientsItem {
   display: flex;   
   flex-direction: column;     
-  height: 208px;
+  /* height: 208px; */
   width: 272px;
   position: relative;
 }
