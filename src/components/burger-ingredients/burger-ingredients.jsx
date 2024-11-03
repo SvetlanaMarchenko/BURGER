@@ -30,7 +30,6 @@ const BurgerIngredients = ({ ingredients }) => {
       setSelectedIngredient(null);
    };
 
-
    return (
       <div className={`${styles.ingredientsSection} mt-10` }>
          <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>

@@ -5,7 +5,6 @@
    width: 200px;
    height: 200px;
    flex-direction: column;
-   /* overflow-y: scroll; */
  }
 
  .ingredientConstructor{

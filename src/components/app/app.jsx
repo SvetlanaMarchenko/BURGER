@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import './App.css';
 import AppHeader from '../app-header/app-header/';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from '../modal/modal';
-import ModalOverlay from '../modal-overlay/modal-overlay';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+
+import styles from './app.module.css';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -36,12 +34,12 @@ function App() {
 
 
   return (
-    <div id="app">
+    <div className={`${styles.appLayout}`}>
       <AppHeader />
-      <main className="ingredientsBox">
+      <div className={`${styles.ingredientsBox}`}>
           <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor ingredients={ingredients}  className="ingredient-constructor ml-10 mr-4"/>
-      </main>
+          <BurgerConstructor ingredients={ingredients}  className={` ml-10 mr-4`}/>
+      </div>
     </div>
   );
 }
