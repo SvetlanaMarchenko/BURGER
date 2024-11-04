@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-export const ingredientsSlice = createSlice({
+const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState: {
     allIngredients: [],
@@ -27,3 +27,4 @@ export const ingredientsSlice = createSlice({
 })
 
 export const { setIngredients, setCurrentIngredient, setError,  setIsLoading} = ingredientsSlice.actions
+export default ingredientsSlice.reducer
