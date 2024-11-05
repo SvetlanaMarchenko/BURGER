@@ -1,26 +1,35 @@
+// BurgerConstructor.js
 import React, { useState } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { removeIngredient, clearConstructor } from '../../services/actions/constructor-actions';
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const dispatch = useDispatch();
+   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
-   const filterIngredientsByType = (type) => {
-      return ingredients.filter((item) => item.type === type);
+   const handleRemoveIngredient = (ingredientId) => {
+      dispatch(removeIngredient(ingredientId));
    };
 
-   const bun = filterIngredientsByType('bun')[0];
-   const mainIngredients = filterIngredientsByType('main');
+   const handleClearConstructor = () => {
+      dispatch(clearConstructor());
+   };
 
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
 
+   // Итоговая стоимость
+   const totalPrice = (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
+
    return (
       <div className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
          {bun && (
-            <div className={`${styles.constructorElementBlock } ml-8`}>
+            <div className={`${styles.constructorElementBlock} ml-8`}>
                <ConstructorElement
                   key={`${bun._id}-top`}
                   type="top"
@@ -33,25 +42,23 @@ const BurgerConstructor = ({ ingredients }) => {
          )}
 
          <div className={styles.innerIngredients}>
-            {mainIngredients.map((ingredient) => (
-               <div key={ingredient._id}>
-                  <div className={styles.constructorElementBlock}>
-                     <div className={styles.dragIconWrapper}>
-                        <DragIcon />
-                     </div>
-                     <ConstructorElement
-                        icon={<DragIcon type="primary" />}
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                     />
+            {ingredients.map((ingredient) => (
+               <div key={ingredient._id} className={styles.constructorElementBlock}>
+                  <div className={styles.dragIconWrapper}>
+                     <DragIcon />
                   </div>
+                  <ConstructorElement
+                     text={ingredient.name}
+                     price={ingredient.price}
+                     thumbnail={ingredient.image}
+                     onClick={() => handleRemoveIngredient(ingredient._id)}
+                  />
                </div>
             ))}
          </div>
 
          {bun && (
-            <div className={`${styles.constructorElementBlock } ml-8`}>
+            <div className={`${styles.constructorElementBlock} ml-8`}>
                <ConstructorElement
                   key={`${bun._id}-bottom`}
                   type="bottom"
@@ -64,8 +71,8 @@ const BurgerConstructor = ({ ingredients }) => {
          )}
 
          <section className={`${styles.priceOrder} mt-10`}>
-            <p className="text text_type_digits-medium">610</p>
-            <CurrencyIcon type="primary" className="mr-10"/>
+            <p className="text text_type_digits-medium">{totalPrice}</p>
+            <CurrencyIcon type="primary" className="mr-10" />
             <Button
                htmlType="button"
                type="primary"
@@ -75,6 +82,10 @@ const BurgerConstructor = ({ ingredients }) => {
                Оформить заказ
             </Button>
          </section>
+
+         <button onClick={handleClearConstructor} className="mt-4">
+            Очистить конструктор
+         </button>
 
          {isModalOpen && (
             <Modal onClose={closeModal}>

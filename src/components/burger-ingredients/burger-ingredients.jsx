@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'; // Ensure this import is correct
 import styles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details'; 
+import { addIngredient } from '../../services/actions/constructor-actions'; 
 import Modal from '../modal/modal';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,6 +49,9 @@ const BurgerIngredients = ({ ingredients }) => {
       setIsModalOpen(false);
       setSelectedIngredient(null);
    };
+   const handleAddIngredient = (ingredient) => {
+      dispatch(addIngredient(ingredient)); // Добавляем ингредиент в конструктор
+   };
 
    return (
       <div className={`${styles.ingredientsSection} mt-10` }>
@@ -67,7 +71,10 @@ const BurgerIngredients = ({ ingredients }) => {
                   
                   <div className={`${styles.ingredientsList}`}>
                      {filterIngredientsByType(type).map((item, index) => (
-                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => openModal(item)}>
+                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => {
+                           handleAddIngredient(item); // Добавляем ингредиент при клике
+                           openModal(item); // Открываем модальное окно
+                        }}>
                            {index === 0 && (
                               <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
                            )}

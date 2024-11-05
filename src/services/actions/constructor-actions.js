@@ -7,6 +7,7 @@ export const addIngredient= (ingredient) => ({
   payload: ingredient
 })
 
+
 export const removeIngredient= (id) => ({
   type: REMOVE_INGREDIENT,
   payload: id
