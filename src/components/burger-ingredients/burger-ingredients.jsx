@@ -56,17 +56,17 @@ const BurgerIngredients = ({ ingredients }) => {
    };
 
    const handleScroll = () => {
-      const bunsTop = bunsRef.current.getBoundingClientRect().buttom;
-      const saucesTop = saucesRef.current.getBoundingClientRect().buttom;
-      const mainsTop = mainsRef.current.getBoundingClientRect().buttom;
+      const bunsTop = bunsRef.current.getBoundingClientRect().top;
+      const saucesTop = saucesRef.current.getBoundingClientRect().top;
+      const mainsTop = mainsRef.current.getBoundingClientRect().top;
 
-      const offset = 100;
-
-      if (bunsTop <= offset && saucesTop > offset) {
+      const bunsOffset = 400; // Уберите "px"
+   
+      if (bunsTop <= bunsOffset && saucesTop > bunsOffset) {
          setCurrent('Булки');
-      } else if (saucesTop <= offset && mainsTop > offset) {
+      } else if (saucesTop <= bunsOffset && mainsTop > bunsOffset) {
          setCurrent('Соусы');
-      } else if (mainsTop <= offset) {
+      } else if (mainsTop <= bunsOffset) {
          setCurrent('Начинки');
       }
    };
