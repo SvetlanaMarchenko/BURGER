@@ -7,7 +7,7 @@ import currentIngredientReducer from './reducers/current-ingredient-reducer'
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  constructorIngredient: constructorReducer,
+  burgerConstructor: constructorReducer,
   currentIngredient: currentIngredientReducer,
   // orderState: orderReducer,
 });

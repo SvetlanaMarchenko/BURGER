@@ -1,6 +1,7 @@
 import { 
   ADD_INGREDIENT, 
-  REMOVE_INGREDIENT 
+  REMOVE_INGREDIENT,
+  CLEAR_CONSTRUCTOR
 } from '../actions/constructor-actions';
 
 const initialState = {
@@ -23,6 +24,8 @@ const constructorReducer = (state = initialState, action) => {
         )
       };
 
+    case CLEAR_CONSTRUCTOR:
+      return initialState;
     default:
       return state; 
   }
