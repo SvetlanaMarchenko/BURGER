@@ -1,7 +1,7 @@
 import { 
   ADD_INGREDIENT, 
   REMOVE_INGREDIENT 
-} from '../actions/constructorActions';
+} from '../actions/constructor-actions';
 
 const initialState = {
   ingredients: []

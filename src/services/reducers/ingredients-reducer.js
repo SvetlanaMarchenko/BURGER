@@ -3,7 +3,7 @@ import {
   CREATE_INGREDIENTS_REQUEST,
   CREATE_INGREDIENTS_SUCCESS,
   FETCH_INGREDIENTS_FAILURE,
-} from '../actions/ingredientsActions';
+} from '../actions/ingredients-actions';
 
 
 const initialState = {

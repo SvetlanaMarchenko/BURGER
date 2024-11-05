@@ -1,8 +1,8 @@
 
 import { combineReducers } from '@reduxjs/toolkit'
-import ingredientsReducer from './reducers/ingredientsReducer'
-import constructorReducer from './reducers/сonstructorReducer'
-import currentIngredientReducer from './reducers/currentIngredientReducer'
+import ingredientsReducer from './reducers/ingredients-reducer'
+import constructorReducer from './reducers/сonstructor-reducer'
+import currentIngredientReducer from './reducers/current-ingredient-reducer'
 // import orderReducer from './reducers/orderReducer'
 
 const rootReducer = combineReducers({
