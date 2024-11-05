@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom'; // Ensure this import is correct
 import styles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details'; 
 import Modal from '../modal/modal';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { dataIngredients } from '../../services/actions/ingredients-actions';
+
 const BurgerIngredients = ({ ingredients }) => {
    const [current, setCurrent] = useState('Булки');
    const [selectedIngredient, setSelectedIngredient] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const dispatch = useDispatch();
+
+   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
+
+   useEffect(() => {
+      dispatch(dataIngredients());
+   }, [dispatch]);
+
+   if (isLoading) return <p> Загрузка Элементов...</p>;
+   if (error) return <p> хм... Ошибка: {error}</p>;
+
+
+   // const filterIngredientsByType = (type) => {
+   //    return allIngredients.filter((item) => item.type === type); 
+   // };
+   
 
    const filterIngredientsByType = (type) => {
       return ingredients.filter((item) => item.type === type);
