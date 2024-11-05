@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   allIngredients: [],
-  currentIngredient: null,
+  // currentIngredient: null,
   error: null,
   isLoading: true
 }
@@ -20,13 +20,9 @@ const ingredientsReducer = (state = initialState, action) =>  {
     case CREATE_INGREDIENTS_SUCCESS: 
       return {...state, isLoading: false, allIngredients: action.payload}
     case FETCH_INGREDIENTS_FAILURE: 
-      console.log("Ошибка загрузки ингредиентов:", action.payload);
       return {...state, isLoading: false, error: action.payload}
     default:
         return state;
   }
 }
 export default ingredientsReducer
-
-
-

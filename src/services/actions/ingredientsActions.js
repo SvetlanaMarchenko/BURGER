@@ -9,7 +9,7 @@ export const fetchIngredientsFailure = (error) => ({ type: FETCH_INGREDIENTS_FAI
 
 const ORDER_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
-export const createOrder = () => async (dispatch) => {
+export const dataIngredients = () => async (dispatch) => {
   dispatch(createIngredientsRequest());
 
   try {
@@ -19,12 +19,13 @@ export const createOrder = () => async (dispatch) => {
     }
 
     const data = await response.json();
-    dispatch(createIngredientsSuccess(data.order.number));
+    dispatch(createIngredientsSuccess(data.ingredients));
   } 
   
   catch (error) {
     dispatch(fetchIngredientsFailure(error.message));
   }
 };
+
 
 

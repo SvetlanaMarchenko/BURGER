@@ -6,9 +6,9 @@ import currentIngredientReducer from './reducers/currentIngredientReducer'
 // import orderReducer from './reducers/orderReducer'
 
 const rootReducer = combineReducers({
-  ingredientsState: ingredientsReducer,
-  constructorState: constructorReducer,
-  currentIngredientState: currentIngredientReducer,
+  ingredients: ingredientsReducer,
+  constructorIngredient: constructorReducer,
+  currentIngredient: currentIngredientReducer,
   // orderState: orderReducer,
 });
 
