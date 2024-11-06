@@ -14,11 +14,13 @@ const initialState = {
 }
 
 const ingredientsReducer = (state = initialState, action) =>  {
-  switch (action.type) {
+  // console.log("s", state)
+  // console.log("a", action)
+switch (action.type) {
     case FETCH_INGREDIENTS_REQUEST: 
       return {...state, isLoading: true, error: null}
     case FETCH_INGREDIENTS_SUCCESS: 
-      return {...state, isLoading: false, allIngredients: action.payload}
+    return {...state, isLoading: false, allIngredients: action.payload}
     case FETCH_INGREDIENTS_FAILURE: 
       return {...state, isLoading: false, error: action.payload}
     default:

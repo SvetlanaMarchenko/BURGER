@@ -10,28 +10,19 @@ export const fetchIngredientsSuccess = (ingredients) => ({ type: FETCH_INGREDIEN
 export const fetchIngredientsFailure = (error) => ({ type: FETCH_INGREDIENTS_FAILURE, payload: error });
 
 
-const ORDER_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const INGREDIENTS_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 
 
+export const fetchDataIngredients = () => {
+  return (dispatch) => {
+    dispatch(fetchIngredientsRequest());
 
-
-export const fetchDataIngredients = () => async (dispatch) => {
-  dispatch(fetchIngredientsRequest());
-
-  try {
-    const response = await axios(ORDER_API_URL);
-    if (!response.ok) {
-      throw new Error(`Это API Ошибка: ${response.status}`);
-    }
-
-    const data = await response.json();
-    dispatch(fetchIngredientsSuccess(data.ingredients));
-  } 
-  
-  catch (error) {
-    dispatch(fetchIngredientsFailure(error.message));
-  }
+    fetch(INGREDIENTS_API_URL)
+      .then(response => response.json())
+      .then(json => dispatch(fetchIngredientsSuccess(json.data)))
+      .catch(error => dispatch(fetchIngredientsFailure(error)));
+  };
 };
 
 

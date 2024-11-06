@@ -16,13 +16,13 @@ const BurgerIngredients = ({ ingredients }) => {
    const dispatch = useDispatch();
 
 
-   store.dispatch(fetchDataIngredients());
+   // store.dispatch(fetchDataIngredients());
 
    // const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
 
-   // useEffect(() => {
-   //    dispatch(fetchDataIngredients());
-   // }, [dispatch]);
+   useEffect(() => {
+      dispatch(fetchDataIngredients());
+   }, [dispatch]);
 
    // if (isLoading) return <p>Загрузка Элементов...</p>;
    // if (error) return <p>Хм... Ошибка: {error}</p>;
