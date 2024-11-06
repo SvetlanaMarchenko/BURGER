@@ -6,7 +6,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { addIngredient } from '../../services/actions/constructor-actions'; 
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { dataIngredients } from '../../services/actions/ingredients-actions';
+import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
+import store from '../../services/store';
 
 const BurgerIngredients = ({ ingredients }) => {
    const [current, setCurrent] = useState('Булки');
@@ -14,10 +15,13 @@ const BurgerIngredients = ({ ingredients }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
 
+
+   store.dispatch(fetchDataIngredients());
+
    // const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
 
    // useEffect(() => {
-   //    dispatch(dataIngredients());
+   //    dispatch(fetchDataIngredients());
    // }, [dispatch]);
 
    // if (isLoading) return <p>Загрузка Элементов...</p>;

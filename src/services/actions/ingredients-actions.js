@@ -1,25 +1,32 @@
+import axios from 'axios';
+
 // services/actions/orderActions.js
-export const CREATE_INGREDIENTS_REQUEST = 'CREATE_INGREDIENTS_REQUEST';
-export const CREATE_INGREDIENTS_SUCCESS = 'CREATE_INGREDIENTS_SUCCESS';
+export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
+export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
 export const FETCH_INGREDIENTS_FAILURE = 'FETCH_INGREDIENTS_FAILURE';
 
-export const createIngredientsRequest = () => ({ type: CREATE_INGREDIENTS_REQUEST });
-export const createIngredientsSuccess = (ingredients) => ({ type: CREATE_INGREDIENTS_SUCCESS, payload: ingredients });
+export const fetchIngredientsRequest = () => ({ type: FETCH_INGREDIENTS_REQUEST });
+export const fetchIngredientsSuccess = (ingredients) => ({ type: FETCH_INGREDIENTS_SUCCESS, payload: ingredients });
 export const fetchIngredientsFailure = (error) => ({ type: FETCH_INGREDIENTS_FAILURE, payload: error });
+
 
 const ORDER_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
-export const dataIngredients = () => async (dispatch) => {
-  dispatch(createIngredientsRequest());
+
+
+
+
+export const fetchDataIngredients = () => async (dispatch) => {
+  dispatch(fetchIngredientsRequest());
 
   try {
-    const response = await fetch(ORDER_API_URL);
+    const response = await axios(ORDER_API_URL);
     if (!response.ok) {
-      throw new Error(`API Ошибка: ${response.status}`);
+      throw new Error(`Это API Ошибка: ${response.status}`);
     }
 
     const data = await response.json();
-    dispatch(createIngredientsSuccess(data.ingredients));
+    dispatch(fetchIngredientsSuccess(data.ingredients));
   } 
   
   catch (error) {
