@@ -1,27 +1,29 @@
-// constructorReducer.js
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, CLEAR_CONSTRUCTOR } from '../actions/constructor-actions';
+import { 
+    ADD_INGREDIENT, 
+    REMOVE_INGREDIENT, 
+    SET_BUN,
+    REMOVE_BUN,
+    CLEAR_CONSTRUCTOR, } from '../actions/constructor-actions';
 
 const initialState = {
-    bun: null, // Здесь хранится одна булка
-    ingredients: [] // Здесь хранятся начинки и соусы
+    bun: null,
+    ingredients: [] 
 };
 
 const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT:
-            if (action.payload.type === 'bun') {
-                // Заменяем булку
-                return { ...state, bun: action.payload };
-            } else {
-                // Добавляем соус или начинку
-                return { ...state, ingredients: [...state.ingredients, action.payload] };
-            }
-
+            return{
+            ...state, ingredients: [...state.ingredients, action.payload]}
         case REMOVE_INGREDIENT:
             return {
                 ...state,
                 ingredients: state.ingredients.filter(item => item._id !== action.payload)
             };
+        case SET_BUN:
+            return {...state, bun: action.payload };
+        case REMOVE_BUN:
+            return {...state,bun: null};
 
         case CLEAR_CONSTRUCTOR:
             return initialState;
@@ -32,4 +34,3 @@ const constructorReducer = (state = initialState, action) => {
 };
 
 export default constructorReducer;
-
