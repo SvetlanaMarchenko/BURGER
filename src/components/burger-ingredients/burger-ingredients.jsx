@@ -8,6 +8,7 @@ import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 import { useDrag } from "react-dnd";
+import IngredientItem from './ingredient-item.jsx';
 
 const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
@@ -24,12 +25,6 @@ const BurgerIngredients = () => {
    const filterIngredientsByType = (type) => {
       return allIngredients.filter((item) => item.type === type);
    };
-
-   const [, dragRef] = useDrag({
-      type: "ingredient",
-      item: allIngredients.id ,
-   })
-
 
    const bunsRef = useRef(null);
    const saucesRef = useRef(null);
@@ -90,20 +85,12 @@ const BurgerIngredients = () => {
                   <h2 className={`${styles.mainTitle}`}>{value}</h2>
                   <div className={`${styles.ingredientsList}`}>
                      {filterIngredientsByType(type).map((item, index) => (
-                        <div ref={dragRef} key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => {
-                           handleAddIngredient(item);
-                           openModal(item);
-                        }}>
-                           {index === 0 && (
-                              <Counter count={1} size="default" extraClass={`${styles.counterTopRight}`} color="white" />
-                           )}
-                           <img src={item.image} alt={item.name} className="ml-4 mb-1 mr-4 mt-6" />
-                           <p className={`${styles.priceItem} mb-1 text text_type_digits-default`}>
-                              {item.price}
-                              <CurrencyIcon type="primary" />
-                           </p>
-                           <p>{item.name}</p>
-                        </div>
+                        <IngredientItem
+                        key={item._id}
+                        item={item}
+                        index={index}
+                        onClick={() => openModal(item)}
+                     />
                      ))}
                   </div>
                </section>

@@ -67,8 +67,14 @@
 .priceItem{
   display: flex ;
   align-items: center;
+}
 
 
+
+.backgroundImgColor {
+  background-color: transparent;
+  padding: 4px; /* Опционально, чтобы выделить картинку */
+  border-radius: 8px; /* При желании, чтобы сгладить углы */
 }
 
 
