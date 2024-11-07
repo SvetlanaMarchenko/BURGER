@@ -5,12 +5,13 @@ import styles from './burger-ingredients.module.css';
 
 const IngredientItem = ({ item, index, onClick }) => {
    const [{ isDrag}, dragRef, preview] = useDrag({
-      type: "ingredient",
-      item: { id: item._id },
+      type: "item",
+      item: item ,
       collect: (monitor) => ({
          isDragging: monitor.isDragging(),
       }),
    });
+   
 
    return (
       !isDrag && (

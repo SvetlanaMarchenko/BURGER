@@ -5,13 +5,30 @@ import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktiku
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { removeIngredient, clearConstructor } from '../../services/actions/constructor-actions';
+import { addIngredient, setBun, removeBun, removeIngredient, clearConstructor } from '../../services/actions/constructor-actions';
+import { useDrop } from 'react-dnd';
+
 
 const BurgerConstructor = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
    const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
+   const [{ isOver }, dropTarget] = useDrop({
+      accept: 'item',
+      drop: (item) => {
+        if (item.type === 'bun') {
+          if (bun) dispatch(removeBun()); 
+          dispatch(setBun(item)); 
+        } else {
+          dispatch(addIngredient(item)); 
+        }
+      },
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+      }),
+    });
+   
    const handleRemoveIngredient = (ingredientId) => {
       dispatch(removeIngredient(ingredientId));
    };
@@ -27,7 +44,7 @@ const BurgerConstructor = () => {
    const totalPrice = (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
 
    return (
-      <div className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
+      <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
          {bun && (
             <div className={`${styles.constructorElementBlock} ml-8`}>
                <ConstructorElement
