@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 // services/actions/orderActions.js
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';

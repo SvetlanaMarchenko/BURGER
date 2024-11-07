@@ -7,33 +7,29 @@ import { addIngredient } from '../../services/actions/constructor-actions';
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
-import store from '../../services/store';
+import { useDrag } from "react-dnd";
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
    const [selectedIngredient, setSelectedIngredient] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
 
-
-   // store.dispatch(fetchDataIngredients());
-
-   // const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
+   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
 
    useEffect(() => {
       dispatch(fetchDataIngredients());
    }, [dispatch]);
 
-   // if (isLoading) return <p>Загрузка Элементов...</p>;
-   // if (error) return <p>Хм... Ошибка: {error}</p>;
-
    const filterIngredientsByType = (type) => {
-      return ingredients.filter((item) => item.type === type);
+      return allIngredients.filter((item) => item.type === type);
    };
 
-   // const filterIngredientsByType = (type) => {
-   //    return allIngredients.filter((item) => item.type === type);
-   // };
+   const [, dragRef] = useDrag({
+      type: "ingredient",
+      item: allIngredients.id ,
+   })
+
 
    const bunsRef = useRef(null);
    const saucesRef = useRef(null);
@@ -75,6 +71,8 @@ const BurgerIngredients = ({ ingredients }) => {
       }
    };
 
+   if (isLoading) return <p>Загрузка Элементов...</p>;
+   if (error) return <p>Хм... Ошибка: {error}</p>;
    return (
       <div className={`${styles.ingredientsSection} mt-10`}>
          <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>
@@ -92,7 +90,7 @@ const BurgerIngredients = ({ ingredients }) => {
                   <h2 className={`${styles.mainTitle}`}>{value}</h2>
                   <div className={`${styles.ingredientsList}`}>
                      {filterIngredientsByType(type).map((item, index) => (
-                        <div key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => {
+                        <div ref={dragRef} key={item._id} className={`${styles.ingredientsItem} text text_type_main-small ml-4`} onClick={() => {
                            handleAddIngredient(item);
                            openModal(item);
                         }}>
