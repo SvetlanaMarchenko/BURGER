@@ -7,7 +7,6 @@ import { addIngredient } from '../../services/actions/constructor-actions';
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
-import { useDrag } from "react-dnd";
 import IngredientItem from './ingredient-item.jsx';
 
 const BurgerIngredients = () => {
@@ -55,7 +54,7 @@ const BurgerIngredients = () => {
       const saucesTop = saucesRef.current.getBoundingClientRect().top;
       const mainsTop = mainsRef.current.getBoundingClientRect().top;
 
-      const bunsOffset = 400; // Уберите "px"
+      const bunsOffset = 400;
    
       if (bunsTop <= bunsOffset && saucesTop > bunsOffset) {
          setCurrent('Булки');
