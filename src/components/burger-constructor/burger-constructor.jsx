@@ -1,5 +1,5 @@
 // BurgerConstructor.js
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -40,12 +40,12 @@ const BurgerConstructor = () => {
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
 
-   // Итоговая стоимость
-   const totalPrice = (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
+   const totalPrice = useMemo(() => {
+      return (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
+   }, [bun, ingredients]);
 
    return (
       <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
-         {/* Верхняя булка или сообщение "Выберите булку" */}
          <div className={`${styles.constructorElementBlock} ml-8`}>
             {bun ? (
                <ConstructorElement
@@ -120,7 +120,7 @@ const BurgerConstructor = () => {
 
          {isModalOpen && (
             <Modal onClose={closeModal}>
-               <OrderDetails onClose={closeModal} />
+               <OrderDetails onClose={closeModal} totalPrice={totalPrice} />
             </Modal>
          )}
       </div>
