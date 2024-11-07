@@ -45,47 +45,61 @@ const BurgerConstructor = () => {
 
    return (
       <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
-         {bun && (
-            <div className={`${styles.constructorElementBlock} ml-8`}>
+         {/* Верхняя булка или сообщение "Выберите булку" */}
+         <div className={`${styles.constructorElementBlock} ml-8`}>
+            {bun ? (
                <ConstructorElement
-                  key={`${bun._id}-top`}
+                  key="top-bun"
                   type="top"
                   isLocked={true}
                   text={`${bun.name} (верх)`}
                   price={bun.price}
                   thumbnail={bun.image}
                />
-            </div>
-         )}
-
-         <div className={styles.innerIngredients}>
-            {ingredients.map((ingredient) => (
-               <div key={ingredient._id} className={styles.constructorElementBlock}>
-                  <div className={styles.dragIconWrapper}>
-                     <DragIcon />
-                  </div>
-                  <ConstructorElement
-                     text={ingredient.name}
-                     price={ingredient.price}
-                     thumbnail={ingredient.image}
-                     onClick={() => handleRemoveIngredient(ingredient._id)}
-                  />
+            ) : (
+               <div className={`${styles.emptyBunWrapper} ${styles.constructorElementBlock}`}>
+                  <ConstructorElement type="top" text="Выберите булку" isLocked={true} />
                </div>
-            ))}
+            )}
+         </div>
+         <div className={styles.innerIngredients}>
+            {ingredients.length > 0 ? (
+               ingredients.map((ingredient) => (
+                  <div key={ingredient._id} className={styles.constructorElementBlock}>
+                     <div className={styles.dragIconWrapper}>
+                        <DragIcon />
+                     </div>
+                     <ConstructorElement
+                        text={ingredient.name}
+                        price={ingredient.price}
+                        thumbnail={ingredient.image}
+                        onClick={() => handleRemoveIngredient(ingredient._id)}
+                     />
+                  </div>
+               ))
+            ) : (
+               <div className={`${styles.emptyIngredientWrapper} ml-8 ${styles.emptyBunWrapper}  text text_type_main-default`}>
+                  <ConstructorElement text="Выберите начинку"  />
+               </div>
+            )}
          </div>
 
-         {bun && (
-            <div className={`${styles.constructorElementBlock} ml-8`}>
+         <div className={`${styles.constructorElementBlock} ml-8`}>
+            {bun ? (
                <ConstructorElement
-                  key={`${bun._id}-bottom`}
+                  key="bottom-bun"
                   type="bottom"
                   isLocked={true}
                   text={`${bun.name} (низ)`}
                   price={bun.price}
                   thumbnail={bun.image}
                />
-            </div>
-         )}
+            ) : (
+               <div className={`${styles.emptyBunWrapper}  ${styles.constructorElementBlock}`}>
+                  <ConstructorElement type="bottom" text="Выберите булку" isLocked={true}  />
+               </div>
+            )}
+         </div>
 
          <section className={`${styles.priceOrder} mt-10`}>
             <p className="text text_type_digits-medium">{totalPrice}</p>
