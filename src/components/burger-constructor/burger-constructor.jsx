@@ -29,9 +29,14 @@ const BurgerConstructor = () => {
       }),
     });
    
+   // const handleRemoveIngredient = (ingredientId) => {
+   //    dispatch(removeIngredient(ingredientId));
+   // };
+
    const handleRemoveIngredient = (ingredientId) => {
-      dispatch(removeIngredient(ingredientId));
-   };
+      console.log('Удаляем ингредиент с ID:', ingredientId); // Логирование ID
+      dispatch(removeIngredient(ingredientId)); // Удаление ингредиента
+    };
 
    const handleClearConstructor = () => {
       dispatch(clearConstructor());
@@ -73,7 +78,7 @@ const BurgerConstructor = () => {
                         text={ingredient.name}
                         price={ingredient.price}
                         thumbnail={ingredient.image}
-                        onClick={() => handleRemoveIngredient(ingredient._id)}
+                        handleClose={() => handleRemoveIngredient(ingredient._id)}
                      />
                   </div>
                ))

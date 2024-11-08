@@ -3,7 +3,8 @@ import {
     REMOVE_INGREDIENT, 
     SET_BUN,
     REMOVE_BUN,
-    CLEAR_CONSTRUCTOR, } from '../actions/constructor-actions';
+    CLEAR_CONSTRUCTOR, 
+} from '../actions/constructor-actions';
 
 const initialState = {
     bun: null,
@@ -13,17 +14,35 @@ const initialState = {
 const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT:
-            return{
-            ...state, ingredients: [...state.ingredients, action.payload]}
+            return {
+                ...state, 
+                ingredients: [...state.ingredients, action.payload]
+            };
+
         case REMOVE_INGREDIENT:
+            console.log('Удаляем ингредиент с ID:', action.payload); // Логируем ID
             return {
                 ...state,
                 ingredients: state.ingredients.filter(item => item._id !== action.payload)
             };
+              
+        // case REMOVE_INGREDIENT:
+        //     return {
+        //         ...state,
+        //         ingredients: null
+        //     };
+
         case SET_BUN:
-            return {...state, bun: action.payload };
+            return {
+                ...state, 
+                bun: action.payload
+            };
+
         case REMOVE_BUN:
-            return {...state,bun: null};
+            return {
+                ...state,
+                bun: null
+            };
 
         case CLEAR_CONSTRUCTOR:
             return initialState;
