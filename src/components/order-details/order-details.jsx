@@ -5,6 +5,7 @@ import doneImage from './done.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../../services/actions/order-actions';
 import {selectCurrentOrderDetails} from '../../services/selectors'
+import PropTypes from 'prop-types';
 
 const OrderDetails = ({ onClose }) => {
    // const dispatch = useDispatch();
@@ -48,6 +49,10 @@ const OrderDetails = ({ onClose }) => {
       </div>
    );
 };
+
+OrderDetails.propTypes = {
+   onClose: PropTypes.func.isRequired
+ };
 
 export default OrderDetails;
 

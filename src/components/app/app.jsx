@@ -26,12 +26,12 @@ function App() {
 
 App.propTypes = {
   ingredients: PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    })
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  })
 };
 
 export default App;

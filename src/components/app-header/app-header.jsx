@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 const AppHeader = () => {
   return (
@@ -30,5 +31,12 @@ const AppHeader = () => {
     </header>
   );
 };
+
+// AppHeader.propTypes = {
+//   isUserLoggedIn: PropTypes.bool,
+// };
+// AppHeader.defaultProps = {
+//   isUserLoggedIn: false,
+// };
 
 export default AppHeader;

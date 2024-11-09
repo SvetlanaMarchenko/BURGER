@@ -7,6 +7,7 @@ import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
+import PropTypes from 'prop-types';
 
 const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
@@ -100,6 +101,17 @@ const BurgerIngredients = () => {
       </div>
    );
 };
+
+BurgerIngredients.propTypes = {
+   ingredients: PropTypes.arrayOf(
+     PropTypes.shape({
+       _id: PropTypes.string.isRequired,  
+       name: PropTypes.string.isRequired,
+       price: PropTypes.number.isRequired,
+       type: PropTypes.string.isRequired,
+     })
+   )
+ };
 
 export default BurgerIngredients;
 

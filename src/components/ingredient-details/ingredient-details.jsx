@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 const IngredientDetails = ({ item, onClose }) => {
    return (
@@ -40,4 +41,15 @@ const IngredientDetails = ({ item, onClose }) => {
    );
 };
 
+IngredientDetails.propTypes = {
+   item: PropTypes.shape({
+     image: PropTypes.string.isRequired,   
+     name: PropTypes.string.isRequired, 
+     calories: PropTypes.number.isRequired, 
+     proteins: PropTypes.number.isRequired,
+     fat: PropTypes.number.isRequired,
+     carbohydrates: PropTypes.number.isRequired
+   }),
+   onClose: PropTypes.func.isRequired,
+ };
 export default IngredientDetails;

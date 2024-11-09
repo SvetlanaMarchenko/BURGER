@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, clearConstructor } from '../../services/actions/constructor-actions';
 import { useDrop } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions'; 
+import PropTypes from 'prop-types';
 
 
 const BurgerConstructor = () => {
@@ -133,5 +134,30 @@ const BurgerConstructor = () => {
       </div>
    );
 };
+
+BurgerConstructor.propTypes = {
+  bun: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
+
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    })
+  ),
+
+  isModalOpen: PropTypes.bool,
+  handleRemoveIngredient: PropTypes.func,
+  handleClearConstructor: PropTypes.func,
+};
+
 
 export default BurgerConstructor;
