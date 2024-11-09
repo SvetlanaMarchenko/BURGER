@@ -1,39 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AppHeader from '../app-header/app-header/';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
-// const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+import PropTypes from 'prop-types';
 
 import styles from './app.module.css';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  // const [error, setError] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true);
-
-
-  // useEffect(() => {
-  //   const fetchIngredients = async () => {
-  //     try {
-  //       const response = await fetch(API_URL);
-  //       if (!response.ok) {
-  //         throw new Error(`У нас ошибка: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       setIngredients(data.data);
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchIngredients();
-  // }, []);
-
+  const [ingredients] = useState([]);
 
   return (
     <div className={`${styles.appLayout}`}>
@@ -47,5 +23,15 @@ function App() {
     </div>
   );
 }
+
+App.propTypes = {
+  ingredients: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    })
+};
 
 export default App;
