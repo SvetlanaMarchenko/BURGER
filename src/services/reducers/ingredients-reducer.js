@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   allIngredients: [],
-  // currentIngredient: null,
   error: null,
   isLoading: true
 }

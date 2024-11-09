@@ -4,6 +4,7 @@ import {
     SET_BUN,
     REMOVE_BUN,
     CLEAR_CONSTRUCTOR, 
+    REPLACE_INGREDIENT
 } from '../actions/constructor-actions';
 
 const initialState = {
@@ -25,12 +26,6 @@ const constructorReducer = (state = initialState, action) => {
                 ...state,
                 ingredients: state.ingredients.filter(item => item._id !== action.payload)
             };
-              
-        // case REMOVE_INGREDIENT:
-        //     return {
-        //         ...state,
-        //         ingredients: null
-        //     };
 
         case SET_BUN:
             return {
@@ -46,6 +41,19 @@ const constructorReducer = (state = initialState, action) => {
 
         case CLEAR_CONSTRUCTOR:
             return initialState;
+
+        case REPLACE_INGREDIENT:
+            const { ingredientElementInder, ingredientHoverIndex } = action;
+            const ingredients = [...state.ingredients];
+            const movedIngredient = ingredients[ingredientElementInder];
+
+            ingredients.splice(ingredientElementInder, 1); 
+            ingredients.splice(ingredientHoverIndex, 0, movedIngredient);  
+
+            return {
+                ...state,
+                ingredients
+            };
 
         default:
             return state;
