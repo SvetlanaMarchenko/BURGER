@@ -7,12 +7,14 @@ import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, clearConstructor } from '../../services/actions/constructor-actions';
 import { useDrop } from 'react-dnd';
+import { createOrder } from '../../services/actions/order-actions'; 
 
 
 const BurgerConstructor = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
    const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+   // const [orderNumber, setOrderNumber] = useState(null); 
 
    const [{ isOver }, dropTarget] = useDrop({
       accept: 'item',
@@ -29,14 +31,9 @@ const BurgerConstructor = () => {
       }),
     });
    
-   // const handleRemoveIngredient = (ingredientId) => {
-   //    dispatch(removeIngredient(ingredientId));
-   // };
-
    const handleRemoveIngredient = (ingredientId) => {
-      console.log('Удаляем ингредиент с ID:', ingredientId); // Логирование ID
-      dispatch(removeIngredient(ingredientId)); // Удаление ингредиента
-    };
+      dispatch(removeIngredient(ingredientId));
+   };
 
    const handleClearConstructor = () => {
       dispatch(clearConstructor());
@@ -48,6 +45,17 @@ const BurgerConstructor = () => {
    const totalPrice = useMemo(() => {
       return (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
    }, [bun, ingredients]);
+
+   // const handleCreateOrder = () => {
+   //    const ingredientOrderId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id); // Формируем массив ID ингредиентов
+   //    dispatch(createOrder(ingredientOrderId));
+   //    openModal(); 
+   // };
+   const handleCreateOrder = () => {
+      const ingredientId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id); 
+      dispatch(createOrder(ingredientId)); 
+      openModal();
+    };
 
    return (
       <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
@@ -113,19 +121,19 @@ const BurgerConstructor = () => {
                htmlType="button"
                type="primary"
                size="medium"
-               onClick={openModal}
+               onClick={handleCreateOrder} 
             >
                Оформить заказ
             </Button>
          </section>
 
          <button onClick={handleClearConstructor} className="mt-4">
-            Очистить конструктор
+            Очистить конструктор {isModalOpen}
          </button>
 
          {isModalOpen && (
             <Modal onClose={closeModal}>
-               <OrderDetails onClose={closeModal} totalPrice={totalPrice} />
+               <OrderDetails onClose={closeModal} />
             </Modal>
          )}
       </div>

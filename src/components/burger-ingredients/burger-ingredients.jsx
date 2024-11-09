@@ -16,8 +16,6 @@ const BurgerIngredients = () => {
    const dispatch = useDispatch();
 
    const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
-   
-   // const { allIngredients } = useSelector((state) => state.ingredients);
 
    useEffect(() => {
       dispatch(fetchDataIngredients());

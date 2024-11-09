@@ -12,7 +12,6 @@ const IngredientItem = ({ item, index, onClick }) => {
       }),
    });
    
-
    return (
       !isDrag && (
          <div

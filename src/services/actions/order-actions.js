@@ -1,25 +1,35 @@
-// export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
-// export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
-// export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
+export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
+export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
+export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
 
-// const ORDER_INGREDIENT_API_URL = 'https://norma.nomoreparties.space/api/orders';
+export const createOrderRequest = () => ({ type: CREATE_ORDER_REQUEST });
+export const createOrderSuccess = (orderData) => ({ type: CREATE_ORDER_SUCCESS, payload: orderData });
+export const createOrderFailure = (error) => ({ type: CREATE_ORDER_FAILURE, payload: error });
 
-// export const createOrder = (ingredients) => async (dispatch) => {
-//   dispatch({ type: CREATE_ORDER_REQUEST });
-//   try {
-//     const response = await fetch(ORDER_INGREDIENT_API_URL, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ ingredients }),
-//     });
-//     const data = await response.json();
-//     if (!response.ok) throw new Error(`Error ${response.status}`);
-//       dispatch({ type: CREATE_ORDER_SUCCESS, payload: data.order.number });
-//   } catch (error) {
-//       dispatch({ type: CREATE_ORDER_FAILURE, payload: error.message });
-//   }
-// };
+const ORDER_INGREDIENT_API_URL = 'https://norma.nomoreparties.space/api/orders';
 
+export const createOrder = (ingredients) => {
+    return (dispatch) => {
+        dispatch(createOrderRequest());
 
+        fetch(ORDER_INGREDIENT_API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ ingredients}), 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        .then(response => response.json())
+        .then((json) => {
+            if (json.success) {
+                dispatch(createOrderSuccess(json.order.number));
+            } else {
+                dispatch(createOrderFailure('Извините, что-то пошло не так'));
+            }
+        })
+        .catch((error) => {
+            dispatch(createOrderFailure(error.message));
+        });
+    };
+};
