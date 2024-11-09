@@ -14,8 +14,6 @@ const initialState = {
 }
 
 const ingredientsReducer = (state = initialState, action) =>  {
-  // console.log("s", state)
-  // console.log("a", action)
 switch (action.type) {
     case FETCH_INGREDIENTS_REQUEST: 
       return {...state, isLoading: true, error: null}

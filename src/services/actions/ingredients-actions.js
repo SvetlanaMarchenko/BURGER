@@ -9,10 +9,7 @@ export const fetchIngredientsRequest = () => ({ type: FETCH_INGREDIENTS_REQUEST 
 export const fetchIngredientsSuccess = (ingredients) => ({ type: FETCH_INGREDIENTS_SUCCESS, payload: ingredients });
 export const fetchIngredientsFailure = (error) => ({ type: FETCH_INGREDIENTS_FAILURE, payload: error });
 
-
 const INGREDIENTS_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
-
 
 export const fetchDataIngredients = () => {
   return (dispatch) => {

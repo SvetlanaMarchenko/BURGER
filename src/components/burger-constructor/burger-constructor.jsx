@@ -14,7 +14,6 @@ const BurgerConstructor = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
    const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
-   // const [orderNumber, setOrderNumber] = useState(null); 
 
    const [{ isOver }, dropTarget] = useDrop({
       accept: 'item',
@@ -46,11 +45,6 @@ const BurgerConstructor = () => {
       return (bun ? bun.price * 2 : 0) + ingredients.reduce((sum, item) => sum + item.price, 0);
    }, [bun, ingredients]);
 
-   // const handleCreateOrder = () => {
-   //    const ingredientOrderId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id); // Формируем массив ID ингредиентов
-   //    dispatch(createOrder(ingredientOrderId));
-   //    openModal(); 
-   // };
    const handleCreateOrder = () => {
       const ingredientId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id); 
       dispatch(createOrder(ingredientId)); 

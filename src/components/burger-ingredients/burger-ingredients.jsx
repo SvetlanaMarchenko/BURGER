@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom'; 
 import styles from './burger-ingredients.module.css';
-import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details'; 
-import { addIngredient } from '../../services/actions/constructor-actions'; 
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
@@ -43,10 +42,6 @@ const BurgerIngredients = () => {
    const closeModal = () => {
       setIsModalOpen(false);
       setSelectedIngredient(null);
-   };
-
-   const handleAddIngredient = (ingredient) => {
-      dispatch(addIngredient(ingredient));
    };
 
    const handleScroll = () => {
