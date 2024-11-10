@@ -4,12 +4,11 @@ import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktiku
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { addIngredient, setBun, removeBun, removeIngredient, clearConstructor, replaceIngredient } from '../../services/actions/constructor-actions';
+import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient } from '../../services/actions/constructor-actions';
 import { useDrop, useDrag } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions';
 import PropTypes from 'prop-types';
 
-// Компонент для перетаскивания ингредиентов
 const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
@@ -21,14 +20,12 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
 
   const [, drop] = useDrop({
     accept: 'ingredient',
-    hover: (item, monitor) => {
+    drop: (item) => {
       const dragIndex = item.index;
       const hoverIndex = index;
 
-      // Если индексы не одинаковые, выполняем перетаскивание
       if (dragIndex !== hoverIndex) {
         moveIngredient(dragIndex, hoverIndex);
-        item.index = hoverIndex;  // Обновляем индекс перетаскиваемого элемента
       }
     },
   });
@@ -45,7 +42,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => removeIngredient()} // Удалить при нажатии
+        handleClose={() => removeIngredient()} 
       />
     </div>
   );
@@ -56,10 +53,10 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
-  // Функция для перемещения ингредиентов
-  const moveIngredient = (dragIndex, hoverIndex) => {
-    if (hoverIndex !== null) {
-      dispatch(replaceIngredient(dragIndex, hoverIndex));
+  const moveIngredient = (fromIndex, toIndex) => {
+    console.log("move ingredient")
+    if (fromIndex !== toIndex) {
+      dispatch(replaceIngredient(fromIndex, toIndex));
     }
   };
 
@@ -82,10 +79,6 @@ const BurgerConstructor = () => {
     dispatch(removeIngredient(index));
   };
 
-  const handleClearConstructor = () => {
-    dispatch(clearConstructor());
-  };
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -101,7 +94,6 @@ const BurgerConstructor = () => {
 
   return (
     <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
-      {/* Булка сверху */}
       <div className={`${styles.constructorElementBlock} ml-8`}>
         {bun ? (
           <ConstructorElement
@@ -119,7 +111,6 @@ const BurgerConstructor = () => {
         )}
       </div>
 
-      {/* Список ингредиентов */}
       <div className={styles.innerIngredients}>
         {ingredients.length > 0 ? (
           ingredients.map((ingredient, index) => (
@@ -138,7 +129,6 @@ const BurgerConstructor = () => {
         )}
       </div>
 
-      {/* Булка снизу */}
       <div className={`${styles.constructorElementBlock} ml-8`}>
         {bun ? (
           <ConstructorElement
@@ -156,7 +146,6 @@ const BurgerConstructor = () => {
         )}
       </div>
 
-      {/* Прайс и кнопка оформления заказа */}
       <section className={`${styles.priceOrder} mt-10`}>
         <p className="text text_type_digits-medium">{totalPrice}</p>
         <CurrencyIcon type="primary" className="mr-10" />
@@ -170,12 +159,6 @@ const BurgerConstructor = () => {
         </Button>
       </section>
 
-      {/* Кнопка очистки конструктора */}
-      <button onClick={handleClearConstructor} className="mt-4">
-        Очистить конструктор
-      </button>
-
-      {/* Модалка с деталями заказа */}
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <OrderDetails onClose={closeModal} />
@@ -192,7 +175,7 @@ BurgerConstructor.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-  }),  // `bun` может быть null или объектом, так что он не обязателен
+  }),  
 
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
@@ -202,9 +185,9 @@ BurgerConstructor.propTypes = {
       image: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
     })
-  ).isRequired, // Массив ингредиентов обязательный
+  ).isRequired,
 
-  isModalOpen: PropTypes.bool, // Модальное окно может быть открытым или закрытым
+  isModalOpen: PropTypes.bool,
   handleRemoveIngredient: PropTypes.func,
   handleClearConstructor: PropTypes.func
 };

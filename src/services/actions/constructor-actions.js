@@ -29,10 +29,10 @@ export const clearConstructor= () => ({
 })
 
 
-export const replaceIngredient = (dragIndex, hoverIndex) => ({
+export const replaceIngredient = (fromIndex, toIndex) => ({
    type: REPLACE_INGREDIENT,
-   dragIndex,
-   hoverIndex
+   fromIndex,
+   toIndex
 });
 
 

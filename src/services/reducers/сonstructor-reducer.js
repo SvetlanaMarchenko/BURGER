@@ -44,16 +44,27 @@ const constructorReducer = (state = initialState, action) => {
             return initialState;
 
         case REPLACE_INGREDIENT:
-            const { ingredientElementInder, ingredientHoverIndex } = action;
-            const ingredients = [...state.ingredients];
-            const movedIngredient = ingredients[ingredientElementInder];
-
-            ingredients.splice(ingredientElementInder, 1); 
-            ingredients.splice(ingredientHoverIndex, 0, movedIngredient);  
-
+            const { fromIndex, toIndex } = action;
+            const newIngredients = [...state.ingredients];
+            
+            console.log('Before removal:', [...newIngredients]);
+            const [movedIngredient] = newIngredients.splice(fromIndex, 1);
+            console.log('After removal:', [...newIngredients]);
+            
+            const isMovingForward = fromIndex < toIndex;
+            const isMovingMoreThanOneSpot = toIndex - fromIndex > 1;
+            const needToAdjustIndex = isMovingForward && isMovingMoreThanOneSpot;
+            
+            const adjustedToIndex = needToAdjustIndex 
+                ? toIndex - 1 
+                : toIndex;
+            
+            newIngredients.splice(adjustedToIndex, 0, movedIngredient);
+            console.log('After insertion:', newIngredients);
+            
             return {
                 ...state,
-                ingredients
+                ingredients: newIngredients
             };
 
         default:
