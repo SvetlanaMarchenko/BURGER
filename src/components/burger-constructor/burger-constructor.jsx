@@ -10,7 +10,7 @@ import { createOrder } from '../../services/actions/order-actions';
 import PropTypes from 'prop-types';
 
 // Компонент для перетаскивания ингредиентов
-const DraggableIngredient = ({ ingredient, index, moveIngredient }) => {
+const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
     item: { type: 'ingredient', index },
@@ -45,7 +45,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient }) => {
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => moveIngredient(index, null)} // Удалить при нажатии
+        handleClose={() => removeIngredient(ingredient._id)} // Удалить при нажатии
       />
     </div>
   );
@@ -128,6 +128,7 @@ const BurgerConstructor = () => {
               index={index}
               ingredient={ingredient}
               moveIngredient={moveIngredient}
+              removeIngredient={() => handleRemoveIngredient(ingredient._id)}
             />
           ))
         ) : (
@@ -191,7 +192,7 @@ BurgerConstructor.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-  }),
+  }),  // `bun` может быть null или объектом, так что он не обязателен
 
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
@@ -201,11 +202,12 @@ BurgerConstructor.propTypes = {
       image: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
     })
-  ),
+  ).isRequired, // Массив ингредиентов обязательный
 
-  isModalOpen: PropTypes.bool,
+  isModalOpen: PropTypes.bool, // Модальное окно может быть открытым или закрытым
   handleRemoveIngredient: PropTypes.func,
-  handleClearConstructor: PropTypes.func,
+  handleClearConstructor: PropTypes.func
 };
+
 
 export default BurgerConstructor;
