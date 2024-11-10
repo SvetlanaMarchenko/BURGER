@@ -21,10 +21,11 @@ const constructorReducer = (state = initialState, action) => {
             };
 
         case REMOVE_INGREDIENT:
-            console.log('Удаляем ингредиент с ID:', action.payload); // Логируем ID
+            console.log('Удаляем ингредиент с index:', action.payload); 
+            
             return {
                 ...state,
-                ingredients: state.ingredients.filter(item => item._id !== action.payload)
+                ingredients: state.ingredients.filter((item, index) => index !== action.payload)
             };
 
         case SET_BUN:

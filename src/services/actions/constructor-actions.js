@@ -10,9 +10,9 @@ export const addIngredient= (ingredient) => ({
   payload: {...ingredient, key: Math.random()}
 })
 
-export const removeIngredient= (ingredientId) => ({
+export const removeIngredient= (index) => ({
   type: REMOVE_INGREDIENT,
-  payload: ingredientId
+  payload: index
 })
 
 export const setBun = (bun) => ({

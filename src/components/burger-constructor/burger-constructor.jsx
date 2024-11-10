@@ -45,7 +45,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => removeIngredient(ingredient._id)} // Удалить при нажатии
+        handleClose={() => removeIngredient()} // Удалить при нажатии
       />
     </div>
   );
@@ -78,8 +78,8 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const handleRemoveIngredient = (ingredientId) => {
-    dispatch(removeIngredient(ingredientId));
+  const handleRemoveIngredient = (index) => {
+    dispatch(removeIngredient(index));
   };
 
   const handleClearConstructor = () => {
@@ -128,7 +128,7 @@ const BurgerConstructor = () => {
               index={index}
               ingredient={ingredient}
               moveIngredient={moveIngredient}
-              removeIngredient={() => handleRemoveIngredient(ingredient._id)}
+              removeIngredient={() => handleRemoveIngredient(index)}
             />
           ))
         ) : (
