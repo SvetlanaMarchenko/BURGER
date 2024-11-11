@@ -65,12 +65,13 @@ const BurgerIngredients = ({ ingredients }) => {
             ))}
          </main>
 
-         {isModalOpen && selectedIngredient && createPortal(
+
+         {isModalOpen && selectedIngredient && (
             <Modal onClose={closeModal}>
                <IngredientDetails item={selectedIngredient} onClose={closeModal} />
-            </Modal>,
-            document.getElementById('modal-root')
+            </Modal>
          )}
+
       </div>
    );
 };
