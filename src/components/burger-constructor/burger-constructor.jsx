@@ -78,7 +78,7 @@ const BurgerConstructor = ({ ingredients }) => {
 
          {isModalOpen && (
             <Modal onClose={closeModal}>
-               <OrderDetails onClose={closeModal} />
+               <OrderDetails />
             </Modal>
          )}
       </div>

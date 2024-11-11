@@ -23,9 +23,3 @@ white-space: nowrap;
   white-space: nowrap; 
   color: gray;
 }
-
-.closeButton{
-  display: flex;
-  position: absolute;
-  right: 40px;
-}

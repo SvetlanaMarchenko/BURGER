@@ -2,7 +2,8 @@
   display: flex;                   
   justify-content: space-between; 
   align-items: center;   
-  white-space: nowrap;                  
+  white-space: nowrap;     
+  height: 64px;             
 }
 
 .titleMain{
