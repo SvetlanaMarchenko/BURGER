@@ -103,7 +103,7 @@ const BurgerIngredients = () => {
 
          {isModalOpen && currentIngredient && (
             <Modal onClose={closeModal}>
-               <IngredientDetails item={currentIngredient} onClose={closeModal} />
+               <IngredientDetails item={currentIngredient} />
             </Modal>
          )}
       </div>

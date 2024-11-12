@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import styles from './ingredient-details.module.css';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCurrentIngredient, fetchIngredient } from '../../services/actions/current-ingredient-actions';
 
-const IngredientDetails = ({ onClose, ingredientId }) => {
+const IngredientDetails = ({ingredientId }) => {
    const dispatch = useDispatch();
    const { currentIngredient, loading, error } = useSelector((state) => state.currentIngredient);
     
@@ -36,18 +35,13 @@ const IngredientDetails = ({ onClose, ingredientId }) => {
          <div>
             <div className={`${styles.titleIngredientDetails} mt-10 mr-10 ml-10`}>
                <p className={`${styles.titleMain} text text_type_main-large`}>Детали ингредиента</p>
-               <button
-                  className={`${styles.buttonSet}`}
-                  onClick={() => { 
+               {/* onClick={() => { 
                     dispatch(fetchIngredient(ingredientId)),
                     console.log("ingredientId")
                     onClose(); 
-                    handleClear(); 
-                  }}
-               >
-                  <CloseIcon type="primary" />
-               </button>
+                    handleClear(); }} */}
             </div>
+
             <div className={`${styles.mainIngredientDetails}`}>
                <img
                   className={`${styles.imgDetails} text text_type_main-large`}

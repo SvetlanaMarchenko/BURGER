@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from './order-details.module.css';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import doneImage from './done.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../../services/actions/order-actions';
 import {selectCurrentOrderDetails} from '../../services/selectors'
 import PropTypes from 'prop-types';
 
-const OrderDetails = ({ onClose }) => {
+const OrderDetails = () => {
    // const dispatch = useDispatch();
    const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails);
   
@@ -42,9 +41,6 @@ const OrderDetails = ({ onClose }) => {
    
    return (
       <div className={styles.orderDetailsFrame}> 
-         <button onClick={onClose} className={`${styles.closeButton} mt-15`}>
-            <CloseIcon type="primary"/>
-         </button>
          {orderDetailsLayout()}
       </div>
    );
