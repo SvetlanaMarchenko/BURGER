@@ -1,0 +1,77 @@
+.ingredientsSection {
+   display: flex;
+   background-color: invisible;
+   text-align: center;
+   width: 600px;
+   flex-direction: column;
+ }
+
+ .tabBar {
+  display: flex;
+ }
+ 
+ .icon{
+   size: 20px;
+ }
+
+ .burgerParts{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+ }
+
+ main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: clip;
+ }
+
+ .mainTitle{
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+ }
+
+
+ .burgerPiecesSeparately{
+  color: white;
+  size: 20px;
+  display: flex;
+  justify-content: flex-start;
+ }
+
+ .ingredientsList {
+  display: flex; 
+  justify-content: space-between;
+  overflow-y: auto;          
+  flex-wrap: wrap;           
+  gap: 24px;   
+  box-sizing: border-box; 
+}
+
+ .ingredientsItem {
+  display: flex;   
+  flex-direction: column;     
+  /* height: 208px; */
+  width: 272px;
+  position: relative;
+}
+
+.counterTopRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.priceItem{
+  display: flex ;
+  align-items: center;
+
+
+}
+
+
+
+
+
