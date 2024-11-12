@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom'; 
 import styles from './burger-ingredients.module.css';
 import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details'; 
@@ -7,12 +6,11 @@ import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
-import { setCurrentIngredient,fetchIngredient } from '../../services/actions/current-ingredient-actions';
+import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import PropTypes from 'prop-types';
 
 const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
-   const [currentIngredient, setCurrentIngredient] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
 
@@ -36,15 +34,10 @@ const BurgerIngredients = () => {
       { type: 'main', value: 'Начинки' }
    ];
 
-    const openModal = (ingredientId) => {
-      console.log("Открыть модалку для ингредиента с id:", ingredientId);
-      setIsModalOpen(true); 
-      dispatch(fetchIngredient()); 
-      setCurrentIngredient(ingredientId); 
+    const openModal = (item) => {
+      dispatch(setCurrentIngredient(item)); 
+      setIsModalOpen(true);
     };
-
-
-    
 
    const closeModal = () => {
       setIsModalOpen(false);
@@ -86,14 +79,13 @@ const BurgerIngredients = () => {
                   <h2 className={`${styles.mainTitle}`}>{value}</h2>
                   <div className={`${styles.ingredientsList}`}>
                   {filterIngredientsByType(type).map((item, index) => (
-            <IngredientItem
-               key={item._id}
-               item={item}
-               index={index}
-               onClick={() => {
-                  console.log("Выбран ингредиент с id:", item._id); 
-                  openModal(item._id); 
-               }}
+                  <IngredientItem
+                     key={item._id}
+                     item={item}
+                     index={index}
+                     onClick={() => {
+                        openModal(item); 
+                     }}
             />
             ))}
                   </div>
@@ -101,9 +93,9 @@ const BurgerIngredients = () => {
             ))}
          </main>
 
-         {isModalOpen && currentIngredient && (
+         {isModalOpen && (
             <Modal onClose={closeModal}>
-               <IngredientDetails item={currentIngredient} />
+               <IngredientDetails/>
             </Modal>
          )}
       </div>
@@ -113,7 +105,6 @@ const BurgerIngredients = () => {
 BurgerIngredients.propTypes = {
    ingredients: PropTypes.arrayOf(
      PropTypes.shape({
-       _id: PropTypes.string,  
        name: PropTypes.string.isRequired,
        price: PropTypes.number.isRequired,
        type: PropTypes.string.isRequired,
