@@ -98,6 +98,7 @@ const BurgerIngredients = () => {
                <IngredientDetails/>
             </Modal>
          )}
+
       </div>
    );
 };

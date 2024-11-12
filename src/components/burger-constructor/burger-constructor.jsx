@@ -37,6 +37,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
     >
       <div className={styles.dragIconWrapper}>
         <DragIcon />
+
       </div>
       <ConstructorElement
         text={ingredient.name}

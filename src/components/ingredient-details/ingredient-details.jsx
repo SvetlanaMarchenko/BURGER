@@ -14,6 +14,7 @@ const IngredientDetails = () => {
             <div className={`${styles.titleIngredientDetails} mt-10 mr-10 ml-10`} >
                <p className={`${styles.titleMain} text text_type_main-large`}>Детали ингредиента</p>
 
+
             </div>
 
             <div className={`${styles.mainIngredientDetails}`}>
