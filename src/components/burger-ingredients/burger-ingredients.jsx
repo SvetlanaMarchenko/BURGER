@@ -6,7 +6,7 @@ import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
-import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
+import { setCurrentIngredient, clearCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import PropTypes from 'prop-types';
 
 const BurgerIngredients = () => {
@@ -39,9 +39,9 @@ const BurgerIngredients = () => {
       setIsModalOpen(true);
     };
 
-   const closeModal = () => {
+   const closeModal = (item) => {
+      dispatch(clearCurrentIngredient(item)); 
       setIsModalOpen(false);
-      setCurrentIngredient(null);
    };
 
    const handleScroll = () => {

@@ -1,42 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearCurrentIngredient, setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
+import {useSelector } from 'react-redux';
 
 
-const IngredientDetails = ({ingredientId }) => {
-   const dispatch = useDispatch();
-   const { currentIngredient, loading, error } = useSelector((state) => state.currentIngredient);
-    
-   useEffect(() => {
-      if (ingredientId) {
-         dispatch(fetchIngredient(ingredientId)); 
-      }
-   }, [ingredientId, dispatch]);
-
-   // const handleClear = () => {
-   //    dispatch(clearCurrentIngredient());
-   // };
-
-   if (loading) {
-     return <div>Загрузка... Ждем...</div>;
-   }
-
-   if (error) {
-     return <div>Упс... Ошибка... {error.message}</div>;
-   }
-
-   if (!currentIngredient) {
-      return null;
-    }
+const IngredientDetails = () => {
+   const { currentIngredient } = useSelector((currentIngredientState) => currentIngredientState);
 
    return (
+
+
       <section className={styles.ingredientsDetailsMain}>
-         {/* onClick={() => { 
-         dispatch(fetchIngredient(ingredientId)),
-         console.log("ingredientId")
-         handleClear(); }} } */}
          <div>
             <div className={`${styles.titleIngredientDetails} mt-10 mr-10 ml-10`} >
                <p className={`${styles.titleMain} text text_type_main-large`}>Детали ингредиента</p>
@@ -77,10 +50,4 @@ const IngredientDetails = ({ingredientId }) => {
    );
 };
 
-
-IngredientDetails.propTypes = {
-   ingredientId: PropTypes.string.isRequired
- };
- 
-
-export default IngredientDetails;
+export default IngredientDetails

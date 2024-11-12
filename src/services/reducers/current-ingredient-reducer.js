@@ -6,18 +6,20 @@ import {
   // FETCH_INGREDIENT_FAILURE
 } from '../actions/current-ingredient-actions';
 
-const initialState = {
-  currentIngredient: null,
-  loading: false,
-  error: null
-};
+// const initialState = {
+//   currentIngredient: null,
+//   loading: false,
+//   error: null
+// };
 
-const currentIngredientsReducer = (state = initialState, action) => {
+const initialCurrentIngredientState = null;
+
+const currentIngredientsReducer = (currentIngredientState = initialCurrentIngredientState, action) => {
   switch (action.type) {
     case SET_CURRENT_INGREDIENT:
-      return { ...state, currentIngredient: action.payload };
+      return action.payload;
     case CLEAR_CURRENT_INGREDIENT:
-      return { ...state, currentIngredient: null };
+      return null ;
     // case FETCH_INGREDIENT_REQUEST:
     //   return { ...state, loading: true };
     // case FETCH_INGREDIENT_SUCCESS:
@@ -25,7 +27,7 @@ const currentIngredientsReducer = (state = initialState, action) => {
     // case FETCH_INGREDIENT_FAILURE:
     //   return { ...state, loading: false, error: action.error };
     default:
-      return state;
+      return currentIngredientState;
   }
 };
 

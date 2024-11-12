@@ -32,5 +32,5 @@ export const setCurrentIngredient = (ingredient) => ({
 });
 
 export const clearCurrentIngredient = () => ({
-  type: CLEAR_CURRENT_INGREDIENT
+  type: CLEAR_CURRENT_INGREDIENT,
 });
