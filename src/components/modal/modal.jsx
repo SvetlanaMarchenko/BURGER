@@ -19,7 +19,6 @@ const Modal = ({ children, onClose }) => {
       window.removeEventListener('keydown', handleEsc);
     };
   }, [onClose]);
-  
 
   return ReactDOM.createPortal(
     <>
@@ -33,7 +32,7 @@ const Modal = ({ children, onClose }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.object, 
+  children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

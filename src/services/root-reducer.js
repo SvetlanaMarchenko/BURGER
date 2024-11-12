@@ -10,6 +10,8 @@ const rootReducer = combineReducers({
   burgerConstructor: constructorReducer,
   currentIngredient: currentIngredientReducer,
   orderBurger: orderReducer,
+  
 });
 
 export default rootReducer
+

@@ -3,10 +3,7 @@ import { useDrag, DragPreviewImage } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addIngredient } from '../../services/actions/constructor-actions';
 import PropTypes from 'prop-types';
-import Modal from '../modal/modal'; // Импортируем модалку
-import IngredientDetails from '../ingredient-details/ingredient-details'; // Импортируем детали ингредиента
 
 const IngredientItem = ({ item, onClick }) => {
   const dispatch = useDispatch();

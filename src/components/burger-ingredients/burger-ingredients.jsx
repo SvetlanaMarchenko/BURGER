@@ -7,16 +7,17 @@ import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
+import { setCurrentIngredient,fetchIngredient } from '../../services/actions/current-ingredient-actions';
 import PropTypes from 'prop-types';
 
 const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
-   const [selectedIngredient, setSelectedIngredient] = useState(null);
+   const [currentIngredient, setCurrentIngredient] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
 
    const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
-
+   
    useEffect(() => {
       dispatch(fetchDataIngredients());
    }, [dispatch]);
@@ -35,14 +36,19 @@ const BurgerIngredients = () => {
       { type: 'main', value: 'Начинки' }
    ];
 
-   const openModal = (ingredient) => {
-      setSelectedIngredient(ingredient);
-      setIsModalOpen(true);
-   };
+    const openModal = (ingredientId) => {
+      console.log("Открыть модалку для ингредиента с id:", ingredientId);
+      setIsModalOpen(true); 
+      dispatch(fetchIngredient()); 
+      setCurrentIngredient(ingredientId); 
+    };
+
+
+    
 
    const closeModal = () => {
       setIsModalOpen(false);
-      setSelectedIngredient(null);
+      setCurrentIngredient(null);
    };
 
    const handleScroll = () => {
@@ -79,22 +85,25 @@ const BurgerIngredients = () => {
                <section ref={type === 'bun' ? bunsRef : type === 'sauce' ? saucesRef : mainsRef} key={type} className={`${styles.ingredientsSection} mt-10`}>
                   <h2 className={`${styles.mainTitle}`}>{value}</h2>
                   <div className={`${styles.ingredientsList}`}>
-                     {filterIngredientsByType(type).map((item, index) => (
-                        <IngredientItem
-                        key={item._id}
-                        item={item}
-                        index={index}
-                        onClick={() => openModal(item)}
-                     />
-                     ))}
+                  {filterIngredientsByType(type).map((item, index) => (
+            <IngredientItem
+               key={item._id}
+               item={item}
+               index={index}
+               onClick={() => {
+                  console.log("Выбран ингредиент с id:", item._id); 
+                  openModal(item._id); 
+               }}
+            />
+            ))}
                   </div>
                </section>
             ))}
          </main>
 
-         {isModalOpen && selectedIngredient && createPortal(
+         {isModalOpen && currentIngredient && createPortal(
             <Modal onClose={closeModal}>
-               <IngredientDetails item={selectedIngredient} onClose={closeModal} />
+               <IngredientDetails item={currentIngredient} onClose={closeModal} />
             </Modal>,
             document.getElementById('modal-root')
          )}
@@ -105,7 +114,7 @@ const BurgerIngredients = () => {
 BurgerIngredients.propTypes = {
    ingredients: PropTypes.arrayOf(
      PropTypes.shape({
-       _id: PropTypes.string.isRequired,  
+       _id: PropTypes.string,  
        name: PropTypes.string.isRequired,
        price: PropTypes.number.isRequired,
        type: PropTypes.string.isRequired,
