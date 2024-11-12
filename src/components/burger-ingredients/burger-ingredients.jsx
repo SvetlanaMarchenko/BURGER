@@ -101,11 +101,10 @@ const BurgerIngredients = () => {
             ))}
          </main>
 
-         {isModalOpen && currentIngredient && createPortal(
+         {isModalOpen && currentIngredient && (
             <Modal onClose={closeModal}>
                <IngredientDetails item={currentIngredient} onClose={closeModal} />
-            </Modal>,
-            document.getElementById('modal-root')
+            </Modal>
          )}
       </div>
    );
