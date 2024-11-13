@@ -2,11 +2,11 @@ import React from 'react';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import {useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 const IngredientItem = ({ item, onClick }) => {
-  const dispatch = useDispatch();
   const ingredientsInConstructor = useSelector((state) => state.burgerConstructor.ingredients);
   const bunInConstructor = useSelector((state) => state.burgerConstructor.bun);
   
@@ -61,13 +61,7 @@ const IngredientItem = ({ item, onClick }) => {
 };
 
 IngredientItem.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }),
+  item: IngredientType,
   onClick: PropTypes.func
 };
 

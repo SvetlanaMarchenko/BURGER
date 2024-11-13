@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -56,7 +56,6 @@ const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
   const moveIngredient = (fromIndex, toIndex) => {
-    console.log("move ingredient")
     if (fromIndex !== toIndex) {
       dispatch(replaceIngredient(fromIndex, toIndex));
     }
@@ -177,7 +176,7 @@ BurgerConstructor.propTypes = {
 
   ingredients: PropTypes.arrayOf(
     IngredientType
-  ).isRequired,
+  ),
   
   isModalOpen: PropTypes.bool,
   handleRemoveIngredient: PropTypes.func,

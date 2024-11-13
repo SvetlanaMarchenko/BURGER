@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styles from './ingredient-details.module.css';
 import {useSelector } from 'react-redux';
 
@@ -10,8 +10,6 @@ const IngredientDetails = () => {
    const popuppedIngredientDetails = selectedData
 
    return (
-
-
       <section className={styles.ingredientsDetailsMain}>
          <div>
             <div className={`${styles.titleIngredientDetails} mt-10 mr-10 ml-10`} >
