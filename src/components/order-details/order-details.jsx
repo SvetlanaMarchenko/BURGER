@@ -1,23 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import styles from './order-details.module.css';
 import doneImage from './done.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { createOrder } from '../../services/actions/order-actions';
+import { useSelector } from 'react-redux';
 import {selectCurrentOrderDetails} from '../../services/selectors'
 import PropTypes from 'prop-types';
 
 const OrderDetails = () => {
-   // const dispatch = useDispatch();
    const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails);
-  
-   // useEffect(() => {
-   //    const ingredientId = []; 
-   //    dispatch(createOrder(ingredientId));
-   // }, [dispatch]);
-
-    
    const orderDetailsLayout = () => {
-      console.log(1)
       if (isLoading) {
          return <p className="text text_type_main-default">Подождите.....Загрузка...</p>;
       }
@@ -38,7 +28,6 @@ const OrderDetails = () => {
          )
        }
    }
-   
    return (
       <div className={styles.orderDetailsFrame}> 
          {orderDetailsLayout()}
@@ -47,7 +36,7 @@ const OrderDetails = () => {
 };
 
 OrderDetails.propTypes = {
-   onClose: PropTypes.func.isRequired
+   onClose: PropTypes.func
  };
 
 export default OrderDetails;

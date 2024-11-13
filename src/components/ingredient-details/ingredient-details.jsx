@@ -5,6 +5,7 @@ import {useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
    const { currentIngredient } = useSelector((currentIngredientState) => currentIngredientState);
+   // const { currentIngredient } = useSelector((state) => state.currentIngredient);
 
    return (
 
