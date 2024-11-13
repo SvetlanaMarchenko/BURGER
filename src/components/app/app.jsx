@@ -4,7 +4,6 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import PropTypes from 'prop-types';
 
 import styles from './app.module.css';
 
@@ -23,15 +22,5 @@ function App() {
     </div>
   );
 }
-
-App.propTypes = {
-  ingredients: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  })
-};
 
 export default App;
