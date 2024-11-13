@@ -8,6 +8,7 @@ import { fetchDataIngredients } from '../../services/actions/ingredients-actions
 import IngredientItem from './ingredient-item.jsx';
 import { setCurrentIngredient, clearCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 const BurgerIngredients = () => {
    const [current, setCurrent] = useState('Булки');
@@ -105,12 +106,8 @@ const BurgerIngredients = () => {
 
 BurgerIngredients.propTypes = {
    ingredients: PropTypes.arrayOf(
-     PropTypes.shape({
-       name: PropTypes.string.isRequired,
-       price: PropTypes.number.isRequired,
-       type: PropTypes.string.isRequired,
-     })
-   )
+     IngredientType
+   ).isRequired,
  };
 
 export default BurgerIngredients;

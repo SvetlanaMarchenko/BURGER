@@ -8,6 +8,7 @@ import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient }
 import { useDrop, useDrag } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions';
 import PropTypes from 'prop-types';
+import { IngredientType } from '../../utils/types';
 
 const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -170,24 +171,14 @@ const BurgerConstructor = () => {
 };
 
 BurgerConstructor.propTypes = {
-  bun: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }),  
+  bun: PropTypes.arrayOf(
+    IngredientType
+  ),
 
   ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    })
+    IngredientType
   ).isRequired,
-
+  
   isModalOpen: PropTypes.bool,
   handleRemoveIngredient: PropTypes.func,
   handleClearConstructor: PropTypes.func
@@ -195,3 +186,4 @@ BurgerConstructor.propTypes = {
 
 
 export default BurgerConstructor;
+
