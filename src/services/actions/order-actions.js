@@ -20,8 +20,12 @@ export const createOrder = (ingredients) => {
                 'Content-Type': 'application/json',
             },
         })
-
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(`Ошибка ${response.status}`);
+        })
         .then((json) => {
             if (json.success) {
                 dispatch(createOrderSuccess(json.order.number));

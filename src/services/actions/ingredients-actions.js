@@ -14,7 +14,12 @@ export const fetchDataIngredients = () => {
     dispatch(fetchIngredientsRequest());
 
     fetch(`${BASE_URL}/ingredients`)
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+    })
       .then(json => dispatch(fetchIngredientsSuccess(json.data)))
       .catch(error => dispatch(fetchIngredientsFailure(error)));
   };
