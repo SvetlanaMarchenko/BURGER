@@ -7,7 +7,6 @@ const IngredientDetails = () => {
    const selectedData = useSelector(
       (a) =>  {return a.currentIngredient}
    );
-   console.log("selectedData is ", selectedData)
    const popuppedIngredientDetails = selectedData
 
    return (
