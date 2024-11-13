@@ -2,7 +2,7 @@ export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
 
-import {BASE_URL} from '../../utils/api.js'
+import {BASE_URL, checkResponse} from '../../utils/api.js'
 
 export const createOrderRequest = () => ({ type: CREATE_ORDER_REQUEST });
 export const createOrderSuccess = (orderData) => ({ type: CREATE_ORDER_SUCCESS, payload: orderData });
@@ -20,12 +20,7 @@ export const createOrder = (ingredients) => {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(`Ошибка ${response.status}`);
-        })
+        .then(checkResponse)
         .then((json) => {
             if (json.success) {
                 dispatch(createOrderSuccess(json.order.number));

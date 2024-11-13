@@ -1,4 +1,4 @@
-import {BASE_URL} from '../../utils/api.js'
+import {BASE_URL, checkResponse} from '../../utils/api.js'
 
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
@@ -14,12 +14,7 @@ export const fetchDataIngredients = () => {
     dispatch(fetchIngredientsRequest());
 
     fetch(`${BASE_URL}/ingredients`)
-      .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return Promise.reject(`Ошибка ${response.status}`);
-    })
+      .then(checkResponse)
       .then(json => dispatch(fetchIngredientsSuccess(json.data)))
       .catch(error => dispatch(fetchIngredientsFailure(error)));
   };
