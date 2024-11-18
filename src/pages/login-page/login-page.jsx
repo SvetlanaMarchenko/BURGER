@@ -5,9 +5,9 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import styles from './app.module.css';
+import styles from './login-page.module.css';
 
-function App() {
+function loginPage() {
 
 
   return (
@@ -23,4 +23,4 @@ function App() {
   );
 }
 
-export default App;
+export default loginPage;

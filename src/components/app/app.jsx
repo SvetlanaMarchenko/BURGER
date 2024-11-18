@@ -11,7 +11,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Define HomePage as the route for "/" */}
         <Route path="/" element={
           <div className={`${styles.appLayout}`}>
             <AppHeader />
@@ -24,7 +23,6 @@ function App() {
           </div>
         } />
         
-        {/* You can define other routes here, for example: */}
         {/* <Route path="/about" element={<AboutPage />} /> */}
         {/* <Route path="/contact" element={<ContactPage />} /> */}
       </Routes>

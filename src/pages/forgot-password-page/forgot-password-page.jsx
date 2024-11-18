@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import styles from './burger-constructor.module.css';
+import styles from './forgot-password-page.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -10,7 +10,7 @@ import { createOrder } from '../../services/actions/order-actions';
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
 
-const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
+const ForgotPasswordPage = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
     item: { type: 'ingredient', index },
@@ -184,5 +184,5 @@ BurgerConstructor.propTypes = {
 };
 
 
-export default BurgerConstructor;
+export default ForgotPasswordPage;
 

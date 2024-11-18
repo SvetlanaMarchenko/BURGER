@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from './modal.module.css';
+import styles from './profile-page.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ children, onClose }) => {
+const ProfilePage = ({ children, onClose }) => {
   React.useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
@@ -40,4 +40,4 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default Modal;
+export default ProfilePage;

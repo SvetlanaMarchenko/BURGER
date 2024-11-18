@@ -1,10 +1,10 @@
-import styles from './order-details.module.css';
+import styles from './page-404.module.css';
 import doneImage from './done.png';
 import { useSelector } from 'react-redux';
 import {selectCurrentOrderDetails} from '../../services/selectors'
 import PropTypes from 'prop-types';
 
-const OrderDetails = () => {
+const PageNotFound = () => {
    const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails);
    const orderDetailsLayout = () => {
       if (isLoading) {
@@ -38,7 +38,7 @@ OrderDetails.propTypes = {
    onClose: PropTypes.func
  };
 
-export default OrderDetails;
+export default PageNotFound;
 
 
 

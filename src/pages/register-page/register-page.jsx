@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './app-header.module.css';
+import styles from './register-page.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-const AppHeader = () => {
+const RegisterPage = () => {
   return (
     <header className={styles.header}>
       <nav className={`${styles.navigationBarLeft} mr-2 mb-4 mt-4`}>
@@ -33,4 +33,4 @@ const AppHeader = () => {
 };
 
 
-export default AppHeader;
+export default RegisterPage;

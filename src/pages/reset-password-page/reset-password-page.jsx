@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './burger-ingredients.module.css';
+import styles from './reset-password-page.module.css';
 import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details'; 
 import Modal from '../modal/modal';
@@ -10,7 +10,7 @@ import { setCurrentIngredient, clearCurrentIngredient } from '../../services/act
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
 
-const BurgerIngredients = () => {
+const ResetPasswordPage = () => {
    const [current, setCurrent] = useState('Булки');
    const [isModalOpen, setIsModalOpen] = useState(false);
    const dispatch = useDispatch();
@@ -110,7 +110,7 @@ BurgerIngredients.propTypes = {
    )
  };
 
-export default BurgerIngredients;
+export default ResetPasswordPage;
 
 
 
