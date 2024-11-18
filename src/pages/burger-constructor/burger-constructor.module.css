@@ -1,0 +1,90 @@
+.ingredientsSection {
+   display: flex;
+   background-color: invisible;
+   text-align: center;
+   width: 200px;
+   height: 200px;
+   flex-direction: column;
+ }
+
+ .ingredientConstructor{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
+
+ .innerIngredients{
+  overflow-y: auto;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+ }
+
+ .orderButton {
+  margin-left: 40px;
+ }
+
+.overflow {
+  min-height: 400px;
+}
+ 
+.icon{
+  size: 20px;
+}
+
+.burgerParts{
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+}
+
+.mainName{
+display: flex;
+justify-content: flex-start;
+}
+
+
+.burgerPiecesSeparately{
+color: white;
+size: 20px;
+display: flex;
+justify-content: flex-start;
+}
+
+.priceOrder {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.constructorElementBlock {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.dragIconWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 32px;
+}
+
+.constructorNull{
+  width: 536px;
+  display: flex;
+  align-content: center;
+}
+.emptyBunWrapper{
+  width: 536px;
+  display: flex;
+  align-content: center;
+}
+
+
+.emptyBunWrapper img,
+.emptyBunWrapper svg {
+  visibility: hidden;
+}
+

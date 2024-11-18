@@ -1,0 +1,25 @@
+.overlay {
+  position: fixed;
+  z-index: 999;
+  overflow: hidden; 
+  margin-top: 0;
+}
+
+.orderDetailsFrame{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 720px;
+  height: 100%;  
+  top: 180px;
+  left: 640px;
+  border: 2px;
+}
+.orderDetailsID{
+white-space: nowrap; 
+}
+
+.orderDetailsWaiting{
+  white-space: nowrap; 
+  color: gray;
+}
