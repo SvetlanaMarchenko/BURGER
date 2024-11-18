@@ -61,6 +61,7 @@ justify-content: flex-start;
 .constructorElementBlock {
   display: flex;
   flex-direction: row;
+  
 }
 
 .dragIconWrapper {
@@ -69,3 +70,21 @@ justify-content: flex-start;
   align-items: center;
   width: 32px;
 }
+
+.constructorNull{
+  width: 536px;
+  display: flex;
+  align-content: center;
+}
+.emptyBunWrapper{
+  width: 536px;
+  display: flex;
+  align-content: center;
+}
+
+
+.emptyBunWrapper img,
+.emptyBunWrapper svg {
+  visibility: hidden;
+}
+
