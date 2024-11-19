@@ -55,7 +55,7 @@ export function LoginPage() {
 
             <div className={`${styles.newPerson}`}>
             <p className="text text_type_main-default text_color_inactive "> Забыли пароль? </p> 
-            <Link to="/register">
+            <Link to="/forgot-password">
               Восстановить пароль
             </Link>
             </div>

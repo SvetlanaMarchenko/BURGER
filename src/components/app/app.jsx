@@ -6,6 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { RegisterPage } from '../../pages/register-page/register-page';
+import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';
 
 import styles from './app.module.css';
 
@@ -28,8 +29,9 @@ function App() {
         
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-        {/* <Route path="/register" element={<RegisterPage />} /> */}
+        {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} /> */}
       </Routes>
     </Router>
   );
