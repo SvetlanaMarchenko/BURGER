@@ -5,6 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginPage } from '../../pages/login-page/login-page';
+import { RegisterPage } from '../../pages/register-page/register-page';
 
 import styles from './app.module.css';
 
@@ -25,11 +26,10 @@ function App() {
           </div>
         } />
         
-        {/* Route for login page */}
         <Route path="/login" element={<LoginPage />} />
-        
-        {/* Other routes can be added here */}
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
+        <Route path="/register" element={<RegisterPage />} />
+
+        {/* <Route path="/register" element={<RegisterPage />} /> */}
       </Routes>
     </Router>
   );

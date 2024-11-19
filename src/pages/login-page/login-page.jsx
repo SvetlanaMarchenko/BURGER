@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {PasswordInput,EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login-page.module.css';
-import AppHeader from '../../components/app-header/app-header'; // Import AppHeader component
+import AppHeader from '../../components/app-header/app-header';
 
 
 export function LoginPage() {
@@ -48,14 +48,14 @@ export function LoginPage() {
             
             <div className={`${styles.newPerson}`}>
             <p className="text text_type_main-default text_color_inactive mb-4"> Вы новый пользователь? </p> 
-            <Link to="/list" className={styles.link}>
+            <Link to="/register">
               Зарегистрироваться
             </Link>
             </div>
 
             <div className={`${styles.newPerson}`}>
             <p className="text text_type_main-default text_color_inactive "> Забыли пароль? </p> 
-            <Link to="/list" className={styles.link}>
+            <Link to="/register">
               Восстановить пароль
             </Link>
             </div>

@@ -1,36 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {PasswordInput,EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register-page.module.css';
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import AppHeader from '../../components/app-header/app-header';
 
 
-const RegisterPage = () => {
+export function RegisterPage() {
+  const [password, setPassword] = useState('');
+  const [value, setValue] = React.useState('')
+  const onChange = e => {
+    setValue(e.target.value)
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
-    <header className={styles.header}>
-      <nav className={`${styles.navigationBarLeft} mr-2 mb-4 mt-4`}>
-        <BurgerIcon type="secondary" className={`${styles.icon} pl-5 pr-2`} />
-        <button className="text text_type_main-default pr-5">Конструктор</button>
-      </nav>
-
-      <nav className={`${styles.navigationBarLeft} mb-4 mt-4`}>
-        <ListIcon type="secondary" className={`${styles.icon} pl-5 pr-2`} />
-        <button className="text text_type_main-default pr-5">
-          Лента Заказов
-        </button>
-      </nav>
-
-      <div className={styles.logoContainer}>
-        <Logo />
+    <div className={styles.loginLayout}>
+      <AppHeader/> 
+      <div>
+        <div className={styles.container}>
+          <form className={styles.form}>
+            <h1 className={`text text_type_main-medium mb-6`}>Регистрация</h1>
+            <EmailInput
+              onChange={onChange}
+              placeholder="Имя"
+              isIcon={false}
+              extraClass="mb-6"
+            />
+            <EmailInput
+                onChange={onChange}
+                value={value}
+                name={'email'}
+                isIcon={false}
+                extraClass="mb-6"
+              /> 
+              <PasswordInput
+                onChange={handlePasswordChange}
+                value={password}
+                name="password"
+                extraClass="mb-6"
+              />
+            <Button
+              htmlType="button"
+              type="primary"
+              size="medium"
+              // onClick={handleCreateOrder}
+              extraClass="mb-20"
+            >
+              Зарегистрироваться
+            </Button>
+            
+            <div className={`${styles.newPerson}`}>
+            <p className="text text_type_main-default text_color_inactive mb-4"> Уже зарегистрированы? </p> 
+            <Link to="/login">
+              Войти
+            </Link>
+            </div>
+            
+          </form>
+        </div>
       </div>
-
-      <nav className={`${styles.navigationBarRight} mb-4 mt-4`}>
-        <ProfileIcon type="secondary" className={`${styles.icon} pl-5 pr-2`} />
-        <button className="text text_type_main-default pr-5">
-          Личный Кабинет
-        </button>
-      </nav>
-    </header>
+    </div>
   );
-};
+}
 
-
-export default RegisterPage;
