@@ -1,116 +1,66 @@
-import React, { useState, useEffect, useRef } from 'react';
 import styles from './reset-password-page.module.css';
-import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientDetails from '../ingredient-details/ingredient-details'; 
-import Modal from '../modal/modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
-import IngredientItem from './ingredient-item.jsx';
-import { setCurrentIngredient, clearCurrentIngredient } from '../../services/actions/current-ingredient-actions';
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { PasswordInput, Button, EmailInput  } from '@ya.praktikum/react-developer-burger-ui-components';
+import AppHeader from '../../components/app-header/app-header';
 
-const ResetPasswordPage = () => {
-   const [current, setCurrent] = useState('Булки');
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const dispatch = useDispatch();
+export function ResetPasswordPage() {
+  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
+  
+//   const handlePasswordChange = (e) => {
+//     setPassword(e.target.value);
+//   };
+  
+//   const handleCodeChange = (e) => {
+//     setCode(e.target.value);
+//   };
 
-   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
-   
-   useEffect(() => {
-      dispatch(fetchDataIngredients());
-   }, [dispatch]);
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     // Add logic to handle the password reset request here
+//     console.log("Password reset request", { password, code });
+//   };
 
-   const filterIngredientsByType = (type) => {
-      return allIngredients.filter((item) => item.type === type);
-   };
-
-   const bunsRef = useRef(null);
-   const saucesRef = useRef(null);
-   const mainsRef = useRef(null);
-
-   const ingredientTypes = [
-      { type: 'bun', value: 'Булки' },
-      { type: 'sauce', value: 'Соусы' },
-      { type: 'main', value: 'Начинки' }
-   ];
-
-    const openModal = (item) => {
-      dispatch(setCurrentIngredient(item)); 
-      setIsModalOpen(true);
-    };
-
-   const closeModal = (item) => {
-      dispatch(clearCurrentIngredient(item)); 
-      setIsModalOpen(false);
-   };
-
-   const handleScroll = () => {
-      const bunsTop = bunsRef.current.getBoundingClientRect().top;
-      const saucesTop = saucesRef.current.getBoundingClientRect().top;
-      const mainsTop = mainsRef.current.getBoundingClientRect().top;
-
-      const bunsOffset = 400;
-   
-      if (bunsTop <= bunsOffset && saucesTop > bunsOffset) {
-         setCurrent('Булки');
-      } else if (saucesTop <= bunsOffset && mainsTop > bunsOffset) {
-         setCurrent('Соусы');
-      } else if (mainsTop <= bunsOffset) {
-         setCurrent('Начинки');
-      }
-   };
-
-   if (isLoading) return <p>Загрузка Элементов...</p>;
-   if (error) return <p>Хм... Ошибка: {error}</p>;
-   return (
-      <div className={`${styles.ingredientsSection} mt-10`}>
-         <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>
-         <div className={`${styles.tabBar} mt-5`}>
-            {ingredientTypes.map(({ value }) => (
-               <Tab key={value} value={value} active={current === value} onClick={() => setCurrent(value)}>
-                  {value}
-               </Tab>
-            ))}
-         </div>
-
-         <main className={styles.scrollContainer} onScroll={handleScroll}>
-            {ingredientTypes.map(({ type, value }) => (
-               <section ref={type === 'bun' ? bunsRef : type === 'sauce' ? saucesRef : mainsRef} key={type} className={`${styles.ingredientsSection} mt-10`}>
-                  <h2 className={`${styles.mainTitle}`}>{value}</h2>
-                  <div className={`${styles.ingredientsList}`}>
-                  {filterIngredientsByType(type).map((item, index) => (
-                  <IngredientItem
-                     key={item._id}
-                     item={item}
-                     index={index}
-                     onClick={() => {
-                        openModal(item); 
-                     }}
+  return (
+    <div className={styles.loginLayout}>
+      <AppHeader /> 
+      <div>
+        <div className={styles.container}>
+          <form className={styles.form}>
+          {/* <form className={styles.form} onSubmit={handleSubmit}> */}
+            <h1 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h1>
+            
+            <PasswordInput
+            //   onChange={handlePasswordChange}
+              value={password}
+              placeholder={'Введите новый пароль'}
+              extraClass="mb-6"
             />
-            ))}
-                  </div>
-               </section>
-            ))}
-         </main>
-
-         {isModalOpen && (
-            <Modal onClose={closeModal}>
-               <IngredientDetails/>
-            </Modal>
-         )}
-
+            <EmailInput
+            //   onChange={onChange}
+              placeholder={'Введите код из письма'}
+              isIcon={false}
+              extraClass="mb-6"
+            />            
+         
+            
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="medium"
+              extraClass="mb-20"
+            >
+              Сохранить
+            </Button>
+            
+            <div className={`${styles.newPerson}`}>
+              <p className="text text_type_main-default text_color_inactive mb-4"> Вспомнили пароль? </p> 
+              <Link to="/login">Войти</Link>
+            </div>
+          </form>
+        </div>
       </div>
-   );
-};
-
-BurgerIngredients.propTypes = {
-   ingredients: PropTypes.arrayOf(
-     IngredientType
-   )
- };
-
-export default ResetPasswordPage;
-
-
-
+    </div>
+  );
+}

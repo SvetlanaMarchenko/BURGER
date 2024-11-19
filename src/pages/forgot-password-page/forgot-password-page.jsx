@@ -37,7 +37,7 @@
                 // onClick={handleCreateOrder}
                 extraClass="mb-20"
               >
-                Войти
+                Восстановить
               </Button>
               
               <div className={`${styles.newPerson}`}>
