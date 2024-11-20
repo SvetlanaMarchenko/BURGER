@@ -1,56 +1,79 @@
-  import React, { useState } from 'react';
-  import { Link } from 'react-router-dom';
-  import {EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-  import styles from './forgot-password-page.module.css';
-  import AppHeader from '../../components/app-header/app-header';
-  
-  
-  export function ForgotPasswordPage() {
-    const [password, setPassword] = useState('');
-    const [value, setValue] = React.useState('')
-    const onChange = e => {
-      setValue(e.target.value)
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './forgot-password-page.module.css';
+import AppHeader from '../../components/app-header/app-header';
+
+export function ForgotPasswordPage() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        navigate('/reset-password');
+      } else {
+        alert(data.message || 'Что-то пошло не так!');
+      }
+    } catch (error) {
+      console.error("Error during password reset:", error);
+      alert('Что-то пошло не так!');
+    } finally {
+      setIsSubmitting(false);
     }
-  
-    const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
-    };
-  
-    return (
-      <div className={styles.loginLayout}>
-        <AppHeader/> 
-        <div>
-          <div className={styles.container}>
-            <form className={styles.form}>
-              <h1 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h1>
-              <EmailInput
-                  onChange={onChange}
-                  value={value}
-                  placeholder={'Укажите email'}
-                  isIcon={false}
-                  extraClass="mb-6"
-                /> 
-              <Button
-                htmlType="button"
-                type="primary"
-                size="medium"
-                // onClick={handleCreateOrder}
-                extraClass="mb-20"
-              >
-                Восстановить
-              </Button>
-              
-              <div className={`${styles.newPerson}`}>
-              <p className="text text_type_main-default text_color_inactive mb-4"> Вспомнили пароль? </p> 
-              <Link to="/login">
-                Войти
-              </Link>
-              </div>
-              
-            </form>
-          </div>
+  };
+
+  return (
+    <div className={styles.loginLayout}>
+      <AppHeader />
+      <div>
+        <div className={styles.container}>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <h1 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h1>
+            <EmailInput
+              onChange={handleEmailChange}
+              value={email}  
+              placeholder={'Укажите email'}
+              isIcon={false}
+              extraClass="mb-6"
+            />
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="medium"
+              extraClass="mb-20"
+              disabled={isSubmitting} 
+            >
+              Восстановить
+            </Button>
+
+            <div className={`${styles.newPerson}`}>
+              <p className="text text_type_main-default text_color_inactive mb-4"> Вспомнили пароль? </p>
+              <Link to="/login">Войти</Link>
+            </div>
+          </form>
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}
