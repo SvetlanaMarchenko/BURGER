@@ -1,3 +1,5 @@
+
+
 import styles from './reset-password-page.module.css';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import React, { useState } from 'react';
@@ -60,20 +62,20 @@ const handleSubmit = async (e) => {
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <h1 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h1>
+            <h1 className={`text text_type_main-medium mb-2`}>Восстановление пароля</h1>
             
             <PasswordInput
               onChange={handlePasswordChange}
               value={password}
               placeholder={'Введите новый пароль'}
-              extraClass="mb-6"
+              extraClass="mb-2"
             />
             <EmailInput
               onChange={handleCodeChange}
               value={token}
               placeholder={'Введите код из письма'}
               isIcon={false}
-              extraClass="mb-6"
+              extraClass="mb-2"
             />            
          
             
