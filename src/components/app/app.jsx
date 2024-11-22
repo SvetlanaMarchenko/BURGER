@@ -4,6 +4,8 @@ import { RegisterPage } from '../../pages/register-page/register-page';
 import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';
 import { ResetPasswordPage } from '../../pages/reset-password-page/reset-password-page';
 import { HomePage } from '../../pages/home-page/home-page';
+import { ProfilePage } from '../../pages/profile-page/profile-page';
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
       <NavLink to="/register">Register</NavLink>
       <NavLink to="/forgot-password">Forgot Password</NavLink>
       <NavLink to="/reset-password">Reset Password</NavLink>
+      <NavLink to="/profile">profile</NavLink>
 
       <Routes>        
         <Route path="/home" element={<HomePage />} />
@@ -27,6 +30,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

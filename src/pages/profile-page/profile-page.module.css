@@ -1,25 +1,72 @@
-.modal {
-  position: fixed;
+.loginLayoutProfile {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  /* text-align: center; */
+  overflow: hidden;
+  height: 100vh;
+  box-sizing: border-box;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  border-radius: 50px;
+}
+
+.newPerson{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.appHeaderStyle{
   background-color: #1C1C21;
-
 }
 
-.modal-title {
-  margin: 0;
+.container {
+  padding: var(--container-padding);
+  height: calc(100vh - var(--container-padding)*2);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  align-items: flex-start
 }
 
-.modal-content {
-  padding: 16px;
-}
-
-.closeButton{
+.form {
+  display: flex;
+  width: 480px;
+  height: 430px;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 15vh;
+  align-items: center;
   position: absolute;
-  right: 0;
-  padding: 0;
+  left: 50%; 
+  transform: translateX(-50%);
 }
+
+.profileForm {
+  display: flex;
+  /* align-items: flex-start */
+}
+
+.profileChoice{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  padding-top: 15vh;
+}
+
+.chioceOption{
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important
+}
+
+
