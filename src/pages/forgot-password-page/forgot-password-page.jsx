@@ -20,7 +20,7 @@ export function ForgotPasswordPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+      const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

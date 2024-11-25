@@ -4,13 +4,15 @@ import styles from './reset-password-page.module.css';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PasswordInput, Button, EmailInput  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Button, EmailInput, Input  } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../../components/app-header/app-header';
+
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resetCode, setResetCode] = React.useState('')
 
   const location = useLocation(); 
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const handleSubmit = async (e) => {
    setIsSubmitting(true);
 
    try {
-      const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+      const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,13 +72,26 @@ const handleSubmit = async (e) => {
               placeholder={'Введите новый пароль'}
               extraClass="mb-2"
             />
-            <EmailInput
+            {/* <EmailInput
               onChange={handleCodeChange}
               value={token}
               placeholder={'Введите код из письма'}
               isIcon={false}
               extraClass="mb-2"
-            />            
+            />    */}
+            <Input
+              type={'text'}
+              placeholder="Введите код из письма"
+              onChange={e => setResetCode(e.target.value)}
+              value={resetCode}
+              name='resetCode'
+              // error={false}
+              // ref={inputRef}
+              // onIconClick={onIconClick}
+              // errorText={'Ошибка'}
+              // size={'default'}
+              extraClass="mb-2"
+            />         
          
             
             <Button
