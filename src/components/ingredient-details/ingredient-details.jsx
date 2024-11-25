@@ -16,9 +16,7 @@ const IngredientDetails = () => {
 
   return (
     <Link
-      key={selectedData._id} // Используем key для уникальности компонента
       to={`/ingredients/${selectedData._id}`} // Путь к детальной странице ингредиента
-      state={{ backgroundLocation: location }} // Передаем текущую локацию в state
     >
       <section className={styles.ingredientsDetailsMain}>
         <div>

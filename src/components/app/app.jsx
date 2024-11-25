@@ -35,7 +35,7 @@ function App() {
       {/* Если есть backgroundLocation в state, то рендерим страницу ингредиента как модалку */}
       {state?.backgroundLocation && (
         <Routes> 
-          <Route path="/ingredients/:id" element={< IngredientDetails />} />
+          <Route path="/ingredients/:id"/>
         </Routes>
       )}
 
