@@ -1,14 +1,23 @@
-import styles from './ingredients-id-page.module.css';
-import PropTypes from 'prop-types';
 
-const IngredientsIdPage = ({ onClose }) => {
+
+
+
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+
+const IngredientsIdPage = () => {
+  const { id } = useParams();  
+
   return (
-    <div className={styles.overlay} onClick={onClose} />
+    <div>
+      {/* <IngredientDetails/> */}
+      <h2>Детали ингредиента</h2>
+      <p>Ингредиент с ID: {id}</p>
+
+
+    </div>
   );
 };
 
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func
-};
-
-export default IngredientsIdPage;
+export default IngredientsIdPage;  

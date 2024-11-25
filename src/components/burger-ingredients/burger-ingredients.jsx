@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
-import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientDetails from '../ingredient-details/ingredient-details'; 
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
@@ -11,106 +11,105 @@ import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
 
 const BurgerIngredients = () => {
-   const [current, setCurrent] = useState('Булки');
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const dispatch = useDispatch();
+  const [current, setCurrent] = useState('Булки');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
-   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
-   
-   useEffect(() => {
-      dispatch(fetchDataIngredients());
-   }, [dispatch]);
+  const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
+  const selectedData = useSelector((state) => state.currentIngredient); // Получаем текущий ингредиент из Redux
 
-   const filterIngredientsByType = (type) => {
-      return allIngredients.filter((item) => item.type === type);
-   };
+  useEffect(() => {
+    dispatch(fetchDataIngredients()); // Загрузка ингредиентов
+  }, [dispatch]);
 
-   const bunsRef = useRef(null);
-   const saucesRef = useRef(null);
-   const mainsRef = useRef(null);
+  const filterIngredientsByType = (type) => {
+    return allIngredients.filter((item) => item.type === type);
+  };
 
-   const ingredientTypes = [
-      { type: 'bun', value: 'Булки' },
-      { type: 'sauce', value: 'Соусы' },
-      { type: 'main', value: 'Начинки' }
-   ];
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainsRef = useRef(null);
 
-    const openModal = (item) => {
-      dispatch(setCurrentIngredient(item)); 
-      setIsModalOpen(true);
-    };
+  const ingredientTypes = [
+    { type: 'bun', value: 'Булки' },
+    { type: 'sauce', value: 'Соусы' },
+    { type: 'main', value: 'Начинки' }
+  ];
 
-   const closeModal = (item) => {
-      dispatch(clearCurrentIngredient(item)); 
-      setIsModalOpen(false);
-   };
+  // Открытие модалки и обновление URL с id ингредиента
+  const openModal = (item) => {
+    dispatch(setCurrentIngredient(item)); // Устанавливаем текущий ингредиент
+    setIsModalOpen(true); // Открываем модалку
+  };
 
-   const handleScroll = () => {
-      const bunsTop = bunsRef.current.getBoundingClientRect().top;
-      const saucesTop = saucesRef.current.getBoundingClientRect().top;
-      const mainsTop = mainsRef.current.getBoundingClientRect().top;
+  const closeModal = () => {
+    dispatch(clearCurrentIngredient()); // Очищаем текущий ингредиент
+    setIsModalOpen(false); // Закрываем модалку
+  };
 
-      const bunsOffset = 400;
-   
-      if (bunsTop <= bunsOffset && saucesTop > bunsOffset) {
-         setCurrent('Булки');
-      } else if (saucesTop <= bunsOffset && mainsTop > bunsOffset) {
-         setCurrent('Соусы');
-      } else if (mainsTop <= bunsOffset) {
-         setCurrent('Начинки');
-      }
-   };
+  const handleScroll = () => {
+    const bunsTop = bunsRef.current.getBoundingClientRect().top;
+    const saucesTop = saucesRef.current.getBoundingClientRect().top;
+    const mainsTop = mainsRef.current.getBoundingClientRect().top;
 
-   if (isLoading) return <p>Загрузка Элементов...</p>;
-   if (error) return <p>Хм... Ошибка: {error}</p>;
-   return (
-      <div className={`${styles.ingredientsSection} mt-10`}>
-         <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>
-         <div className={`${styles.tabBar} mt-5`}>
-            {ingredientTypes.map(({ value }) => (
-               <Tab key={value} value={value} active={current === value} onClick={() => setCurrent(value)}>
-                  {value}
-               </Tab>
-            ))}
-         </div>
+    const bunsOffset = 400;
 
-         <main className={styles.scrollContainer} onScroll={handleScroll}>
-            {ingredientTypes.map(({ type, value }) => (
-               <section ref={type === 'bun' ? bunsRef : type === 'sauce' ? saucesRef : mainsRef} key={type} className={`${styles.ingredientsSection} mt-10`}>
-                  <h2 className={`${styles.mainTitle}`}>{value}</h2>
-                  <div className={`${styles.ingredientsList}`}>
-                  {filterIngredientsByType(type).map((item, index) => (
-                  <IngredientItem
-                     key={item._id}
-                     item={item}
-                     index={index}
-                     onClick={() => {
-                        openModal(item); 
-                     }}
-            />
-            ))}
-                  </div>
-               </section>
-            ))}
-         </main>
+    if (bunsTop <= bunsOffset && saucesTop > bunsOffset) {
+      setCurrent('Булки');
+    } else if (saucesTop <= bunsOffset && mainsTop > bunsOffset) {
+      setCurrent('Соусы');
+    } else if (mainsTop <= bunsOffset) {
+      setCurrent('Начинки');
+    }
+  };
 
-         {isModalOpen && (
-            <Modal onClose={closeModal}>
-               <IngredientDetails/>
-            </Modal>
-         )}
+  if (isLoading) return <p>Загрузка...</p>;
+  if (error) return <p>Ошибка: {error}</p>;
 
+  return (
+    <div className={`${styles.ingredientsSection} mt-10`}>
+      <h1 className={`${styles.mainTitle} text text_type_main-large mt-10`}>Соберите бургер</h1>
+      <div className={`${styles.tabBar} mt-5`}>
+        {ingredientTypes.map(({ value }) => (
+          <Tab key={value} value={value} active={current === value} onClick={() => setCurrent(value)}>
+            {value}
+          </Tab>
+        ))}
       </div>
-   );
+
+      <main className={styles.scrollContainer} onScroll={handleScroll}>
+        {ingredientTypes.map(({ type, value }) => (
+          <section
+            ref={type === 'bun' ? bunsRef : type === 'sauce' ? saucesRef : mainsRef}
+            key={type}
+            className={`${styles.ingredientsSection} mt-10`}
+          >
+            <h2 className={`${styles.mainTitle}`}>{value}</h2>
+            <div className={`${styles.ingredientsList}`}>
+              {filterIngredientsByType(type).map((item) => (
+                <IngredientItem
+                  key={item._id}
+                  item={item}
+                  onClick={() => openModal(item)} // Открыть модалку при клике
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+      </main>
+
+      {/* Модалка с детальным ингредиентом */}
+      {isModalOpen && selectedData && (
+        <Modal onClose={closeModal}>
+          <IngredientDetails  />
+        </Modal>
+      )}
+    </div>
+  );
 };
 
 BurgerIngredients.propTypes = {
-   ingredients: PropTypes.arrayOf(
-     IngredientType
-   )
- };
+  ingredients: PropTypes.arrayOf(IngredientType),
+};
 
 export default BurgerIngredients;
-
-
-
