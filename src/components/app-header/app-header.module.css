@@ -44,3 +44,7 @@ button {
 button:hover {
   border-color: transparent;
 }
+
+.active1 {
+  color: blueviolet;
+}

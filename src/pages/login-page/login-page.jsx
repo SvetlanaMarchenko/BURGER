@@ -8,6 +8,7 @@ export function LoginPage() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('bob@example.com'); // Добавил state для email
   const [isSubmitting, setIsSubmitting] = useState(false); // Состояние для предотвращения нескольких отправок
+  const [error, setError] = useState('');
   const navigate = useNavigate(); // Для перенаправления на другую страницу
 
   const handleEmailChange = (e) => {
@@ -44,17 +45,55 @@ export function LoginPage() {
       const data = await response.json(); // Парсим ответ сервера
 
       if (data.success) {
+        // Сохраняем токены в localStorage
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+
         // Если вход успешен, перенаправляем на главную страницу или на страницу профиля
         navigate('/home');
       } else {
         // Обработка ошибки, если вход не удался
-        alert(data.message || 'Ошибка при входе');
+        setError(data.message || 'Ошибка при входе');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Что-то пошло не так! Попробуйте позже.');
+      setError('Что-то пошло не так! Попробуйте позже.');
     } finally {
       setIsSubmitting(false); // Разблокируем кнопку после завершения запроса
+    }
+  };
+
+  const refreshToken = async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      return; // Если нет refreshToken, ничего не делаем
+    }
+
+    try {
+      const response = await fetch('https://norma.nomoreparties.space/api/auth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: refreshToken,
+        }),
+      });
+
+      const data = await response.json(); // Парсим ответ
+
+      if (data.success) {
+        // Обновляем accessToken и refreshToken в localStorage
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+      } else {
+        // Если не удалось обновить токены, нужно выйти из системы
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error refreshing token:', error);
     }
   };
 
@@ -78,6 +117,7 @@ export function LoginPage() {
               name="password"
               extraClass="mb-6"
             />
+            {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
             <Button
               htmlType="submit" // Сделаем кнопку отправки формы
               type="primary"
