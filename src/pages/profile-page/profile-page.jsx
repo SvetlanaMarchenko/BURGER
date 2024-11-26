@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './profile-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
-import { Link, useNavigate } from 'react-router-dom';
-import { PasswordInput, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
+import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink } from 'react-router-dom';  // Импортируем NavLink для навигации
 
 export function ProfilePage() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,15 @@ export function ProfilePage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Загрузка данных пользователя при монтировании компонента (например, из localStorage или API)
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      setEmail(userData.email || '');
+      setName(userData.name || '');
+    }
+  }, []);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -24,8 +34,8 @@ export function ProfilePage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
+
     if (!email || !password || !name) {
       setError('Заполните все поля!');
       return;
@@ -76,6 +86,7 @@ export function ProfilePage() {
         // Если выход успешен, удаляем токены из localStorage
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userData'); // Удаляем данные пользователя
         
         // Редиректим пользователя на страницу входа
         navigate('/login');
@@ -95,10 +106,29 @@ export function ProfilePage() {
         <div className={styles.container}>
           <div className={styles.profileForm}>
             <nav className={`${styles.profileChoice}`}>
-              <h1 className={`${styles.chioceOption} text text_type_main-medium`}>Профиль</h1>
-              <h1 className={`${styles.chioceOption} text text_type_main-medium`}>История заказов</h1> 
-              <h1 
-                className={`${styles.chioceOption} text text_type_main-medium mb-20`} 
+              {/* Используем NavLink для активной ссылки */}
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.chioceOption} text text_type_main-medium`
+                    : `${styles.chioceOption} text text_type_main-medium text_color_inactive`
+                }
+              >
+                Профиль
+              </NavLink>
+              <NavLink
+              
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.chioceOption} text text_type_main-medium`
+                    : `${styles.chioceOption} text text_type_main-medium text_color_inactive`
+                }
+              >
+                История заказов
+              </NavLink>
+              <h1
+                className={`${styles.chioceOption} text text_type_main-medium mb-20`}
                 onClick={handleLogout} // Добавляем обработчик на клик для выхода
               >
                 Выход
@@ -109,19 +139,19 @@ export function ProfilePage() {
             </nav>
         
             <form className={styles.form} onSubmit={handleSubmit}>
-              <PasswordInput
-                onChange={handleEmailChange}
+              <Input
+                type="text"
+                onChange={handleNameChange}
                 value={name}
                 name="name"
                 placeholder="Name"
                 extraClass="mb-2"
-                icon="EditIcon"
               />
 
               <EmailInput
-                onChange={handleNameChange}
+                onChange={handleEmailChange}
                 value={email}
-                name={'email'}
+                name="email"
                 placeholder="Email"
                 isIcon={true}
                 extraClass="mb-2"
@@ -136,6 +166,10 @@ export function ProfilePage() {
               />
 
               {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
+              
+              <Button type="primary" size="large" extraClass="mt-6">
+                Сохранить
+              </Button>
             </form>
           </div>
         </div>

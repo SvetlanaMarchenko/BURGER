@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <nav>
-        <NavLink 
+      <NavLink 
           to="/home" 
           className={({ isActive }) => isActive ? "active1" : ""}
         >
