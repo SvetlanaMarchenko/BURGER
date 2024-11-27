@@ -1,59 +1,76 @@
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
+// Проверка ответа
 function checkResponse(res) {
-   if (res.ok) {
-       return res.json();
-   }
-   return Promise.reject(`Ошибка ${res.status}`);
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}`);
 }
 
+// Функция для отправки запросов на сервер
 export function requestFromApi(endpoint, options = {}) {
-  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse); 
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 }
 
+// Функция для выполнения запроса с авторизацией
+const fetchWithAuth = async (endpoint, options = {}) => {
+  const accessToken = localStorage.getItem('accessToken');
+  
+  if (!accessToken) {
+    throw new Error('Access token is missing');
+  }
 
-// // В проектной работе эта функция будет обращаться к серверу
-// // и обновлять токены если они уже устарели.
-// const getUser = async () => {
-//     const result = new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             resolve({
-//                 user: {},
-//             });
-//         }, 1000);
-//     });
+  const headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${accessToken}`,
+  };
 
-//     try {
-//         return await result;
-//     } catch (error) {
-//         localStorage.removeItem("accessToken");
-//         localStorage.removeItem("refreshToken");
-//         throw error;
-//     }
-// }
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
 
-// const login = () =>
-//     new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             localStorage.setItem("accessToken", "test-token");
-//             localStorage.setItem("refreshToken", "test-refresh-token");
-//             resolve({
-//                 user: {},
-//             });
-//         }, 1000);
-//     });
+  if (response.status === 401) {
+    // Если ответ с ошибкой 401, обновляем токен и повторяем запрос
+    await refreshAccessToken();
+    return fetchWithAuth(endpoint, options);  // Повторно вызываем запрос с новым токеном
+  }
 
-// const logout = () =>
-//     new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             localStorage.removeItem("accessToken");
-//             localStorage.removeItem("refreshToken");
-//             resolve();
-//         }, 1000);
-//     });
+  return response;
+};
 
-// export const api = {
-//     getUser,
-//     login,
-//     logout
-// };
+// Функция для обновления токенов
+const refreshAccessToken = async () => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  
+  if (!refreshToken) {
+    throw new Error('Refresh token is missing');
+  }
+
+  try {
+    const response = await fetch('https://norma.nomoreparties.space/api/auth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: refreshToken }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+    } else {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      window.location.href = '/login';  // Перенаправление на страницу логина, если обновление не удалось
+    }
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    window.location.href = '/login';  // Перенаправление на страницу логина, если произошла ошибка
+  }
+};
+
+export { fetchWithAuth };

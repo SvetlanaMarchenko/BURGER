@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
+import { fetchWithAuth } from '../../utils/Api';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ export function ForgotPasswordPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
+      const response = await fetchWithAuth('/password-reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

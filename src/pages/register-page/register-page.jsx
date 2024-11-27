@@ -1,11 +1,9 @@
-
-
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
+import { requestFromApi } from '../../utils/api.js';
 
 export function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -27,15 +25,15 @@ export function RegisterPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
+
     if (!email || !password || !name) {
       setError('Заполните все поля!');
       return;
     }
 
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/auth/register', {
+      const response = await requestFromApi('/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,15 +41,19 @@ export function RegisterPage() {
         body: JSON.stringify({ email, password, name }),
       });
 
-      const result = await response.json();
+      if (response.success) {
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
 
-      if (result.success) {
+
         navigate('/home');
+
       } else {
-        setError(result.message || 'Упс. Что-то не так...');
+        setError(response.message || 'Registration failed');
       }
     } catch (error) {
-      setError('Упс..... Ошибка сети. Попробуйте снова позже.');
+      console.error('Registration error:', error);
+      setError('Что-то пошло не так. Пожалуйста, попробуйте позже.');
     }
   };
 
@@ -62,16 +64,16 @@ export function RegisterPage() {
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>
             <h1 className="text text_type_main-medium mb-2">Регистрация</h1>
-            
+
             <Input
-              type={'text'}
-              placeholder={'Имя'}
+              type="text"
+              placeholder="Имя"
               onChange={handleNameChange}
               value={name}
-              name={'name'}
+              name="name"
               error={false}
-              errorText={'Ошибка'}
-              size={'default'}
+              errorText="Ошибка"
+              size="default"
             />
 
             <EmailInput
@@ -79,8 +81,8 @@ export function RegisterPage() {
               value={email}
               placeholder="Email"
               isIcon={false}
-            /> 
-            
+            />
+
             <PasswordInput
               onChange={handlePasswordChange}
               value={password}
@@ -91,21 +93,18 @@ export function RegisterPage() {
             {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
 
             <Button
-              htmlType="submit" 
+              htmlType="submit"
               type="primary"
               size="medium"
               extraClass="mb-20"
             >
               Зарегистрироваться
             </Button>
-            
+
             <div className={styles.newPerson}>
-              <p className="text text_type_main-default text_color_inactive mb-4"> Уже зарегистрированы? </p> 
-              <Link to="/login">
-                Войти
-              </Link>
+              <p className="text text_type_main-default text_color_inactive mb-4"> Уже зарегистрированы? </p>
+              <Link to="/login">Войти</Link>
             </div>
-            
           </form>
         </div>
       </div>

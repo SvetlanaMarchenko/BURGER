@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { RegisterPage } from '../../pages/register-page/register-page';
@@ -7,19 +7,24 @@ import { ResetPasswordPage } from '../../pages/reset-password-page/reset-passwor
 import { HomePage } from '../../pages/home-page/home-page';
 import { ProfilePage } from '../../pages/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page'; 
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-
-
+// import { AuthContext } from '../../context/auth-context';
 
 function App() {
+  // const { isAuthenticated, refreshAccessToken } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem('refreshToken')) {
+  //     refreshAccessToken();
+  //   }
+  // }, [refreshAccessToken]);
+
   const location = useLocation(); // Получаем текущую локацию из React Router
   const state = location.state; // Извлекаем state из текущего location
 
   return (
     <div>
       <nav>
-      <NavLink 
+        <NavLink 
           to="/home" 
           className={({ isActive }) => isActive ? "active1" : ""}
         >
@@ -34,8 +39,8 @@ function App() {
 
       {/* Если есть backgroundLocation в state, то рендерим страницу ингредиента как модалку */}
       {state?.backgroundLocation && (
-        <Routes> 
-          <Route path="/ingredients/:id"/>
+        <Routes location={state.backgroundLocation}> 
+          <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
         </Routes>
       )}
 
@@ -48,10 +53,10 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/ingredients/:id" element={< IngredientsIdPage/>} />
+        <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
       </Routes>
     </div>
   );
 }
 
-export default App
+export default App;

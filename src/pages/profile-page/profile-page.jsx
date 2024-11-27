@@ -3,16 +3,18 @@ import styles from './profile-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';  // Импортируем NavLink для навигации
+import { NavLink } from 'react-router-dom';
+import { fetchWithAuth } from '../../utils/Api'; // Импортируем функцию для авторизованных запросов
 
 export function ProfilePage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  // Загрузка данных пользователя при монтировании компонента (например, из localStorage или API)
+  // Загрузка данных пользователя при монтировании компонента
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
     if (userData) {
@@ -21,17 +23,9 @@ export function ProfilePage() {
     }
   }, []);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleNameChange = (e) => setName(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,37 +36,43 @@ export function ProfilePage() {
     }
 
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/auth/register', {
-        method: 'POST',
+      // Отправляем обновленные данные на сервер
+      const response = await fetchWithAuth('/auth/user', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ email, name, password }),
       });
 
       const result = await response.json();
 
       if (result.success) {
-        navigate('/home');
+        // Обновляем данные пользователя в localStorage
+        localStorage.setItem('userData', JSON.stringify(result.user));
+        setSuccessMessage('Данные успешно обновлены!');
+        setError('');
+        // Остаемся на странице профиля
       } else {
         setError(result.message || 'Упс. Что-то не так...');
+        setSuccessMessage('');
       }
     } catch (error) {
-      setError('Упс..... Ошибка сети. Попробуйте снова позже.');
+      setError('Ошибка сети. Попробуйте позже.');
+      setSuccessMessage('');
     }
   };
 
   // Функция для выхода из системы
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
-    
     if (!refreshToken) {
       console.log('Нет токена для выхода');
       return;
     }
 
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/auth/logout', {
+      const response = await fetchWithAuth('/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,13 +83,11 @@ export function ProfilePage() {
       const data = await response.json();
 
       if (data.success) {
-        // Если выход успешен, удаляем токены из localStorage
+        // Удаляем токены и данные пользователя из localStorage
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        localStorage.removeItem('userData'); // Удаляем данные пользователя
-        
-        // Редиректим пользователя на страницу входа
-        navigate('/login');
+        localStorage.removeItem('userData');
+        navigate('/login'); // Перенаправляем на страницу входа
       } else {
         alert('Ошибка при выходе из системы');
       }
@@ -105,8 +103,8 @@ export function ProfilePage() {
       <div>
         <div className={styles.container}>
           <div className={styles.profileForm}>
-            <nav className={`${styles.profileChoice}`}>
-              {/* Используем NavLink для активной ссылки */}
+            <nav className={styles.profileChoice}>
+              {/* Навигация */}
               <NavLink
                 to="/profile"
                 className={({ isActive }) =>
@@ -118,7 +116,7 @@ export function ProfilePage() {
                 Профиль
               </NavLink>
               <NavLink
-              
+                to="/orders"
                 className={({ isActive }) =>
                   isActive
                     ? `${styles.chioceOption} text text_type_main-medium`
@@ -129,7 +127,7 @@ export function ProfilePage() {
               </NavLink>
               <h1
                 className={`${styles.chioceOption} text text_type_main-medium mb-20`}
-                onClick={handleLogout} // Добавляем обработчик на клик для выхода
+                onClick={handleLogout} // Обработчик на клик для выхода
               >
                 Выход
               </h1>
@@ -137,26 +135,29 @@ export function ProfilePage() {
                 В этом разделе вы можете изменить свои персональные данные
               </p>
             </nav>
-        
+
+            {/* Форма профиля */}
             <form className={styles.form} onSubmit={handleSubmit}>
               <Input
                 type="text"
+                placeholder="Имя"
                 onChange={handleNameChange}
                 value={name}
                 name="name"
-                placeholder="Name"
+                error={false}
+                errorText="Ошибка"
+                size="default"
                 extraClass="mb-2"
               />
 
               <EmailInput
                 onChange={handleEmailChange}
                 value={email}
-                name="email"
                 placeholder="Email"
                 isIcon={true}
                 extraClass="mb-2"
               />
-              
+
               <PasswordInput
                 onChange={handlePasswordChange}
                 value={password}
@@ -165,8 +166,10 @@ export function ProfilePage() {
                 icon="EditIcon"
               />
 
+              {/* Сообщения об ошибках и успехе */}
               {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
-              
+              {successMessage && <p className="text text_type_main-default text_color_inactive">{successMessage}</p>}
+
               <Button type="primary" size="large" extraClass="mt-6">
                 Сохранить
               </Button>
