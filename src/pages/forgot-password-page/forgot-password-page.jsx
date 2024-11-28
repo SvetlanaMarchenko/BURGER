@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
-import { fetchWithAuth } from '../../utils/Api';
+import { resetPassword } from '../../utils/Api';  // Импортируем функцию сброса пароля
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -21,15 +21,8 @@ export function ForgotPasswordPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetchWithAuth('/password-reset', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
+      // Вызываем функцию сброса пароля из API
+      const data = await resetPassword(email);
 
       if (data.success) {
         navigate('/reset-password');
@@ -50,7 +43,7 @@ export function ForgotPasswordPage() {
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <h1 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h1>
+            <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>
             <EmailInput
               onChange={handleEmailChange}
               value={email}  
@@ -68,7 +61,7 @@ export function ForgotPasswordPage() {
               Восстановить
             </Button>
 
-            <div className={`${styles.newPerson}`}>
+            <div className={styles.newPerson}>
               <p className="text text_type_main-default text_color_inactive mb-4"> Вспомнили пароль? </p>
               <Link to="/login">Войти</Link>
             </div>

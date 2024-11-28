@@ -4,7 +4,7 @@ import AppHeader from '../../components/app-header/app-header';
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
-import { fetchWithAuth } from '../../utils/Api'; // Импортируем функцию для авторизованных запросов
+import { fetchUserData, logoutUser, updateUserData } from '../../utils/Api'; 
 
 export function ProfilePage() {
   const [email, setEmail] = useState('');
@@ -12,21 +12,30 @@ export function ProfilePage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [initialUserData, setInitialUserData] = useState({ email: '', name: '' });
   const navigate = useNavigate();
 
-  // Загрузка данных пользователя при монтировании компонента
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if (userData) {
-      setEmail(userData.email || '');
-      setName(userData.name || '');
-    }
+    const fetchData = async () => {
+      try {
+        const result = await fetchUserData(); 
+        setInitialUserData(result.user);
+        setEmail(result.user.email);
+        setName(result.user.name);
+      } catch (error) {
+        setError('Ошибка при загрузке данных');
+      }
+    };
+
+    fetchData();
   }, []);
 
+  // Обработчики изменения данных
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
+  // Обработчик сохранения данных
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,64 +45,33 @@ export function ProfilePage() {
     }
 
     try {
-      // Отправляем обновленные данные на сервер
-      const response = await fetchWithAuth('/auth/user', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, name, password }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        // Обновляем данные пользователя в localStorage
-        localStorage.setItem('userData', JSON.stringify(result.user));
-        setSuccessMessage('Данные успешно обновлены!');
-        setError('');
-        // Остаемся на странице профиля
-      } else {
-        setError(result.message || 'Упс. Что-то не так...');
-        setSuccessMessage('');
-      }
+      const updatedUserData = { email, name, password };
+  
+      const result = await updateUserData(updatedUserData);
+  
+      setSuccessMessage('Данные успешно обновлены');
+      setInitialUserData(result.user);
+      setError('');
     } catch (error) {
-      setError('Ошибка сети. Попробуйте позже.');
+      setError('Ошибка при сохранении данных');
       setSuccessMessage('');
     }
   };
 
-  // Функция для выхода из системы
+  const handleCancel = () => {
+    setEmail(initialUserData.email);
+    setName(initialUserData.name);
+    setPassword('');
+  };
+
+  // Обработчик выхода из системы
   const handleLogout = async () => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
-      console.log('Нет токена для выхода');
-      return;
-    }
-
     try {
-      const response = await fetchWithAuth('/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: refreshToken }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Удаляем токены и данные пользователя из localStorage
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('userData');
-        navigate('/login'); // Перенаправляем на страницу входа
-      } else {
-        alert('Ошибка при выходе из системы');
-      }
+      await logoutUser();  // Вызываем функцию выхода из API
+      navigate('/login');   // Перенаправляем на страницу входа
     } catch (error) {
-      console.error('Ошибка при запросе выхода:', error);
-      alert('Что-то пошло не так. Попробуйте позже.');
+      console.error(error);
+      alert('Ошибка при выходе. Попробуйте позже.');
     }
   };
 
@@ -104,31 +82,13 @@ export function ProfilePage() {
         <div className={styles.container}>
           <div className={styles.profileForm}>
             <nav className={styles.profileChoice}>
-              {/* Навигация */}
-              <NavLink
-                to="/profile"
-                className={({ isActive }) =>
-                  isActive
-                    ? `${styles.chioceOption} text text_type_main-medium`
-                    : `${styles.chioceOption} text text_type_main-medium text_color_inactive`
-                }
-              >
+              <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOption} text text_type_main-medium text_color_inactive`}>
                 Профиль
               </NavLink>
-              <NavLink
-                to="/orders"
-                className={({ isActive }) =>
-                  isActive
-                    ? `${styles.chioceOption} text text_type_main-medium`
-                    : `${styles.chioceOption} text text_type_main-medium text_color_inactive`
-                }
-              >
+              <NavLink to="/orders" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOption} text text_type_main-medium text_color_inactive`}>
                 История заказов
               </NavLink>
-              <h1
-                className={`${styles.chioceOption} text text_type_main-medium mb-20`}
-                onClick={handleLogout} // Обработчик на клик для выхода
-              >
+              <h1 className={`${styles.chioceOption} text text_type_main-medium mb-20`} onClick={handleLogout}>
                 Выход
               </h1>
               <p className={`${styles.chioceOption} text text_type_main-small text_color_inactive`}>
@@ -136,7 +96,6 @@ export function ProfilePage() {
               </p>
             </nav>
 
-            {/* Форма профиля */}
             <form className={styles.form} onSubmit={handleSubmit}>
               <Input
                 type="text"
@@ -149,7 +108,6 @@ export function ProfilePage() {
                 size="default"
                 extraClass="mb-2"
               />
-
               <EmailInput
                 onChange={handleEmailChange}
                 value={email}
@@ -157,7 +115,6 @@ export function ProfilePage() {
                 isIcon={true}
                 extraClass="mb-2"
               />
-
               <PasswordInput
                 onChange={handlePasswordChange}
                 value={password}
@@ -166,13 +123,20 @@ export function ProfilePage() {
                 icon="EditIcon"
               />
 
-              {/* Сообщения об ошибках и успехе */}
               {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
               {successMessage && <p className="text text_type_main-default text_color_inactive">{successMessage}</p>}
 
-              <Button type="primary" size="large" extraClass="mt-6">
-                Сохранить
-              </Button>
+              <div className={styles.buttonsContainer}>
+                <Button type="primary" size="large" extraClass="mt-6">Сохранить</Button>
+                <Button
+                  type="secondary"
+                  size="large"
+                  extraClass="mt-6"
+                  onClick={handleCancel} // Обработчик отмены
+                >
+                  Отмена
+                </Button>
+              </div>
             </form>
           </div>
         </div>

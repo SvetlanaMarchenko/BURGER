@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
-import { requestFromApi } from '../../utils/api.js';
+import { registerUser } from '../../utils/api.js'; // Импортируем функцию для регистрации
 
 export function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -33,27 +33,13 @@ export function RegisterPage() {
     }
 
     try {
-      const response = await requestFromApi('/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, name }),
-      });
-
-      if (response.success) {
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
-
-
-        navigate('/home');
-
-      } else {
-        setError(response.message || 'Registration failed');
-      }
+      // Используем функцию registerUser из API для регистрации пользователя
+      await registerUser(email, password, name);
+      
+      // Если регистрация прошла успешно, перенаправляем на домашнюю страницу
+      navigate('/home');
     } catch (error) {
-      console.error('Registration error:', error);
-      setError('Что-то пошло не так. Пожалуйста, попробуйте позже.');
+      setError(error.message);  // Отображаем ошибку
     }
   };
 
