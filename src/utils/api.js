@@ -88,7 +88,6 @@ const fetchUserData = async () => {
   }
 };
 
-// Функция для выполнения запроса с авторизацией
 const fetchWithAuth = async (endpoint, options = {}) => {
   const accessToken = localStorage.getItem('accessToken');
   
@@ -115,7 +114,6 @@ const fetchWithAuth = async (endpoint, options = {}) => {
   return response;
 };
 
-// Функция для обновления токенов
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
@@ -140,11 +138,11 @@ const refreshAccessToken = async () => {
     } else {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      window.location.href = '/login';  // Перенаправление на страницу логина, если обновление не удалось
+      window.location.href = '/login';  
     }
   } catch (error) {
     console.error('Error refreshing token:', error);
-    window.location.href = '/login';  // Перенаправление на страницу логина, если произошла ошибка
+    window.location.href = '/login';  
   }
 };
 

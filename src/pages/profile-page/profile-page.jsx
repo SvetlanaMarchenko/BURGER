@@ -6,7 +6,7 @@ import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-de
 import { NavLink } from 'react-router-dom';
 import { fetchUserData, logoutUser, updateUserData } from '../../utils/Api'; 
 
-export function ProfilePage() {
+function ProfilePage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -144,3 +144,5 @@ export function ProfilePage() {
     </div>
   );
 }
+
+export default ProfilePage

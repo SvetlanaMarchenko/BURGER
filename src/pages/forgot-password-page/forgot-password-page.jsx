@@ -21,7 +21,6 @@ export function ForgotPasswordPage() {
 
     setIsSubmitting(true);
     try {
-      // Вызываем функцию сброса пароля из API
       const data = await resetPassword(email);
 
       if (data.success) {
