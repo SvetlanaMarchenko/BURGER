@@ -106,14 +106,14 @@ function ProfilePage() {
                 error={false}
                 errorText="Ошибка"
                 size="default"
-                extraClass="mb-2"
+                extraClass="mb-6"
               />
               <EmailInput
                 onChange={handleEmailChange}
                 value={email}
                 placeholder="Email"
                 isIcon={true}
-                extraClass="mb-2"
+                extraClass="mb-6"
               />
               <PasswordInput
                 onChange={handlePasswordChange}
