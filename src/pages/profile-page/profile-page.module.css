@@ -44,6 +44,7 @@
   position: absolute;
   left: 50%; 
   transform: translateX(-50%);
+  align-items: flex-end;
 }
 
 .profileForm {
@@ -65,7 +66,29 @@
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: flex-start !important
+  justify-content: flex-start !important;
+  color: white;
 }
+
+.chioceOptionInactive{
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+  
+}
+
+.chioceOptionInactive:hover{
+  color: #747bff;
+}
+
+.chioceOptionInactiveInfo{
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+}
+
+
 
 

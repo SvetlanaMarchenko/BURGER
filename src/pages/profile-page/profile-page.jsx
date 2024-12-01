@@ -29,13 +29,10 @@ function ProfilePage() {
 
     fetchData();
   }, []);
-
-  // Обработчики изменения данных
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Обработчик сохранения данных
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,11 +61,10 @@ function ProfilePage() {
     setPassword('');
   };
 
-  // Обработчик выхода из системы
   const handleLogout = async () => {
     try {
-      await logoutUser();  // Вызываем функцию выхода из API
-      navigate('/login');   // Перенаправляем на страницу входа
+      await logoutUser(); 
+      navigate('/login');
     } catch (error) {
       console.error(error);
       alert('Ошибка при выходе. Попробуйте позже.');
@@ -82,16 +78,18 @@ function ProfilePage() {
         <div className={styles.container}>
           <div className={styles.profileForm}>
             <nav className={styles.profileChoice}>
-              <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOption} text text_type_main-medium text_color_inactive`}>
+              <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
                 Профиль
               </NavLink>
-              <NavLink to="/orders" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOption} text text_type_main-medium text_color_inactive`}>
+
+              <NavLink to="/" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
                 История заказов
               </NavLink>
-              <h1 className={`${styles.chioceOption} text text_type_main-medium mb-20`} onClick={handleLogout}>
+
+              <h1 className={`${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive mb-20`} onClick={handleLogout}>
                 Выход
               </h1>
-              <p className={`${styles.chioceOption} text text_type_main-small text_color_inactive`}>
+              <p className={`${styles.chioceOptionInactiveInfo} text text_type_main-small text_color_inactive`}>
                 В этом разделе вы можете изменить свои персональные данные
               </p>
             </nav>
@@ -127,15 +125,15 @@ function ProfilePage() {
               {successMessage && <p className="text text_type_main-default text_color_inactive">{successMessage}</p>}
 
               <div className={styles.buttonsContainer}>
-                <Button type="primary" size="large" extraClass="mt-6">Сохранить</Button>
-                <Button
+              <Button
                   type="secondary"
                   size="large"
-                  extraClass="mt-6"
-                  onClick={handleCancel} // Обработчик отмены
+                  onClick={handleCancel}
                 >
                   Отмена
                 </Button>
+                <Button type="primary" size="large">Сохранить</Button>
+
               </div>
             </form>
           </div>
