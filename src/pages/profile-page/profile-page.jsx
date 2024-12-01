@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Импорт PropTypes
 import styles from './profile-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { useNavigate } from 'react-router-dom';
@@ -6,48 +7,51 @@ import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-de
 import { NavLink } from 'react-router-dom';
 import { fetchUserData, logoutUser, updateUserData } from '../../utils/Api'; 
 
-function ProfilePage() {
+function ProfilePage({ initialUserData: propInitialUserData }) { 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [initialUserData, setInitialUserData] = useState({ email: '', name: '' });
-  const [isChanged, setIsChanged] = useState(false); // Новое состояние для отслеживания изменений
+  const [isChanged, setIsChanged] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchUserData(); 
-        setInitialUserData(result.user);
-        setEmail(result.user.email);
-        setName(result.user.name);
-      } catch (error) {
-        setError('Ошибка при загрузке данных');
-      }
-    };
+    if (propInitialUserData) {
+      setInitialUserData(propInitialUserData);
+      setEmail(propInitialUserData.email);
+      setName(propInitialUserData.name);
+    } else {
+      const fetchData = async () => {
+        try {
+          const result = await fetchUserData(); 
+          setInitialUserData(result.user);
+          setEmail(result.user.email);
+          setName(result.user.name);
+        } catch (error) {
+          setError('Ошибка при загрузке данных');
+        }
+      };
+      fetchData();
+    }
+  }, [propInitialUserData]);
 
-    fetchData();
-  }, []);
-
-  // Обработчики изменений
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setIsChanged(true); // Устанавливаем флаг изменения
+    setIsChanged(true);
   };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    setIsChanged(true); // Устанавливаем флаг изменения
+    setIsChanged(true);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setIsChanged(true); // Устанавливаем флаг изменения
+    setIsChanged(true);
   };
 
-  // Отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,22 +68,20 @@ function ProfilePage() {
       setSuccessMessage('Данные успешно обновлены');
       setInitialUserData(result.user);
       setError('');
-      setIsChanged(false); // Сброс флага изменений
+      setIsChanged(false);
     } catch (error) {
       setError('Ошибка при сохранении данных');
       setSuccessMessage('');
     }
   };
 
-  // Отмена изменений
   const handleCancel = () => {
     setEmail(initialUserData.email);
     setName(initialUserData.name);
     setPassword('');
-    setIsChanged(false); // Сброс флага изменений
+    setIsChanged(false);
   };
 
-  // Выход из системы
   const handleLogout = async () => {
     try {
       await logoutUser(); 
@@ -143,7 +145,6 @@ function ProfilePage() {
               {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
               {successMessage && <p className="text text_type_main-default text_color_inactive">{successMessage}</p>}
 
-              {/* Отображаем кнопки только если данные изменены */}
               {isChanged && (
                 <div className={styles.buttonsContainer}>
                   <Button
@@ -163,5 +164,16 @@ function ProfilePage() {
     </div>
   );
 }
+
+ProfilePage.propTypes = {
+  initialUserData: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })
+};
+
+ProfilePage.defaultProps = {
+  initialUserData: null
+};
 
 export default ProfilePage;
