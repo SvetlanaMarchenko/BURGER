@@ -72,5 +72,5 @@ export function ForgotPasswordPage() {
   );
 }
 ForgotPasswordPage.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

@@ -24,3 +24,7 @@
   flex-grow: 1;
   overflow-y: hidden;
 }
+
+.titleIngredientDetails{
+  display: flex;
+}

@@ -23,20 +23,6 @@ function App() {
 
   return (
     <div>
-      <nav>
-        <NavLink 
-          to="/" 
-          className={({ isActive }) => isActive ? "active1" : ""}
-        >
-          Home
-        </NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/register">Register</NavLink>
-        <NavLink to="/forgot-password">Forgot Password</NavLink>
-        <NavLink to="/reset-password">Reset Password</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
-      </nav>
-
       {/* Если есть backgroundLocation в state, то рендерим страницу ингредиента как модалку */}
       {state?.backgroundLocation &&
       (

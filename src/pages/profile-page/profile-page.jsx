@@ -167,8 +167,8 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
 
 ProfilePage.propTypes = {
   initialUserData: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    email: PropTypes.string,
+    name: PropTypes.string
   })
 };
 
