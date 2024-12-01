@@ -30,7 +30,6 @@ export function ForgotPasswordPage() {
         alert(data.message || 'Что-то пошло не так!');
       }
     } catch (error) {
-      console.error("Ошибка при восстановлении пароля", error);
       alert('Что-то пошло не так!');
     } finally {
       setIsSubmitting(false);

@@ -1,23 +1,18 @@
 import { Link } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 const IngredientDetails = () => {
   const selectedData = useSelector(
-    (a) => a.currentIngredient // Получаем текущий ингредиент из Redux
+    (a) => a.currentIngredient
   );
-  const location = useLocation(); // Получаем текущую локацию
-  console.log(`selectedData`, selectedData)
-  console.log('in IngredientDetails')
-
   if (!selectedData) {
-    return <p>Загрузка...</p>; // Если данных нет, можно отобразить сообщение
+    return <p>Загрузка...</p>;
   }
 
   return (
     <Link
-      to={`/ingredients/${selectedData._id}`} // Путь к детальной странице ингредиента
+      to={`/ingredients/${selectedData._id}`} 
     >
       <section className={styles.ingredientsDetailsMain}>
         <div>

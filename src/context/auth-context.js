@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
         window.location.href = '/login';
       }
     } catch (error) {
-      console.error('Error refreshing token:', error);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       setIsAuthenticated(false);

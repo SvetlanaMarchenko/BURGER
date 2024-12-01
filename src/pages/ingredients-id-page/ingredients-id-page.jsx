@@ -11,7 +11,6 @@ const IngredientsIdPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Trying to load and set ingredient");
     dispatch(fetchDataIngredientsAndSetCurrent(id));
   }, [dispatch, id]);
 

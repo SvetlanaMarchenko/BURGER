@@ -26,20 +26,15 @@ export const fetchDataIngredientsAndSetCurrent = (ingredient_id) => {
 
     requestFromApi('/ingredients')
       .then(json => {
-        console.log("fetched successfully")
         const fetchedIngredients = json.data
-        console.log("fetchedData: ", fetchedIngredients)
-        console.log("we are looking for ", ingredient_id)
         const desiredIngredient = fetchedIngredients.find(ingr => ingr._id === ingredient_id )
 
         if(desiredIngredient) {
-          console.log('desiredIngredient found! It is ', desiredIngredient)
           return dispatch(setCurrentIngredient(desiredIngredient))
         } else {
           console.error("No ingredient with id ", ingredient_id)
         }
           return dispatch(fetchIngredientsSuccess(fetchedIngredients))
-        // return dispatch(fetchIngredientsSuccess(json.data))
       })
       .catch(error => dispatch(fetchIngredientsFailure(error)));
   };

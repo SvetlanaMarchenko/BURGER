@@ -20,19 +20,16 @@ const BurgerIngredients = () => {
   const location = useLocation();
   const { id } = useParams(); 
 
-
   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
-  const selectedData = useSelector((state) => state.currentIngredient); // Получаем текущий ингредиент из Redux
+  const selectedData = useSelector((state) => state.currentIngredient); 
   
 
   useEffect(() => {
-    console.log('in ingrs useEffect location is: ', location)
-    console.log('in ingrs useEffect id is: ', id)
     if( location.pathname.startsWith('/ingredients/') && id ) {
       dispatch(fetchDataIngredientsAndSetCurrent())
       
     } else {
-      dispatch(fetchDataIngredients()); // Загрузка ингредиентов
+      dispatch(fetchDataIngredients());
     }
   }, [dispatch]);
 
@@ -50,15 +47,15 @@ const BurgerIngredients = () => {
     { type: 'main', value: 'Начинки' }
   ];
 
-  // Открытие модалки и обновление URL с id ингредиента
   const openModal = (item) => {
-    dispatch(setCurrentIngredient(item)); // Устанавливаем текущий ингредиент
-    setIsModalOpen(true); // Открываем модалку
+    dispatch(setCurrentIngredient(item));
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    dispatch(clearCurrentIngredient()); // Очищаем текущий ингредиент
-    setIsModalOpen(false); // Закрываем модалку
+    dispatch(clearCurrentIngredient());
+    setIsModalOpen(false);
+    navigate(-1)
   };
 
   const handleScroll = () => {
@@ -105,10 +102,9 @@ const BurgerIngredients = () => {
                   key={item._id}
                   item={item}
                   onClick={() => {
-                    console.log("ingr clicked, so setting backgroundLocation")
                     navigate(`/ingredients/${item._id}`, {state: {backgroundLocation: '/'}})
                     return openModal(item)
-                  }} // Открыть модалку при клике
+                  }}
                 />
               ))}
             </div>
@@ -116,7 +112,6 @@ const BurgerIngredients = () => {
         ))}
       </main>
 
-      {/* Модалка с детальным ингредиентом */}
       {isModalOpen && selectedData && (
         <Modal onClose={closeModal}>
           <IngredientDetails  />

@@ -87,7 +87,6 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
       await logoutUser(); 
       navigate('/login');
     } catch (error) {
-      console.error(error);
       alert('Ошибка при выходе. Попробуйте позже.');
     }
   };
