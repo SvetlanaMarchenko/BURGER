@@ -8,10 +8,18 @@ import { HomePage } from '../../pages/home-page/home-page';
 import ProfilePage from '../../pages/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
 import { OnlyAuth, OnlyUnAuth, ProtectedResetPassword } from '../protected-route.jsx';
+import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
+// import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients.jsx'
 
 function App() {
   const location = useLocation(); // Получаем текущую локацию из React Router
-  const state = location.state; // Извлекаем state из текущего location
+  // const state = location.state; // Извлекаем state из текущего location
+  console.log("original location:", location)
+  console.log("location.state: ", location.state)
+  let state = location.state
+  console.log("app's state after trying bckg: ", state)
+  console.log("location after state something:", location)
+  
 
   return (
     <div>
@@ -30,11 +38,13 @@ function App() {
       </nav>
 
       {/* Если есть backgroundLocation в state, то рендерим страницу ингредиента как модалку */}
-      {state?.backgroundLocation && (
-        <Routes location={state.backgroundLocation}>
-          <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
+      {state?.backgroundLocation &&
+      (
+        <Routes>
+          <Route path="/ingredients/:id" element={<HomePage />} />    
         </Routes>
-      )}
+      )
+      }
 
       {/* Основные маршруты приложения */}
       <Routes location={state?.backgroundLocation || location}>    

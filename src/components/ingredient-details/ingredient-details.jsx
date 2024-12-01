@@ -9,6 +9,7 @@ const IngredientDetails = () => {
   );
   const location = useLocation(); // Получаем текущую локацию
   console.log(`selectedData`, selectedData)
+  console.log('in IngredientDetails')
 
   if (!selectedData) {
     return <p>Загрузка...</p>; // Если данных нет, можно отобразить сообщение

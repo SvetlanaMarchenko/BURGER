@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../../utils/api';  // Импортируем функцию для авторизации
+import PropTypes from 'prop-types'; // Импортируем PropTypes
 import styles from './login-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 
-export function LoginPage() {
+export function LoginPage({ initialEmail }) {
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('primer@primer.ru');
+  const [email, setEmail] = useState(initialEmail || ''); // Инициализируем email с переданным значением, если оно есть
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -93,3 +94,10 @@ export function LoginPage() {
     </div>
   );
 }
+
+// Проверка пропсов для LoginPage
+LoginPage.propTypes = {
+  initialEmail: PropTypes.string,  // Пропс initialEmail должен быть строкой
+};
+
+export default LoginPage;

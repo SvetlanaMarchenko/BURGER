@@ -4,6 +4,7 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 import styles from './forgot-password-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 import { resetPassword } from '../../utils/Api';  // Импортируем функцию сброса пароля
+import PropTypes from 'prop-types';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -70,3 +71,6 @@ export function ForgotPasswordPage() {
     </div>
   );
 }
+ForgotPasswordPage.propTypes = {
+  title: PropTypes.string.isRequired,  // Проверка, что переданный пропс 'title' - строка и обязателен
+};
