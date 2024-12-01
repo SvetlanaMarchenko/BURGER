@@ -13,6 +13,7 @@ function ProfilePage() {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [initialUserData, setInitialUserData] = useState({ email: '', name: '' });
+  const [isChanged, setIsChanged] = useState(false); // Новое состояние для отслеживания изменений
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,10 +30,24 @@ function ProfilePage() {
 
     fetchData();
   }, []);
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handleNameChange = (e) => setName(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
 
+  // Обработчики изменений
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setIsChanged(true); // Устанавливаем флаг изменения
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    setIsChanged(true); // Устанавливаем флаг изменения
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setIsChanged(true); // Устанавливаем флаг изменения
+  };
+
+  // Отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -49,18 +64,22 @@ function ProfilePage() {
       setSuccessMessage('Данные успешно обновлены');
       setInitialUserData(result.user);
       setError('');
+      setIsChanged(false); // Сброс флага изменений
     } catch (error) {
       setError('Ошибка при сохранении данных');
       setSuccessMessage('');
     }
   };
 
+  // Отмена изменений
   const handleCancel = () => {
     setEmail(initialUserData.email);
     setName(initialUserData.name);
     setPassword('');
+    setIsChanged(false); // Сброс флага изменений
   };
 
+  // Выход из системы
   const handleLogout = async () => {
     try {
       await logoutUser(); 
@@ -124,17 +143,19 @@ function ProfilePage() {
               {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
               {successMessage && <p className="text text_type_main-default text_color_inactive">{successMessage}</p>}
 
-              <div className={styles.buttonsContainer}>
-              <Button
-                  type="secondary"
-                  size="large"
-                  onClick={handleCancel}
-                >
-                  Отмена
-                </Button>
-                <Button type="primary" size="large">Сохранить</Button>
-
-              </div>
+              {/* Отображаем кнопки только если данные изменены */}
+              {isChanged && (
+                <div className={styles.buttonsContainer}>
+                  <Button
+                    type="secondary"
+                    size="large"
+                    onClick={handleCancel}
+                  >
+                    Отмена
+                  </Button>
+                  <Button type="primary" size="large">Сохранить</Button>
+                </div>
+              )}
             </form>
           </div>
         </div>
@@ -143,4 +164,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage
+export default ProfilePage;
