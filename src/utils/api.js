@@ -106,13 +106,13 @@ const fetchWithAuth = async (endpoint, options = {}) => {
   });
 
   if (response.status === 401) {
-    // Если ответ с ошибкой 401, обновляем токен и повторяем запрос
     await refreshAccessToken();
-    return fetchWithAuth(endpoint, options);  // Повторно вызываем запрос с новым токеном
+    return fetchWithAuth(endpoint, options);
   }
 
   return response;
 };
+
 
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');

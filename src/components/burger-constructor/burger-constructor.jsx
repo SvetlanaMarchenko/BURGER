@@ -6,9 +6,10 @@ import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient } from '../../services/actions/constructor-actions';
 import { useDrop, useDrag } from 'react-dnd';
-import { createOrder } from '../../services/actions/order-actions';
+import { createOrder } from '../../services/actions/order-actions'; // Импортируем createOrder для работы с заказами
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
+import { useNavigate } from 'react-router-dom'; // Для редиректа на страницу логина
 
 const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -38,13 +39,12 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
     >
       <div className={styles.dragIconWrapper}>
         <DragIcon />
-
       </div>
       <ConstructorElement
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => removeIngredient()} 
+        handleClose={() => removeIngredient()}
       />
     </div>
   );
@@ -53,6 +53,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
 const BurgerConstructor = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Для перенаправления на страницу логина
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
   const moveIngredient = (fromIndex, toIndex) => {
@@ -88,9 +89,16 @@ const BurgerConstructor = () => {
   }, [bun, ingredients]);
 
   const handleCreateOrder = () => {
+    const token = localStorage.getItem('accessToken'); // Получаем токен из localStorage
+
+    if (!token) {
+      navigate('/login'); // Если токен отсутствует, перенаправляем на страницу логина
+      return;
+    }
+
     const ingredientId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id);
-    dispatch(createOrder(ingredientId));
-    openModal();
+    dispatch(createOrder(ingredientId)); // Создаём заказ
+    openModal(); // Открываем модалку с деталями заказа
   };
 
   return (
@@ -124,7 +132,7 @@ const BurgerConstructor = () => {
             />
           ))
         ) : (
-          <div className={`${styles.emptyIngredientWrapper} ml-8 ${styles.emptyBunWrapper}  text text_type_main-default`}>
+          <div className={`${styles.emptyIngredientWrapper} ml-8 ${styles.emptyBunWrapper} text text_type_main-default`}>
             <ConstructorElement text="Выберите начинку" />
           </div>
         )}
@@ -141,7 +149,7 @@ const BurgerConstructor = () => {
             thumbnail={bun.image}
           />
         ) : (
-          <div className={`${styles.emptyBunWrapper}  ${styles.constructorElementBlock}`}>
+          <div className={`${styles.emptyBunWrapper} ${styles.constructorElementBlock}`}>
             <ConstructorElement type="bottom" text="Выберите булку" isLocked={true} />
           </div>
         )}
@@ -154,7 +162,7 @@ const BurgerConstructor = () => {
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={handleCreateOrder}
+          onClick={handleCreateOrder} // Вызов обработчика создания заказа
         >
           Оформить заказ
         </Button>
@@ -170,19 +178,11 @@ const BurgerConstructor = () => {
 };
 
 BurgerConstructor.propTypes = {
-  bun: PropTypes.arrayOf(
-    IngredientType
-  ),
-
-  ingredients: PropTypes.arrayOf(
-    IngredientType
-  ),
-  
+  bun: PropTypes.arrayOf(IngredientType),
+  ingredients: PropTypes.arrayOf(IngredientType),
   isModalOpen: PropTypes.bool,
   handleRemoveIngredient: PropTypes.func,
-  handleClearConstructor: PropTypes.func
+  handleClearConstructor: PropTypes.func,
 };
 
-
 export default BurgerConstructor;
-
