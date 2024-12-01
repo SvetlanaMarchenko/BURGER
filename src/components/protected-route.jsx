@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { fetchUserData } from '../utils/api'; // Импортируем функцию для получения данных пользователя
 
-const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false, protectResetPassword = false }) => {
+const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false}) => {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
@@ -43,16 +43,9 @@ const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false, protect
   if (!onlyUnAuth && !isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
-
-  // Защита маршрута для сброса пароля (пользователь должен перейти через forgot-password)
-  if (protectResetPassword && !localStorage.getItem('resetEmail')) {
-    return <Navigate to="/forgot-password" />;
-  }
-
   // Рендерим переданный компонент
   return <Component />;
 };
 
 export const OnlyAuth = (props) => <ProtectedRouteElement {...props} onlyUnAuth={false} />;
 export const OnlyUnAuth = (props) => <ProtectedRouteElement {...props} onlyUnAuth={true} />;
-export const ProtectedResetPassword = (props) => <ProtectedRouteElement {...props} protectResetPassword={true} />;

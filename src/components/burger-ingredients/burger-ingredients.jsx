@@ -106,7 +106,7 @@ const BurgerIngredients = () => {
                   item={item}
                   onClick={() => {
                     console.log("ingr clicked, so setting backgroundLocation")
-                    navigate(`/ingredients/${item._id}`, {state: {backgroundLocation: '/home'}})
+                    navigate(`/ingredients/${item._id}`, {state: {backgroundLocation: '/'}})
                     return openModal(item)
                   }} // Открыть модалку при клике
                 />

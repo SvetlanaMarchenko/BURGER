@@ -228,4 +228,22 @@ const logoutUser = async () => {
   }
 };
 
+
+export const resetPasswordRequest = async (password, token) => {
+  try {
+    const response = await requestFromApi('/password-reset/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, token }),
+    });
+
+    return response;  // Возвращаем результат, чтобы обработать его в компоненте
+  } catch (error) {
+    console.error('Ошибка при сбросе пароля:', error);
+    throw new Error('Что-то пошло не так! Попробуйте позже.');
+  }
+};
+
 export { fetchWithAuth, fetchUserData, registerUser, logoutUser, updateUserData };

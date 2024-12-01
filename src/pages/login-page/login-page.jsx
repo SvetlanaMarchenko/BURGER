@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { loginUser } from '../../utils/api';  // Импортируем функцию для авторизации
-import PropTypes from 'prop-types'; // Импортируем PropTypes
+import { loginUser } from '../../utils/api'; 
+import PropTypes from 'prop-types';
 import styles from './login-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
 
 export function LoginPage({ initialEmail }) {
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(initialEmail || ''); // Инициализируем email с переданным значением, если оно есть
+  const [email, setEmail] = useState(initialEmail || ''); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -32,13 +32,10 @@ export function LoginPage({ initialEmail }) {
     setIsSubmitting(true);
 
     try {
-      // Используем функцию loginUser из API для аутентификации и получения токенов
       await loginUser(email, password);
-      
-      // Если авторизация прошла успешно, перенаправляем на главную страницу
       navigate('/');
     } catch (error) {
-      setError(error.message);  // Отображаем ошибку
+      setError(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -76,7 +73,7 @@ export function LoginPage({ initialEmail }) {
             </Button>
 
             <div className={`${styles.newPerson}`}>
-              <p className="text text_type_main-default text_color_inactive mb-4"> Вы новый пользователь? </p>
+              <p className="text text_type_main-default text_color_inactive mb-4"> Вы - новый пользователь? </p>
               <Link to="/register">
                 Зарегистрироваться
               </Link>
@@ -95,9 +92,8 @@ export function LoginPage({ initialEmail }) {
   );
 }
 
-// Проверка пропсов для LoginPage
 LoginPage.propTypes = {
-  initialEmail: PropTypes.string,  // Пропс initialEmail должен быть строкой
+  initialEmail: PropTypes.string,
 };
 
 export default LoginPage;

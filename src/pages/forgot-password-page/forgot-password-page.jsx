@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password-page.module.css';
 import AppHeader from '../../components/app-header/app-header';
-import { resetPassword } from '../../utils/Api';  // Импортируем функцию сброса пароля
+import { resetPassword } from '../../utils/api';
 import PropTypes from 'prop-types';
 
 export function ForgotPasswordPage() {
@@ -30,7 +30,7 @@ export function ForgotPasswordPage() {
         alert(data.message || 'Что-то пошло не так!');
       }
     } catch (error) {
-      console.error("Error during password reset:", error);
+      console.error("Ошибка при восстановлении пароля", error);
       alert('Что-то пошло не так!');
     } finally {
       setIsSubmitting(false);
@@ -72,5 +72,5 @@ export function ForgotPasswordPage() {
   );
 }
 ForgotPasswordPage.propTypes = {
-  title: PropTypes.string.isRequired,  // Проверка, что переданный пропс 'title' - строка и обязателен
+  title: PropTypes.string.isRequired,
 };

@@ -7,7 +7,7 @@ import { ResetPasswordPage } from '../../pages/reset-password-page/reset-passwor
 import { HomePage } from '../../pages/home-page/home-page';
 import ProfilePage from '../../pages/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
-import { OnlyAuth, OnlyUnAuth, ProtectedResetPassword } from '../protected-route.jsx';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 // import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients.jsx'
 
@@ -25,7 +25,7 @@ function App() {
     <div>
       <nav>
         <NavLink 
-          to="/home" 
+          to="/" 
           className={({ isActive }) => isActive ? "active1" : ""}
         >
           Home
@@ -49,7 +49,7 @@ function App() {
       {/* Основные маршруты приложения */}
       <Routes location={state?.backgroundLocation || location}>    
         <Route path="/" element={<HomePage />} />
-        <Route path="/home" element={<HomePage />} />    
+
         
         {/* Маршруты для неавторизованных пользователей */}
         <Route path="/login" element={<OnlyUnAuth element={LoginPage} />} />
@@ -61,7 +61,7 @@ function App() {
         <Route path="/profile/*" element={<OnlyAuth element={ProfilePage} />} /> {/* Все вложенные маршруты */}
         
         {/* Защита для маршрута /reset-password, доступ только для пользователей, которые перешли через /forgot-password */}
-        <Route path="/reset-password" element={<ProtectedResetPassword element={ResetPasswordPage} />} />
+        <Route path="/reset-password" element={<OnlyUnAuth element={ResetPasswordPage} />} />
         
         {/* Главная страница, доступна всем */}
         <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
