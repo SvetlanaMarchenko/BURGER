@@ -6,10 +6,10 @@ import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient } from '../../services/actions/constructor-actions';
 import { useDrop, useDrag } from 'react-dnd';
-import { createOrder } from '../../services/actions/order-actions'; // Импортируем createOrder для работы с заказами
+import { createOrder } from '../../services/actions/order-actions'; 
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
-import { useNavigate } from 'react-router-dom'; // Для редиректа на страницу логина
+import { useNavigate } from 'react-router-dom'; 
 
 const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -53,7 +53,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
 const BurgerConstructor = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Для перенаправления на страницу логина
+  const navigate = useNavigate(); 
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
   const moveIngredient = (fromIndex, toIndex) => {
@@ -89,16 +89,17 @@ const BurgerConstructor = () => {
   }, [bun, ingredients]);
 
   const handleCreateOrder = () => {
-    const token = localStorage.getItem('accessToken'); // Получаем токен из localStorage
+    const token = localStorage.getItem('accessToken');
 
     if (!token) {
-      navigate('/login'); // Если токен отсутствует, перенаправляем на страницу логина
+      navigate('/login'); 
+      
       return;
     }
 
     const ingredientId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id);
-    dispatch(createOrder(ingredientId)); // Создаём заказ
-    openModal(); // Открываем модалку с деталями заказа
+    dispatch(createOrder(ingredientId)); 
+    openModal(); 
   };
 
   return (
@@ -162,7 +163,7 @@ const BurgerConstructor = () => {
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={handleCreateOrder} // Вызов обработчика создания заказа
+          onClick={handleCreateOrder} 
         >
           Оформить заказ
         </Button>

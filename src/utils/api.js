@@ -1,6 +1,6 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
-// Проверка ответа
+
 function checkResponse(res) {
   if (res.ok) {
     return res.json();
@@ -8,12 +8,11 @@ function checkResponse(res) {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-// Функция для отправки запросов на сервер
+
 export function requestFromApi(endpoint, options = {}) {
   return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 }
 
-// Функция для авторизации и сохранения токенов
 export const loginUser = async (email, password) => {
   try {
     const data = await requestFromApi('/auth/login', {
@@ -25,7 +24,6 @@ export const loginUser = async (email, password) => {
     });
 
     if (data.success) {
-      // Сохраняем токены в localStorage
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
 
@@ -39,7 +37,7 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// Функция для регистрации пользователя и сохранения токенов
+
 const registerUser = async (email, password, name) => {
   try {
     const data = await requestFromApi('/auth/register', {
@@ -51,7 +49,6 @@ const registerUser = async (email, password, name) => {
     });
 
     if (data.success) {
-      // Сохраняем токены в localStorage
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
 
@@ -65,7 +62,6 @@ const registerUser = async (email, password, name) => {
   }
 };
 
-// Функция для получения данных пользователя
 const fetchUserData = async () => {
   const accessToken = localStorage.getItem('accessToken');
   
@@ -155,17 +151,17 @@ const updateUserData = async (updatedUserData) => {
 
   try {
     const response = await fetchWithAuth('/auth/user', {
-      method: 'PATCH', // Используем PATCH, чтобы обновить только нужные поля
+      method: 'PATCH', 
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedUserData), // Данные для обновления
+      body: JSON.stringify(updatedUserData), 
     });
 
-    const result = await response.json(); // Парсим ответ от сервера
+    const result = await response.json();
 
     if (result.success) {
-      // Если запрос прошел успешно, возвращаем обновленные данные
+
       return result;
     } else {
       throw new Error(result.message || 'Не удалось обновить данные');
@@ -186,14 +182,13 @@ export const resetPassword = async (email) => {
       body: JSON.stringify({ email }),
     });
 
-    return data; // Возвращаем результат, чтобы компонент мог обработать успех или ошибку
+    return data; 
   } catch (error) {
     console.error("Ошибка при сбросе пароля:", error);
     throw new Error('Что-то пошло не так! Попробуйте позже.');
   }
 };
 
-// Функция для выхода из системы
 const logoutUser = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
@@ -214,11 +209,10 @@ const logoutUser = async () => {
     const data = await response.json();
 
     if (data.success) {
-      // Удаляем токены и данные пользователя из localStorage
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('userData');
-      window.location.href = '/login';  // Перенаправление на страницу логина
+      window.location.href = '/login'; 
     } else {
       console.error('Ошибка при выходе из системы');
     }
@@ -239,7 +233,7 @@ export const resetPasswordRequest = async (password, token) => {
       body: JSON.stringify({ password, token }),
     });
 
-    return response;  // Возвращаем результат, чтобы обработать его в компоненте
+    return response; 
   } catch (error) {
     console.error('Ошибка при сбросе пароля:', error);
     throw new Error('Что-то пошло не так! Попробуйте позже.');
