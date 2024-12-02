@@ -118,15 +118,13 @@ const refreshAccessToken = async () => {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/auth/token`, {
+    const data = await requestFromApi(`${BASE_URL}/auth/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ token: refreshToken }),
     });
-
-    const data = await response.json();
 
     if (data.success) {
       localStorage.setItem('accessToken', data.accessToken);
@@ -150,15 +148,14 @@ const updateUserData = async (updatedUserData) => {
   }
 
   try {
-    const response = await fetchWithAuth('/auth/user', {
+    const result = await fetchWithAuth('/auth/user', {
       method: 'PATCH', 
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedUserData), 
-    });
-
-    const result = await response.json();
+    })
+    .then(checkResponse);
 
     if (result.success) {
 
@@ -198,15 +195,14 @@ const logoutUser = async () => {
   }
 
   try {
-    const response = await fetchWithAuth('/auth/logout', {
+    const data = await fetchWithAuth('/auth/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ token: refreshToken }),
-    });
-
-    const data = await response.json();
+    })
+    .then(checkResponse)
 
     if (data.success) {
       localStorage.removeItem('accessToken');

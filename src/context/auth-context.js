@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react';
+import {BASE_URL, requestFromApi} from '../utils/api'; 
 
 export const AuthContext = createContext();
 
@@ -11,15 +12,13 @@ export const AuthProvider = ({ children }) => {
     if (!refreshToken) return;
 
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/auth/token', {
+      const data = await requestFromApi(`${BASE_URL}/auth/token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ token: refreshToken }),
       });
-
-      const data = await response.json();
 
       if (data.success) {
         localStorage.setItem('accessToken', data.accessToken);
