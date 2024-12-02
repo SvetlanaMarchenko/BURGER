@@ -33,13 +33,6 @@ function App() {
   return (
     <div className={style.appLayout}>
        <AppHeader />
-      {state?.backgroundLocation &&
-      (
-        <Routes>
-          <Route path="/ingredients/:id" element={<HomePage />} />    
-        </Routes>
-      )
-      }
 
       {state?.backgroundLocation && (
         <Routes>
