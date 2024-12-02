@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; 
 import styles from './profile-page.module.css';
-import AppHeader from '../../components/app-header/app-header';
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
@@ -93,7 +92,6 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
 
   return (
     <div className={styles.loginLayoutProfile}>
-      <AppHeader />
       <div>
         <div className={styles.container}>
           <div className={styles.profileForm}>

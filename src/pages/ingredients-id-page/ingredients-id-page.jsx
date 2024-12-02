@@ -4,7 +4,6 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 import { fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
 import { useDispatch } from 'react-redux';
 import style from './ingredients-id-page.module.css';
-import AppHeader from '../../components/app-header/app-header/';
 
 const IngredientsIdPage = () => {
   const { id } = useParams();  
@@ -16,7 +15,6 @@ const IngredientsIdPage = () => {
 
   return (
     <div className={style.appLayout}>
-      <AppHeader />
       <div className={style.postModalIngredientDetails}>
         <IngredientDetails />
       </div>

@@ -4,7 +4,6 @@ import { PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer
 import { loginUser } from '../../utils/api'; 
 import PropTypes from 'prop-types';
 import styles from './login-page.module.css';
-import AppHeader from '../../components/app-header/app-header';
 
 export function LoginPage({ initialEmail }) {
   const [password, setPassword] = useState('');
@@ -43,7 +42,6 @@ export function LoginPage({ initialEmail }) {
 
   return (
     <div className={styles.loginLayout}>
-      <AppHeader />
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>

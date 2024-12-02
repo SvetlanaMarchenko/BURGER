@@ -11,7 +11,6 @@ export function HomePage() {
   return (
 
         <div className={`${styles.appLayout}`}>
-            <AppHeader />
             <DndProvider backend={HTML5Backend}>
               <div className={`${styles.ingredientsBox}`}>
                 <BurgerIngredients />

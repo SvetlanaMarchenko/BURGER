@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeader from '../../components/app-header/app-header';
 import { requestFromApi } from '../../utils/api.js';
 import { resetPasswordRequest } from '../../utils/api.js';
 
@@ -55,7 +54,6 @@ export function ResetPasswordPage() {
 
   return (
     <div className={styles.loginLayout}>
-      <AppHeader />
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>

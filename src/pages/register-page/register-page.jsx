@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register-page.module.css';
-import AppHeader from '../../components/app-header/app-header';
 import { registerUser } from '../../utils/api.js';
 import PropTypes from 'prop-types';
 
@@ -46,7 +45,6 @@ export function RegisterPage({ onRegister }) {
 
   return (
     <div className={styles.loginLayout}>
-      <AppHeader />
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>

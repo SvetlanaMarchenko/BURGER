@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password-page.module.css';
-import AppHeader from '../../components/app-header/app-header';
 import { resetPassword } from '../../utils/api';
 import PropTypes from 'prop-types';
 
@@ -38,7 +37,6 @@ export function ForgotPasswordPage() {
 
   return (
     <div className={styles.loginLayout}>
-      <AppHeader />
       <div>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>
