@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 
@@ -11,9 +11,6 @@ const IngredientDetails = () => {
   }
 
   return (
-    <Link
-      to={`/ingredients/${selectedData._id}`} 
-    >
       <section className={styles.ingredientsDetailsMain}>
         <div>
           <div className={`${styles.titleIngredientDetails} mt-10 mr-10 ml-10`}>
@@ -53,7 +50,6 @@ const IngredientDetails = () => {
           </div>
         </div>
       </section>
-    </Link>
   );
 };
 

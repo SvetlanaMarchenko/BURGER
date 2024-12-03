@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import { Routes, Route, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation, useNavigate, useMatch } from 'react-router-dom';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { RegisterPage } from '../../pages/register-page/register-page';
 import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';
@@ -18,14 +18,23 @@ import style from '../../components/app/app.module.css';
 function App() {
   const location = useLocation();
   let state = location.state
-  const currentIngredient = useSelector((state) => state.currentIngredient); 
   const allIngredients = useSelector((state) => state.ingredients.allIngredients); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
   
   useEffect(() => {
-    if(currentIngredient === null && allIngredients && allIngredients.length > 0) {
-      dispatch(setCurrentIngredient(allIngredients[0]))
+    if(
+        wantedIngredientId !== null &&
+        allIngredients &&
+        allIngredients.length > 0
+      ) {
+      const wantedIngredient = allIngredients.find(ingr => ingr._id === wantedIngredientId)
+      if(!wantedIngredient) {
+        console.error("Tried to open page for non-existing ingredient ", wantedIngredientId)
+      } else {
+        dispatch(setCurrentIngredient(wantedIngredient))
+      }
     }
   }, [allIngredients, dispatch]);
 
