@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {FC} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const modalRoot = document.getElementById("react-modals");
+// If whole react-modals element is not define, it's good if whole app will just blow up
+const modalRoot = document.getElementById("react-modals")!;
+ 
+interface ModalProps {
+  children: React.ReactNode;
+  onClose: () => void;
+}
 
-const Modal = ({ children, onClose }) => {
+const Modal: FC <ModalProps> = ({ children, onClose }) => {
   React.useEffect(() => {
-    const handleEsc = (event) => {
+    
+    const handleEsc = (event: KeyboardEvent) => {
+      console.log("this: ", this)
       if (event.key === 'Escape') {
         onClose();
       }
@@ -33,11 +40,6 @@ const Modal = ({ children, onClose }) => {
     </>,
     modalRoot
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func,
 };
 
 export default Modal;
