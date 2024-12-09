@@ -2,12 +2,12 @@ import styles from './order-details.module.css';
 import doneImage from './done.png';
 import { useSelector } from 'react-redux';
 import {selectCurrentOrderDetails} from '../../services/selectors'
-import PropTypes from 'prop-types';
 
-const OrderDetails = () => {
-   const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails);
+const OrderDetails: React.FC = () => {
+   const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails );
    const orderDetailsLayout = () => {
       if (isLoading) {
+         console.log("is loding", isLoading)
          return <p className="text text_type_main-default">Подождите.....Загрузка...</p>;
       }
 
@@ -33,10 +33,6 @@ const OrderDetails = () => {
       </div>
    );
 };
-
-OrderDetails.propTypes = {
-   onClose: PropTypes.func
- };
 
 export default OrderDetails;
 
