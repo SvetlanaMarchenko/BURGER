@@ -7,7 +7,7 @@ import { ResetPasswordPage } from '../../pages/reset-password-page/reset-passwor
 import { HomePage } from '../../pages/home-page/home-page';
 import ProfilePage from '../../pages/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
-import { OnlyAuth, OnlyUnAuth } from '../protected-route.jsx';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route.tsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../modal/modal';

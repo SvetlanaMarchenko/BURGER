@@ -1,8 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { fetchUserData } from '../utils/api'; 
 
-const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false}) => {
+// here onlyUnAuth strictly determinated  
+interface ProtectedRouteElementProps{
+  element: React.ComponentType<any>,
+  onlyUnAuth: boolean;
+}
+interface OnlyAuthProps{
+  [key: string]: any;
+  element: React.ComponentType<any>;
+}
+
+const ProtectedRouteElement: FC<ProtectedRouteElementProps> = ({ element: Component, onlyUnAuth = false}) => {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
@@ -21,10 +31,8 @@ const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false}) => {
           setIsAuthenticated(false);
         }
       }
-
       setIsAuthChecked(true);
     };
-
     checkAuthStatus();
   }, []);
 
@@ -43,5 +51,5 @@ const ProtectedRouteElement = ({ element: Component, onlyUnAuth = false}) => {
   return <Component />;
 };
 
-export const OnlyAuth = (props) => <ProtectedRouteElement {...props} onlyUnAuth={false} />;
-export const OnlyUnAuth = (props) => <ProtectedRouteElement {...props} onlyUnAuth={true} />;
+export const OnlyAuth: FC<OnlyAuthProps> = (props) => <ProtectedRouteElement {...props} onlyUnAuth={false} />;
+export const OnlyUnAuth: FC<OnlyAuthProps> = (props) => <ProtectedRouteElement {...props} onlyUnAuth={true} />;
