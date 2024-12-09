@@ -1,11 +1,11 @@
 import styles from './page-404.module.css';
 import doneImage from './done.png';
 import { useSelector } from 'react-redux';
-import {selectCurrentOrderDetails} from '../../services/selectors'
+import {SelectCurrentOrderDetails} from '../../services/selectors'
 import PropTypes from 'prop-types';
 
 const PageNotFound = () => {
-   const { orderId, isLoading, errorInOrder } = useSelector(selectCurrentOrderDetails);
+   const { orderId, isLoading, errorInOrder } = useSelector(SVGAElementelectCurrentOrderDetails);
    const orderDetailsLayout = () => {
       if (isLoading) {
          return <p className="text text_type_main-default">Подождите.....Загрузка...</p>;
