@@ -1,3 +1,4 @@
+
 import { createSelector } from 'reselect';
 
 interface OrderState {
@@ -18,12 +19,11 @@ interface CurrentOrderDetails {
   errorInOrder: boolean | null;
 }
 
-
 export const SelectCurrentOrderDetails = createSelector(
   [getCurrentOrderState],
   (order): CurrentOrderDetails => ({
     orderId: order?.orderId ?? null,
-    isLoading: order?.isLoading ?? false,
+    isLoading: order?.isLoading ?? false, 
     errorInOrder: order?.errorInOrder ?? null,
   })
 );
