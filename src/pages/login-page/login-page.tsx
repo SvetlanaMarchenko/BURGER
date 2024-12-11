@@ -2,25 +2,24 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../../utils/api'; 
-import PropTypes from 'prop-types';
 import styles from './login-page.module.css';
 
-export function LoginPage({ initialEmail }) {
+export function LoginPage() {
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(initialEmail || ''); 
+  const [email, setEmail] = useState(''); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -34,7 +33,7 @@ export function LoginPage({ initialEmail }) {
       await loginUser(email, password);
       navigate('/');
     } catch (error) {
-      setError(error.message);
+      setError("Что-то пошло не так в процессе logIn");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,9 +88,5 @@ export function LoginPage({ initialEmail }) {
     </div>
   );
 }
-
-LoginPage.propTypes = {
-  initialEmail: PropTypes.string,
-};
 
 export default LoginPage;
