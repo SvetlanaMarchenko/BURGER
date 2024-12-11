@@ -23,11 +23,11 @@ export interface CreateOrderFailureProps {
 
 
 export const createOrderRequest = () : CreateOrderRequestProps => ({ type: CREATE_ORDER_REQUEST });
-export const createOrderSuccess = (orderNumber : CreateOrderSuccessProps) => ({ type: CREATE_ORDER_SUCCESS, payload: orderNumber });
+export const createOrderSuccess = (orderId : number) => ({ type: CREATE_ORDER_SUCCESS, payload: orderId });
 export const createOrderFailure = (error: string): CreateOrderFailureProps => ({ type: CREATE_ORDER_FAILURE, payload: error });
 
 export const createOrder = (ingredients: Ingredients) => {
-  return async (dispatch: any) => {  
+  return async (dispatch: any) => {
     dispatch(createOrderRequest());
 
     try {

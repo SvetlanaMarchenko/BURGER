@@ -1,16 +1,21 @@
 import {requestFromApi} from '../../utils/api.js'
-import {setCurrentIngredient} from '../../services/actions/current-ingredient-actions.js'
+import {setCurrentIngredient} from './current-ingredient-actions.js'
+import { Ingredients } from '../../utils/types/ingredients';
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { RootState, AppDispatch } from '../store.js';
+
 
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
 export const FETCH_INGREDIENTS_FAILURE = 'FETCH_INGREDIENTS_FAILURE';
 
-export const fetchIngredientsRequest = () => ({ type: FETCH_INGREDIENTS_REQUEST });
-export const fetchIngredientsSuccess = (ingredients) => ({ type: FETCH_INGREDIENTS_SUCCESS, payload: ingredients });
-export const fetchIngredientsFailure = (error) => ({ type: FETCH_INGREDIENTS_FAILURE, payload: error });
+export const fetchIngredientsRequest = () : Action => ({ type: FETCH_INGREDIENTS_REQUEST });
+export const fetchIngredientsSuccess = (ingredients: Ingredients) => ({ type: FETCH_INGREDIENTS_SUCCESS, payload: ingredients });
+export const fetchIngredientsFailure = (error: string) => ({ type: FETCH_INGREDIENTS_FAILURE, payload: error });
 
 
-export const fetchDataIngredients = () => {
+export const fetchDataIngredients = (): ThunkAction<void, RootState, unknown, Action<string>> => {
   return (dispatch) => {
     dispatch(fetchIngredientsRequest());
 
@@ -20,14 +25,14 @@ export const fetchDataIngredients = () => {
   };
 };
 
-export const fetchDataIngredientsAndSetCurrent = (ingredient_id) => {
-  return (dispatch) => {
+export const fetchDataIngredientsAndSetCurrent = (ingredient_id: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch(fetchIngredientsRequest());
 
     requestFromApi('/ingredients')
       .then(json => {
         const fetchedIngredients = json.data
-        const desiredIngredient = fetchedIngredients.find(ingr => ingr._id === ingredient_id )
+        const desiredIngredient = fetchedIngredients.find((ingr: { _id: string; }) => ingr._id === ingredient_id )
 
         if(desiredIngredient) {
           return dispatch(setCurrentIngredient(desiredIngredient))

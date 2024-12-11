@@ -18,10 +18,10 @@ const initialState:OrderReducerProps = {
     errorInOrder: false
   }
 
-type OrderActionTypes =
-| createOrderRequest
-| createOrderSuccess
-| createOrderFailure;
+  type OrderActionTypes =
+  | ReturnType<typeof createOrderRequest>
+  | ReturnType<typeof createOrderSuccess>
+  | ReturnType<typeof createOrderFailure>;
 
 const orderReducer = (
     state = initialState,
