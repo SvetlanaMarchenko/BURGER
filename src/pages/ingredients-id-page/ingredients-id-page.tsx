@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import style from './ingredients-id-page.module.css';
 
 const IngredientsIdPage = () => {
-  const { id } = useParams();  
+  const { id } = useParams<{ id: string }>();  
   const dispatch = useDispatch();
 
   useEffect(() => {

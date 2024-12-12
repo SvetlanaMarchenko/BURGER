@@ -9,7 +9,6 @@ export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
 export const FETCH_INGREDIENTS_FAILURE = 'FETCH_INGREDIENTS_FAILURE';
 
-
 export const fetchIngredientsRequest = (): Action => ({
   type: FETCH_INGREDIENTS_REQUEST
 });
@@ -35,22 +34,23 @@ export const fetchDataIngredients = (): ThunkAction<void, RootState, unknown, Ac
 };
 
 export const fetchDataIngredientsAndSetCurrent = (ingredient_id: string) => {
-  return (dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(fetchIngredientsRequest());
 
-    requestFromApi('/ingredients')
-      .then(json => {
-        const fetchedIngredients = json.data
-        const desiredIngredient = fetchedIngredients.find((ingr: { _id: string; }) => ingr._id === ingredient_id )
+    try {
+      const json = await requestFromApi('/ingredients');
+      const fetchedIngredients = json.data;
+      const desiredIngredient = fetchedIngredients.find((ingr: { _id: string }) => ingr._id === ingredient_id);
 
-        if(desiredIngredient) {
-          return dispatch(setCurrentIngredient(desiredIngredient))
-        } else {
-          console.error("No ingredient with id ", ingredient_id)
-        }
-          return dispatch(fetchIngredientsSuccess(fetchedIngredients))
-      })
-      .catch(error => dispatch(fetchIngredientsFailure(error)));
+      if (desiredIngredient) {  
+        dispatch(setCurrentIngredient(desiredIngredient)); 
+      } else {
+        console.error("No ingredient with id ", ingredient_id);
+      }
+      dispatch(fetchIngredientsSuccess(fetchedIngredients));
+    } catch (error) {
+      dispatch(fetchIngredientsFailure("Что-то точно не так"));
+    }
   };
 };
 

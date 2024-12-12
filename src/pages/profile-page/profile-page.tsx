@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; 
-import styles from './profile-page.module.css';
+import React, { useState, useEffect, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
-import { fetchUserData, logoutUser, updateUserData } from '../../utils/Api'; 
+import { fetchUserData, logoutUser, updateUserData } from '../../utils/api';
+import styles from './profile-page.module.css';
 
-function ProfilePage({ initialUserData: propInitialUserData }) { 
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [initialUserData, setInitialUserData] = useState({ email: '', name: '' });
-  const [isChanged, setIsChanged] = useState(false); 
+interface PropInitialUserDataProps {
+  email: string;
+  name: string;
+}
+
+const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({ initialUserData }) => {
+  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [initialUserDataState, setInitialUserData] = useState<PropInitialUserDataProps>({ email: '', name: '' });
+  const [isChanged, setIsChanged] = useState<boolean>(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (propInitialUserData) {
-      setInitialUserData(propInitialUserData);
-      setEmail(propInitialUserData.email);
-      setName(propInitialUserData.name);
+    if (initialUserData) {
+      setInitialUserData(initialUserData);
+      setEmail(initialUserData.email);
+      setName(initialUserData.name);
     } else {
       const fetchData = async () => {
         try {
-          const result = await fetchUserData(); 
+          const result = await fetchUserData();
           setInitialUserData(result.user);
           setEmail(result.user.email);
           setName(result.user.name);
@@ -34,24 +38,24 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
       };
       fetchData();
     }
-  }, [propInitialUserData]);
+  }, [initialUserData]);
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setIsChanged(true);
   };
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsChanged(true);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setIsChanged(true);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email || !password || !name) {
@@ -61,9 +65,9 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
 
     try {
       const updatedUserData = { email, name, password };
-  
+
       const result = await updateUserData(updatedUserData);
-  
+
       setSuccessMessage('Данные успешно обновлены');
       setInitialUserData(result.user);
       setError('');
@@ -75,15 +79,15 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
   };
 
   const handleCancel = () => {
-    setEmail(initialUserData.email);
-    setName(initialUserData.name);
+    setEmail(initialUserDataState.email);
+    setName(initialUserDataState.name);
     setPassword('');
     setIsChanged(false);
   };
 
   const handleLogout = async () => {
     try {
-      await logoutUser(); 
+      await logoutUser();
       navigate('/login');
     } catch (error) {
       alert('Ошибка при выходе. Попробуйте позже.');
@@ -122,8 +126,7 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
                 error={false}
                 errorText="Ошибка"
                 size="default"
-                extraClass="mb-6"
-              />
+                extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
               <EmailInput
                 onChange={handleEmailChange}
                 value={email}
@@ -148,10 +151,11 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
                     type="secondary"
                     size="large"
                     onClick={handleCancel}
+                    htmlType="reset"
                   >
                     Отмена
                   </Button>
-                  <Button type="primary" size="large">Сохранить</Button>
+                  <Button type="primary" size="large" htmlType="submit">Сохранить</Button>
                 </div>
               )}
             </form>
@@ -160,17 +164,6 @@ function ProfilePage({ initialUserData: propInitialUserData }) {
       </div>
     </div>
   );
-}
-
-ProfilePage.propTypes = {
-  initialUserData: PropTypes.shape({
-    email: PropTypes.string,
-    name: PropTypes.string
-  })
-};
-
-ProfilePage.defaultProps = {
-  initialUserData: null
 };
 
 export default ProfilePage;
