@@ -1,9 +1,8 @@
 import styles from './reset-password-page.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { requestFromApi } from '../../utils/api.js';
 import { resetPasswordRequest } from '../../utils/api.js';
 
 export function ResetPasswordPage() {
@@ -11,8 +10,6 @@ export function ResetPasswordPage() {
   const [token, setToken] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handlePasswordChange = (e) => {
@@ -33,10 +30,8 @@ export function ResetPasswordPage() {
 
     setIsSubmitting(true);
     setError('');
-
     try {
       const response = await resetPasswordRequest(password, token);
-
       if (response.success) {
         navigate('/login'); 
       } else {
@@ -47,11 +42,7 @@ export function ResetPasswordPage() {
     } finally {
       setIsSubmitting(false);
     }
-
-
-
   };
-
   return (
     <div className={styles.loginLayout}>
       <div>

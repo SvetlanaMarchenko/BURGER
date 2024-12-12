@@ -3,28 +3,31 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PasswordInput, EmailInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './register-page.module.css';
 import { registerUser } from '../../utils/api.js';
-import PropTypes from 'prop-types';
 
-export function RegisterPage({ onRegister }) {
+interface RegisterPageProps {
+  onRegister: () => void;  
+}
+
+export const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email || !password || !name) {
@@ -39,7 +42,7 @@ export function RegisterPage({ onRegister }) {
       }
       navigate('/');
     } catch (error) {
-      setError(error.message);
+      setError("Ошибка при регистрации");
     }
   };
 
@@ -59,8 +62,7 @@ export function RegisterPage({ onRegister }) {
               error={false}
               errorText="Ошибка"
               size="default"
-              extraClass="mb-6"
-            />
+              extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
 
             <EmailInput
               onChange={handleEmailChange}
@@ -98,7 +100,3 @@ export function RegisterPage({ onRegister }) {
     </div>
   );
 }
-
-RegisterPage.propTypes = {
-  onRegister: PropTypes.func, 
-};
