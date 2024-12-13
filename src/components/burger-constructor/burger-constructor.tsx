@@ -154,9 +154,13 @@ const BurgerConstructor: React.FC = () => {
             />
           ))
         ) : (
-          <div className={`${styles.emptyIngredientWrapper} ml-8 ${styles.emptyBunWrapper} text text_type_main-default`}>
-            <ConstructorElement text="Выберите начинку" />
-          </div>
+        <div className={`${styles.emptyIngredientWrapper} ml-8 ${styles.emptyBunWrapper} text text_type_main-default`}>
+          <ConstructorElement
+            text="Выберите начинку"
+            price={0}
+            thumbnail=""
+          />
+        </div>
         )}
       </div>
 
@@ -172,7 +176,7 @@ const BurgerConstructor: React.FC = () => {
           />
         ) : (
           <div className={`${styles.emptyBunWrapper} ${styles.constructorElementBlock}`}>
-            <ConstructorElement type="bottom" text="Выберите булку" isLocked={true} />
+            <ConstructorElement type="bottom" text="Выберите булку" isLocked={true} price={0} thumbnail=""/>
           </div>
         )}
       </div>

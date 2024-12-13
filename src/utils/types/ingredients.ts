@@ -5,6 +5,7 @@ export interface Ingredient {
   type: string;
   price: number;
   image: string,
+  key: any,
   _id: string
 }
 
