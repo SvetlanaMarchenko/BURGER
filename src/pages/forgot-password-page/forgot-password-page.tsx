@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forgot-password-page.module.css';
 import { resetPassword } from '../../utils/api';
-import PropTypes from 'prop-types';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -68,6 +67,3 @@ export function ForgotPasswordPage() {
     </div>
   );
 }
-ForgotPasswordPage.propTypes = {
-  title: PropTypes.string,
-};
