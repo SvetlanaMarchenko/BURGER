@@ -61,7 +61,6 @@ const DraggableIngredient: React.FC<DraggableIngredientProps> = ({ ingredient, i
 
 const BurgerConstructor: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const { bun, ingredients } = useSelector((state: RootState) => state.burgerConstructor);
   const dispatch: AppDispatch = useDispatch();
