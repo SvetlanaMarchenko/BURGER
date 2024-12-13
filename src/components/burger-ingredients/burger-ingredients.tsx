@@ -9,8 +9,11 @@ import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
 import {useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
+import { Ingredient } from '../../utils/types/ingredients';
 
-const BurgerIngredients = () => {
+
+// const BurgerIngredients: React.FC<IngredientType>  = () => {
+  const BurgerIngredients: React.FC = () => {
   const [current, setCurrent] = useState('Булки');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,24 +21,24 @@ const BurgerIngredients = () => {
   const { id } = useParams(); 
 
   const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
+
+  const bunsRef = useRef<HTMLDivElement | null>(null);
+  const saucesRef = useRef<HTMLDivElement | null>(null);
+  const mainsRef = useRef<HTMLDivElement | null>(null);
   
 
   useEffect(() => {
     if( location.pathname.startsWith('/ingredients/') && id ) {
-      dispatch(fetchDataIngredientsAndSetCurrent())
+      dispatch(fetchDataIngredientsAndSetCurrent(id))
       
     } else {
-      dispatch(fetchDataIngredients());
+      dispatch(fetchDataIngredients(id));
     }
   }, [dispatch]);
 
-  const filterIngredientsByType = (type) => {
-    return allIngredients.filter((item) => item.type === type);
+  const filterIngredientsByType = (type: string) => {
+    return allIngredients.filter((item: Ingredient) => item.type === type);
   };
-
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const mainsRef = useRef(null);
 
   const ingredientTypes = [
     { type: 'bun', value: 'Булки' },
@@ -43,13 +46,13 @@ const BurgerIngredients = () => {
     { type: 'main', value: 'Начинки' }
   ];
 
-  const openModal = (item) => {
+  const openModal = (item: Ingredient) => {
     dispatch(setCurrentIngredient(item));
   };
   const handleScroll = () => {
-    const bunsTop = bunsRef.current.getBoundingClientRect().top;
-    const saucesTop = saucesRef.current.getBoundingClientRect().top;
-    const mainsTop = mainsRef.current.getBoundingClientRect().top;
+    const bunsTop = bunsRef.current?.getBoundingClientRect().top ?? 0; 
+    const saucesTop = saucesRef.current?.getBoundingClientRect().top ?? 0;
+    const mainsTop = mainsRef.current?.getBoundingClientRect().top ?? 0;
 
     const bunsOffset = 400;
 
@@ -85,7 +88,7 @@ const BurgerIngredients = () => {
           >
             <h2 className={`${styles.mainTitle}`}>{value}</h2>
             <div className={`${styles.ingredientsList}`}>
-              {filterIngredientsByType(type).map((item) => (
+              {filterIngredientsByType(type).map((item: Ingredient) => (
                 <IngredientItem
                   key={item._id}
                   item={item}
@@ -101,10 +104,6 @@ const BurgerIngredients = () => {
       </main>
     </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(IngredientType),
 };
 
 export default BurgerIngredients;

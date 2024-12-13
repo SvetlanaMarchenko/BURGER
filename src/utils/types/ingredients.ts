@@ -4,6 +4,7 @@ export interface Ingredient {
   name: string;
   type: string;
   price: number;
+  _id: string
 }
 
 export type Ingredients = Ingredient[]; 
