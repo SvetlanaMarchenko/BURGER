@@ -76,7 +76,7 @@ const BurgerConstructor: React.FC = () => {
     }
   };
 
-  const [{ isOver },dropTarget] = useDrop({
+  const [{ isOver: boolean },dropTarget] = useDrop({
     accept: 'item',
     drop: (item: Ingredient) => {
       if (item.type === 'bun') {
@@ -130,7 +130,14 @@ const BurgerConstructor: React.FC = () => {
           />
         ) : (
           <div className={`${styles.emptyBunWrapper} ${styles.constructorElementBlock}`}>
-            <ConstructorElement type="top" text="Выберите булку" isLocked={true} />
+
+            <ConstructorElement 
+              type="top" 
+              text="Выберите булку" 
+              isLocked={true} 
+              price={0}
+              thumbnail=""
+            />
           </div>
         )}
       </div>
