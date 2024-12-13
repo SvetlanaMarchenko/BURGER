@@ -2,7 +2,6 @@ import styles from './page-404.module.css';
 import doneImage from './done.png';
 import { useSelector } from 'react-redux';
 import {SelectCurrentOrderDetails} from '../../services/selectors'
-import PropTypes from 'prop-types';
 
 const PageNotFound = () => {
    const { orderId, isLoading, errorInOrder } = useSelector(SVGAElementelectCurrentOrderDetails);
@@ -33,11 +32,6 @@ const PageNotFound = () => {
       </div>
    );
 };
-
-OrderDetails.propTypes = {
-   onClose: PropTypes.func
- };
-
 export default PageNotFound;
 
 
