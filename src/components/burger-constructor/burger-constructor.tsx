@@ -8,7 +8,7 @@ import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient }
 import { useDrop, useDrag } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions'; 
 import { useNavigate } from 'react-router-dom'; 
-import { Ingredient,  Ingredients} from '../../utils/types/ingredients';
+import { Ingredient} from '../../utils/types/ingredients';
 import { RootState, AppDispatch } from '../../services/store';
 
 
@@ -17,10 +17,6 @@ interface DraggableIngredientProps {
   index: number; 
   moveIngredient: (fromIndex: number, toIndex: number) => void; 
   removeIngredient: (index: number) => void; 
-}
-interface DropItemProps {
-  type: 'bun' | 'ingredient';
-  _id: string;
 }
 
 

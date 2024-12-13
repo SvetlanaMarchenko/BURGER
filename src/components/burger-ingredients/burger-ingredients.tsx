@@ -8,18 +8,16 @@ import { setCurrentIngredient } from '../../services/actions/current-ingredient-
 import {useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
 import { Ingredient } from '../../utils/types/ingredients';
+import { RootState, AppDispatch } from '../../services/store';
 
-
-
-// const BurgerIngredients: React.FC<IngredientType>  = () => {
   const BurgerIngredients: React.FC = () => {
   const [current, setCurrent] = useState('Булки');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams(); 
 
-  const { allIngredients = [], isLoading, error } = useSelector((state) => state.ingredients || {});
+  const { allIngredients = [], isLoading, error } = useSelector((state: RootState) => state.ingredients || {});
 
   const bunsRef = useRef<HTMLDivElement | null>(null);
   const saucesRef = useRef<HTMLDivElement | null>(null);
@@ -31,7 +29,7 @@ import { Ingredient } from '../../utils/types/ingredients';
       dispatch(fetchDataIngredientsAndSetCurrent(id))
       
     } else {
-      dispatch(fetchDataIngredients(id));
+      dispatch(fetchDataIngredients());
     }
   }, [dispatch]);
 
