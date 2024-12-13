@@ -5,11 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients, fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
 import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
 import {useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
 import { Ingredient } from '../../utils/types/ingredients';
+
 
 
 // const BurgerIngredients: React.FC<IngredientType>  = () => {

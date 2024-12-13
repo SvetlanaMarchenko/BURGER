@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import { Routes, Route, NavLink, useLocation, useNavigate, useMatch } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, useMatch } from 'react-router-dom';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { RegisterPage } from '../../pages/register-page/register-page';
 import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';

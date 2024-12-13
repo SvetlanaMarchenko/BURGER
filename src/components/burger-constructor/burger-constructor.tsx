@@ -7,11 +7,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient } from '../../services/actions/constructor-actions';
 import { useDrop, useDrag } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions'; 
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
 import { useNavigate } from 'react-router-dom'; 
+import { Ingredient,  Ingredients} from '../../utils/types/ingredients';
+import { RootState, AppDispatch } from '../../services/store';
 
-const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredient }) => {
+
+interface DraggableIngredientProps {
+  ingredient: Ingredient; 
+  index: number; 
+  moveIngredient: (fromIndex: number, toIndex: number) => void; 
+  removeIngredient: (index: number) => void; 
+}
+interface DropItemProps {
+  type: 'bun' | 'ingredient';
+  _id: string;
+}
+
+
+const DraggableIngredient: React.FC<DraggableIngredientProps> = ({ ingredient, index, moveIngredient, removeIngredient }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
     item: { type: 'ingredient', index },
@@ -22,7 +35,7 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
 
   const [, drop] = useDrop({
     accept: 'ingredient',
-    drop: (item) => {
+    drop: (item: { type: string; index: number }) => {
       const dragIndex = item.index;
       const hoverIndex = index;
 
@@ -38,33 +51,34 @@ const DraggableIngredient = ({ ingredient, index, moveIngredient, removeIngredie
       className={`${styles.constructorElementBlock} ${isDragging ? styles.dragging : ''}`}
     >
       <div className={styles.dragIconWrapper}>
-        <DragIcon />
+        <DragIcon type="primary"  />
       </div>
       <ConstructorElement
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => removeIngredient()}
+        handleClose={() => removeIngredient(index)}
       />
     </div>
   );
 };
 
-const BurgerConstructor = () => {
+const BurgerConstructor: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate(); 
-  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  const { bun, ingredients } = useSelector((state: RootState) => state.burgerConstructor);
+  const dispatch: AppDispatch = useDispatch();
 
-  const moveIngredient = (fromIndex, toIndex) => {
+  const moveIngredient = (fromIndex: number, toIndex: number) => {
     if (fromIndex !== toIndex) {
       dispatch(replaceIngredient(fromIndex, toIndex));
     }
   };
 
-  const [{ isOver }, dropTarget] = useDrop({
+  const [{ isOver },dropTarget] = useDrop({
     accept: 'item',
-    drop: (item) => {
+    drop: (item: Ingredient) => {
       if (item.type === 'bun') {
         if (bun) dispatch(removeBun());
         dispatch(setBun(item));
@@ -77,7 +91,7 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const handleRemoveIngredient = (index) => {
+  const handleRemoveIngredient = (index: number) => {
     dispatch(removeIngredient(index));
   };
 
@@ -90,14 +104,14 @@ const BurgerConstructor = () => {
 
   const handleCreateOrder = () => {
     const token = localStorage.getItem('accessToken');
-
+  
     if (!token) {
-      navigate('/login'); 
-      
+      navigate('/login');
       return;
     }
 
-    const ingredientId = [bun?._id, ...ingredients.map(item => item._id)].filter(id => id);
+    const ingredientId: Ingredient[] = [bun, ...ingredients].filter((item): item is Ingredient => item != null);
+
     dispatch(createOrder(ingredientId)); 
     openModal(); 
   };
@@ -176,14 +190,6 @@ const BurgerConstructor = () => {
       )}
     </div>
   );
-};
-
-BurgerConstructor.propTypes = {
-  bun: PropTypes.arrayOf(IngredientType),
-  ingredients: PropTypes.arrayOf(IngredientType),
-  isModalOpen: PropTypes.bool,
-  handleRemoveIngredient: PropTypes.func,
-  handleClearConstructor: PropTypes.func,
 };
 
 export default BurgerConstructor;
