@@ -12,15 +12,15 @@ export function ResetPasswordPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleTokenChange = (e) => {
+  const handleTokenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!password || !token) {
@@ -38,7 +38,7 @@ export function ResetPasswordPage() {
         setError(response.message || 'Что-то пошло не так!');
       }
     } catch (error) {
-      setError(error.message || 'Что-то пошло не так. Попробуйте позже.');
+      setError( 'Что-то пошло не так. Попробуйте позже.');
     } finally {
       setIsSubmitting(false);
     }
@@ -63,8 +63,7 @@ export function ResetPasswordPage() {
               onChange={handleTokenChange}
               value={token}
               name="token"
-              extraClass="mb-6"
-            />
+              extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
 
             <Button
               htmlType="submit"
