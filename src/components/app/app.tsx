@@ -7,18 +7,20 @@ import { ResetPasswordPage } from '../../pages/reset-password-page/reset-passwor
 import { HomePage } from '../../pages/home-page/home-page';
 import ProfilePage from '../../pages/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
-import { OnlyAuth, OnlyUnAuth } from '../protected-route.tsx';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../modal/modal';
 import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import AppHeader from '../../components/app-header/app-header';
 import style from '../../components/app/app.module.css';
+import { RootState } from '../../services/store';
+
  
 function App() {
   const location = useLocation();
   let state = location.state
-  const allIngredients = useSelector((state) => state.ingredients.allIngredients); 
+  const allIngredients = useSelector((state: RootState) => state.ingredients.allIngredients); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
