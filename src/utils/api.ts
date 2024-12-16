@@ -1,5 +1,10 @@
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
+interface UpdatedUserData {
+  name?: string;
+  email?: string;
+  password?: string;
+}
 
 function checkResponse(res: Response) {
   if (res.ok) {
@@ -7,7 +12,6 @@ function checkResponse(res: Response) {
   }
   return Promise.reject(`Ошибка ${res.status}`);
 }
-
 
 export function requestFromApi(endpoint: string, options: RequestInit = {}) {
   return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
@@ -38,7 +42,7 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 
-const registerUser = async (email, password, name) => {
+const registerUser = async (email:string, password: string, name: string) => {
   try {
     const data = await requestFromApi('/auth/register', {
       method: 'POST',
@@ -84,7 +88,7 @@ const fetchUserData = async () => {
   }
 };
 
-const fetchWithAuth = async (endpoint, options = {}) => {
+const fetchWithAuth = async (endpoint: string, options: RequestInit = {}): Promise<Response>  => {
   const accessToken = localStorage.getItem('accessToken');
   
   if (!accessToken) {
@@ -140,7 +144,7 @@ const refreshAccessToken = async () => {
   }
 };
 
-const updateUserData = async (updatedUserData) => {
+const updateUserData = async (updatedUserData: UpdatedUserData) => {
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {
@@ -169,7 +173,7 @@ const updateUserData = async (updatedUserData) => {
   }
 };
 
-export const resetPassword = async (email) => {
+export const resetPassword = async (email: string) => {
   try {
     const data = await requestFromApi('/password-reset', {
       method: 'POST',
@@ -218,8 +222,7 @@ const logoutUser = async () => {
   }
 };
 
-
-export const resetPasswordRequest = async (password, token) => {
+export const resetPasswordRequest = async (password: string , token: string) => {
   try {
     const response = await requestFromApi('/password-reset/reset', {
       method: 'POST',
