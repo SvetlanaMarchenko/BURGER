@@ -63,7 +63,7 @@ export function ResetPasswordPage() {
               onChange={handleTokenChange}
               value={token}
               name="token"
-              extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
+              extraClass="mb-6"/>
             <Button
               htmlType="submit"
               type="primary"

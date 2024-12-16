@@ -62,7 +62,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
               error={false}
               errorText="Ошибка"
               size="default"
-              extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              extraClass="mb-6" />
 
             <EmailInput
               onChange={handleEmailChange}

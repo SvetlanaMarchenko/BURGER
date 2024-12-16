@@ -126,7 +126,7 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
                 error={false}
                 errorText="Ошибка"
                 size="default"
-                extraClass="mb-6" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
+                extraClass="mb-6"/>
               <EmailInput
                 onChange={handleEmailChange}
                 value={email}

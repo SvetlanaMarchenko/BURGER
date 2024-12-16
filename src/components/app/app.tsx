@@ -33,7 +33,6 @@ function App() {
       ) {
       const wantedIngredient = allIngredients.find(ingr => ingr._id === wantedIngredientId)
       if(!wantedIngredient) {
-        console.error("Tried to open page for non-existing ingredient ", wantedIngredientId)
       } else {
         dispatch(setCurrentIngredient(wantedIngredient))
       }
