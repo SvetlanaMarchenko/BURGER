@@ -1,7 +1,7 @@
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 
-function checkResponse(res) {
+function checkResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }
@@ -9,11 +9,11 @@ function checkResponse(res) {
 }
 
 
-export function requestFromApi(endpoint, options = {}) {
+export function requestFromApi(endpoint: string, options: RequestInit = {}) {
   return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 }
 
-export const loginUser = async (email, password) => {
+export const loginUser = async (email: string, password: string) => {
   try {
     const data = await requestFromApi('/auth/login', {
       method: 'POST',
