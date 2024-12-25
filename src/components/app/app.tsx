@@ -15,6 +15,7 @@ import { setCurrentIngredient } from '../../services/actions/current-ingredient-
 import AppHeader from '../../components/app-header/app-header';
 import style from '../../components/app/app.module.css';
 import { RootState } from '../../services/store';
+import { Feed } from '../../feed/feed';
 
  
 function App() {
@@ -59,6 +60,7 @@ function App() {
 
       <Routes location={state?.backgroundLocation || location}>    
         <Route path="/" element={<HomePage />} />
+        <Route path='/feed' element={<Feed/>} />
 
         <Route path="/login" element={<OnlyUnAuth element={LoginPage} />} />
         <Route path="/register" element={<OnlyUnAuth element={RegisterPage} />} />
