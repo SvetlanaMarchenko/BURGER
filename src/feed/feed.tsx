@@ -3,6 +3,7 @@ import BurgerConstructor from '../components/burger-constructor/burger-construct
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientItem from '../components/burger-ingredients/ingredient-item';
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
 
 export function Feed() {
   // Заглушка для демонстрации
@@ -33,22 +34,20 @@ export function Feed() {
 
             <main className={styles.scrollContainer} onScroll={handleScroll}>
               <section className={`${styles.orderSection}`}>
+                <div className={`${styles.orderNumber}`}>
                 <div className="text text_type_digits-default">Номер заказа</div>
-            
-                  < IngredientItem className={`${styles.nazvanieBurgera} mb-6`}
-                    key={item._id}
-                    item={item}
-                    // onClick={() => {
-                    //   navigate(`/ingredients/${item._id}`, {
-                    //     state: { backgroundLocation: '/' },
-                    //   });
-                    //   return openModal(item);
-                    // }}
-                    
-                  /> 
+                <div>
+                  <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date()} />
+                </div>
+                </div>
+
+                <IngredientItem
+                  className={`${styles.nazvanieBurgera} mb-6`}
+                  key={item._id}
+                  item={item}
+                />
               </section>
             </main>
-
           </div>
           <BurgerConstructor className="ml-10 mr-4" />
         </div>
