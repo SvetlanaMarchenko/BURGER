@@ -23,7 +23,7 @@
   overflow-y: hidden;
 }
 
-.titleIngredientDetails{
+.mainTitle{
   display: flex;
 }
 
@@ -44,3 +44,21 @@
   justify-content: space-between;
 }
 
+
+.ordersList{
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+  align-items: flex-start;
+ }
+
+.subheading{
+  display: flex;
+  width: 580px;
+}
+
+.orderListBox{
+  width: 272px;
+  display: flex;
+
+}

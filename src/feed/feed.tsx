@@ -49,7 +49,23 @@ export function Feed() {
               </section>
             </main>
           </div>
-          <BurgerConstructor className="ml-10 mr-4" />
+
+
+
+          {/* <BurgerConstructor className=" mr-4" /> */}
+          <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-10`}>
+            <div className={`${styles.subheading}  mb-6`}>
+              <h1 className={` ${styles.orderListBox} text text_type_main-medium`}>Готовы:</h1>
+              <h1 className={` ${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
+            </div>
+            <h1 className={` text text_type_main-medium mt-15`}>Выполнено за все время:</h1>
+            <h1 className={` text text_type_digits-large mb-15`}>12435</h1>
+            <h1 className={` text text_type_main-medium`}>Выполнено за сегодня:</h1>
+            <h1 className={` text text_type_digits-large mb-15`}>124</h1>
+          </div>
+
+
+
         </div>
       </DndProvider>
     </div>
