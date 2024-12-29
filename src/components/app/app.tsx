@@ -16,6 +16,7 @@ import AppHeader from '../../components/app-header/app-header';
 import style from '../../components/app/app.module.css';
 import { RootState } from '../../services/store';
 import { Feed } from '../../feed/feed';
+import FeedNumber from '../../feed/feed-number/feed-number';
 
  
 function App() {
@@ -72,6 +73,8 @@ function App() {
         <Route path="/reset-password" element={<OnlyUnAuth element={ResetPasswordPage} />} />
 
         <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
+
+        <Route path="/feed/:number" element={<FeedNumber />} />
       </Routes>
     </div>
   );
