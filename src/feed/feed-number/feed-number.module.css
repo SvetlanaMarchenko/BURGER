@@ -1,5 +1,5 @@
 /* 
-.appLayout {
+.orderLayout {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -26,14 +26,67 @@
   text-align: center;        
 }
 
-
-.postModalIngredientDetails div {
+/** Canceling modal specific title alignments to align as mockup wants */
+/*.postModalIngredientDetails div {
   justify-content: center;
 }
 
 .postModalIngredientDetails div p {
   max-width: initial;
+} */
+
+.orderDetailsMain{
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  position: relative;
 }
 
+.moduleOrderLayout{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
- */
+.orderName{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.statusOrder{
+  color: #00CCCC;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.orderIngredient{
+  display: flex;
+  justify-content: flex-start;
+  width: 608px;
+
+}
+
+.orderIngredientName{
+  width: 414px;
+}
+
+.orderResult{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 640px;
+}
+
+.orderTime{
+  width: 556px;
+}
+
+.orderNumber{
+  text-align: center;
+}
+
+.orderIngredientOptions{
+  max-height: 376px;
+
+}
+
