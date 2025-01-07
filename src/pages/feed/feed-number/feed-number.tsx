@@ -66,8 +66,8 @@ return (
       <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>
                 Состав:
       </h1>
-      </section>
-      <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll} >
+    </section>
+    <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll} >
       <div className={`${styles.orderIngredient} mb-4 text text_type_main-default text_color_inactive`}>
           <div>
             <h1 className="text text_type_main-default mr-4">{item.img}</h1>

@@ -22,6 +22,10 @@ const NavigationProfilePage: React.FC<{ initialUserData?: PropInitialUserDataPro
   };
 
   return (
+    <div className={styles.loginLayoutProfile}>
+    <div>
+
+        
           <nav className={styles.profileChoice}>
               <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
                 Профиль
@@ -38,6 +42,8 @@ const NavigationProfilePage: React.FC<{ initialUserData?: PropInitialUserDataPro
                 В этом разделе вы можете изменить свои персональные данные
               </p>
             </nav>
+            </div>
+        </div>
   );
 };
 

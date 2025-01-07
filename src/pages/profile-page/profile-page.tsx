@@ -84,10 +84,8 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
   };
 
   return (
-    <div className={styles.loginLayoutProfile}>
-      <div>
-        <div className={styles.container}>
-          <div className={styles.profileForm}>
+    <div className={styles.container}>
+      <div className={styles.profileForm}>
           <NavigationProfilePage />
             <form className={styles.form} onSubmit={handleSubmit}>
               <Input
@@ -132,10 +130,8 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
                 </div>
               )}
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+            </div>
   );
 };
 

@@ -23,13 +23,9 @@
   overflow-y: hidden;
 }
 
-.mainTitle{
-  display: flex;
-}
-
 .orderSection{
   background-color: #1C1C21;
-  width: 584px;
+  width: 844px;
   padding: 24px;
   border-radius: 40px;
   /* display: flex; */
@@ -44,21 +40,100 @@
   justify-content: space-between;
 }
 
+.profileOrder{
+  display: flex;
+}
 
-.ordersList{
+/* 
+.orderLayout {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
-  align-items: flex-start;
- }
-
-.subheading{
-  display: flex;
-  width: 580px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: black;   
+  overflow: hidden;
+  height: 100vh;
+  box-sizing: border-box;
+  align-items: center
 }
 
-.orderListBox{
-  width: 272px;
+.postModalIngredientDetails {
   display: flex;
+  flex-direction: column;    
+  justify-content: center;     
+  align-items: center;       
+  background-color: black;     
+  padding: 20px;               
+  border-radius: 10px;        
+  max-width: 600px;             
+  width: 100%;                
+  text-align: center;        
+}
+
+/** Canceling modal specific title alignments to align as mockup wants */
+/*.postModalIngredientDetails div {
+  justify-content: center;
+}
+
+.postModalIngredientDetails div p {
+  max-width: initial;
+} */
+
+.orderDetailsMain{
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  position: relative;
+}
+
+.moduleOrderLayout{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderName{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.statusOrder{
+  color: #00CCCC;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.orderIngredient{
+  display: flex;
+  justify-content: flex-start;
+  width: 608px;
 
 }
+
+.orderIngredientName{
+  width: 414px;
+}
+
+.orderResult{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 640px;
+}
+
+.orderTime{
+  width: 556px;
+}
+
+.orderNumber{
+
+  text-align: center;
+}
+
+.orderIngredientOptions{
+  max-height: 376px;
+
+}
+

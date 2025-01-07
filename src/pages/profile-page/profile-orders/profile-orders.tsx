@@ -8,8 +8,8 @@ import NavigationProfilePage from '../navigation-profile-page';
 
 export function ProfileOrders() {
   // Заглушка для демонстрации
-  const value = 'Пример заголовка';
-  const item = { _id: '123', name: 'Пример ингредиента примерный' };
+  const value = 'Пример заголовка самы йпримерный пример';
+  const item = { _id: '123564875', name: 'Пример ингредиента примерный', img: 'img', quantity: 2, price: 300};
 
   const navigate = (path: string, state: object) => {
     console.log(`Navigating to ${path}`, state);
@@ -25,29 +25,36 @@ export function ProfileOrders() {
   };
 
   return (
-    <div className={`${styles.appLayout}`}>
+    <div className={`${styles.profileOrder}`}>
       <DndProvider backend={HTML5Backend}>
       <NavigationProfilePage />
         <div className={`${styles.ingredientsBox}`}>
           <div className={`${styles.ingredientsSection} mt-10`}>
-            <h1 className={`${styles.mainTitle} text text_type_main-large`}>Лента заказов</h1>
 
             <div className={`${styles.burgerBar} mt-6`} />
 
             <main className={styles.scrollContainer} onScroll={handleScroll}>
               <section className={`${styles.orderSection}`}>
-                <div className={`${styles.orderNumber}`}>
-                <div className="text text_type_digits-default">Номер заказа</div>
-                <div>
-                  <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date()} />
-                </div>
-                </div>
+              <div className={`${styles.orderNumber}`}>
+                <h1 className="text text_type_digits-default mb-10">
+                  # {item._id}
+                </h1> 
+                <FormattedDate 
+                  className="text text_type_main-default text_color_inactive" 
+                  date={new Date()} 
+                />
+              </div>
 
-                {/* <IngredientItem
-                  className={`${styles.nazvanieBurgera} mb-6`}
-                  key={item._id}
-                  item={item}
-                /> */}
+
+                <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
+                        {/* alt={selectedData.name} */}
+                        {value}
+                </h1>
+                <h1 className={`${styles.statusOrder} text text_type_main-default mb-15`}>Выполнен</h1>
+                <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>
+                          Состав:
+                </h1>
+
               </section>
             </main>
           </div>
@@ -55,19 +62,6 @@ export function ProfileOrders() {
 
 
           {/* <BurgerConstructor className=" mr-4" /> */}
-          <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-10`}>
-            <div className={`${styles.subheading}  mb-6`}>
-              <h1 className={` ${styles.orderListBox} text text_type_main-medium`}>Готовы:</h1>
-              <h1 className={` ${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
-            </div>
-            <h1 className={` text text_type_main-medium mt-15`}>Выполнено за все время:</h1>
-            <h1 className={` text text_type_digits-large mb-15`}>12435</h1>
-            <h1 className={` text text_type_main-medium`}>Выполнено за сегодня:</h1>
-            <h1 className={` text text_type_digits-large mb-15`}>124</h1>
-          </div>
-
-
-
         </div>
       </DndProvider>
     </div>
