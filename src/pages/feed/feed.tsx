@@ -1,8 +1,8 @@
 import styles from './feed.module.css';
-import BurgerConstructor from '../components/burger-constructor/burger-constructor';
+import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import IngredientItem from '../components/burger-ingredients/ingredient-item';
+import IngredientItem from '../../components/burger-ingredients/ingredient-item';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
 
 export function Feed() {

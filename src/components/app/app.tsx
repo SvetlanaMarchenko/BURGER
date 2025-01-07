@@ -15,8 +15,9 @@ import { setCurrentIngredient } from '../../services/actions/current-ingredient-
 import AppHeader from '../../components/app-header/app-header';
 import style from '../../components/app/app.module.css';
 import { RootState } from '../../services/store';
-import { Feed } from '../../feed/feed';
-import FeedNumber from '../../feed/feed-number/feed-number';
+import { Feed } from '../../pages/feed/feed';
+import FeedNumber from '../../pages/feed/feed-number/feed-number';
+import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
 
  
 function App() {
@@ -75,6 +76,8 @@ function App() {
         <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
 
         <Route path="/feed/:number" element={<FeedNumber />} />
+        <Route path="/profile/:orders" element={<ProfileOrders />} />
+        
       </Routes>
     </div>
   );

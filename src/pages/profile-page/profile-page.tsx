@@ -65,9 +65,7 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
 
     try {
       const updatedUserData = { email, name, password };
-
       const result = await updateUserData(updatedUserData);
-
       setSuccessMessage('Данные успешно обновлены');
       setInitialUserData(result.user);
       setError('');
@@ -104,7 +102,7 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
                 Профиль
               </NavLink>
 
-              <NavLink to="/" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
+              <NavLink to="/profile/orders" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
                 История заказов
               </NavLink>
 
