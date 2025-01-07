@@ -76,7 +76,7 @@ function App() {
         <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
 
         <Route path="/feed/:number" element={<FeedNumber />} />
-        <Route path="/profile/:orders" element={<ProfileOrders />} />
+        <Route path="/profile/orders" element={<OnlyAuth element={ProfileOrders} />} />
         
       </Routes>
     </div>

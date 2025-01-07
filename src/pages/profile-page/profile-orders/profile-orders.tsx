@@ -4,6 +4,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 // import IngredientItem from '../../components/burger-ingredients/ingredient-item';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
+import NavigationProfilePage from '../navigation-profile-page';
 
 export function ProfileOrders() {
   // Заглушка для демонстрации
@@ -26,6 +27,7 @@ export function ProfileOrders() {
   return (
     <div className={`${styles.appLayout}`}>
       <DndProvider backend={HTML5Backend}>
+      <NavigationProfilePage />
         <div className={`${styles.ingredientsBox}`}>
           <div className={`${styles.ingredientsSection} mt-10`}>
             <h1 className={`${styles.mainTitle} text text_type_main-large`}>Лента заказов</h1>
