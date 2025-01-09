@@ -18,6 +18,7 @@ import { RootState } from '../../services/store';
 import { Feed } from '../../pages/feed/feed';
 import FeedNumber from '../../pages/feed/feed-number/feed-number';
 import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
+import OrdersNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';
 
  
 function App() {
@@ -77,6 +78,8 @@ function App() {
 
         <Route path="/feed/:number" element={<FeedNumber />} />
         <Route path="/profile/orders" element={<OnlyAuth element={ProfileOrders} />} />
+
+        <Route path="/profile/orders/:number" element={<OnlyAuth element={OrdersNumber} />} />
         
       </Routes>
     </div>
