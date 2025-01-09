@@ -25,8 +25,8 @@
 
 .orderSection{
   background-color: #1C1C21;
-  width: 844px;
-  padding: 24px;
+  width: 830px;
+  padding: 24px 24px 24px 24px;
   border-radius: 40px;
   /* display: flex; */
   /* flex-direction: column; */
@@ -36,7 +36,6 @@
 .orderNumber{
   display: flex;
   flex-direction: row;
-  gap: 150px;
   justify-content: space-between;
 }
 
@@ -120,20 +119,24 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 640px;
+  width: 830px;
 }
 
 .orderTime{
   width: 556px;
 }
 
-.orderNumber{
-
-  text-align: center;
+.orderImage{
+  width: 796px;
 }
 
 .orderIngredientOptions{
   max-height: 376px;
-
 }
+
+.orderName{
+  width: 830px;;
+}
+
+
 

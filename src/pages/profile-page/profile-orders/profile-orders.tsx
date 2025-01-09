@@ -3,7 +3,7 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 // import IngredientItem from '../../components/burger-ingredients/ingredient-item';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
+import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
 import NavigationProfilePage from '../navigation-profile-page';
 
 export function ProfileOrders() {
@@ -34,9 +34,9 @@ export function ProfileOrders() {
             <div className={`${styles.burgerBar} mt-6`} />
 
             <main className={styles.scrollContainer} onScroll={handleScroll}>
-              <section className={`${styles.orderSection}`}>
+              <section className={`${styles.orderSection} mb-6`}>
               <div className={`${styles.orderNumber}`}>
-                <h1 className="text text_type_digits-default mb-10">
+                <h1 className="text text_type_digits-default mb-6">
                   # {item._id}
                 </h1> 
                 <FormattedDate 
@@ -45,16 +45,23 @@ export function ProfileOrders() {
                 />
               </div>
 
-
-                <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
+                <h1 className={`${styles.orderName} text text_type_main-medium mb-2`}>
                         {/* alt={selectedData.name} */}
                         {value}
                 </h1>
-                <h1 className={`${styles.statusOrder} text text_type_main-default mb-15`}>Выполнен</h1>
-                <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>
-                          Состав:
+                <h1 className={`${styles.statusOrder} text text_type_main-default mb-6`}>Выполнен</h1>
+
+
+                <section className={`${styles.orderResult}`}>
+                <h1 className={`${styles.orderImage} text text_type_main-medium`}>
+                    {item.img}
                 </h1>
 
+                <p className="text text_type_digits-default">
+                    {item.price}
+                </p>
+                <CurrencyIcon type="primary" className="ml-2" />
+                </section>
               </section>
             </main>
           </div>
