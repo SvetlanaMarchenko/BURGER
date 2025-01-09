@@ -3,24 +3,25 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientItem from '../../components/burger-ingredients/ingredient-item';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; 
+import { Order } from '../../utils/types/orders';
 
 export function Feed() {
   // Заглушка для демонстрации
   const value = 'Пример заголовка';
-  const item = { _id: '123', name: 'Пример ингредиента примерный' };
+  const item = { _id: 123, name: 'Пример ингредиента примерный' };
 
   const navigate = (path: string, state: object) => {
     console.log(`Navigating to ${path}`, state);
   };
 
-  const openModal = (item: any) => {
-    console.log('Opening modal for:', item);
-  };
-
   // Обработчик скролла
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
     console.log('Scrolled:', event.currentTarget.scrollTop);
+  };
+
+  const openModal = (item: Order) => {
+    dispatch(setCurrentIngredient(item));
   };
 
   return (
@@ -45,6 +46,10 @@ export function Feed() {
                   className={`${styles.nazvanieBurgera} mb-6`}
                   key={item._id}
                   item={item}
+                  onClick={() => {
+                    navigate(`/orders/${item.number}`, {state: {backgroundLocation: '/'}})
+                    return openModal(item)
+                  }}
                 />
               </section>
             </main>
