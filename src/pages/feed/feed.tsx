@@ -5,8 +5,14 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientItem from '../../components/burger-ingredients/ingredient-item';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; 
 import { Order } from '../../utils/types/orders';
+import { useDispatch } from 'react-redux';
+
 
 export function Feed() {
+  const dispatch = useDispatch();
+  const startWebSocket = () => {
+    dispatch({ type: 'WS_CONNECTION_START' }); // Начинаем соединение
+  };
   // Заглушка для демонстрации
   const value = 'Пример заголовка';
   const item = { _id: 123, name: 'Пример ингредиента примерный' };
@@ -51,6 +57,9 @@ export function Feed() {
                     return openModal(item)
                   }}
                 />
+                    <button onClick={startWebSocket}>
+      Start WebSocket
+    </button>
               </section>
             </main>
           </div>
