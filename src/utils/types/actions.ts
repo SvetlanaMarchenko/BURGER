@@ -1,33 +1,34 @@
 import {
-  JOIN_CHAT,
-  JOIN_CHAT_FAILED,
-  JOIN_CHAT_SUCCESS,
+  // JOIN_CHAT,
+  // JOIN_CHAT_FAILED,
+  // JOIN_CHAT_SUCCESS,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_CONNECTION_START,
-} from '../action-types';
-import type { IMessage, IUserResponse } from "./modelsData";
+} from  '../../services/actions/ws-action-types';
 
-export interface IJoinChatAction {
-  readonly type: typeof JOIN_CHAT;
-}
+import type { IMessage } from "../types/modelsData";
 
-export interface IJoinChatFailedAction {
-  readonly type: typeof JOIN_CHAT_FAILED;
-}
+// export interface IJoinChatAction {
+//   readonly type: typeof JOIN_CHAT;
+// }
 
-export interface IJoinChatSuccessAction {
-  readonly type: typeof JOIN_CHAT_SUCCESS;
-  readonly user: IUserResponse;
-}
+// export interface IJoinChatFailedAction {
+//   readonly type: typeof JOIN_CHAT_FAILED;
+// }
 
-export type TUserActions =
-  | IJoinChatAction
-  | IJoinChatFailedAction
-  | IJoinChatSuccessAction;
+// export interface IJoinChatSuccessAction {
+//   readonly type: typeof JOIN_CHAT_SUCCESS;
+//   readonly user: IUserResponse;
+// }
+
+// export type TUserActions =
+//   | IJoinChatAction
+//   | IJoinChatFailedAction
+//   | IJoinChatSuccessAction;
 
 export interface IWSConnectionStart {
   readonly type: typeof WS_CONNECTION_START;

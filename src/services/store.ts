@@ -1,10 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './root-reducer';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { socketMiddleware } from './middleware/socket-middleware'; 
-
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-
+import { ThunkAction } from 'redux-thunk';
+import { socketMiddleware } from './middleware/socket-middleware';
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -14,31 +11,7 @@ import {
   WS_SEND_MESSAGE,
 } from './actions/ws-action-types';
 
-import { Action } from 'redux';
-
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(socketMiddleware(wsUrl))
-});
-
-// export type RootState = ReturnType<typeof rootReducer>;
-
-// export type AppDispatch = ThunkDispatch<RootState, undefined, Action>;
-
-// export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppActions = Action<string>;
-
-// export const useDispatch = dispatchHook.withType <AppDispatch>() 
-// export const useSelector = selectorHook.withType <RootState>() 
-
-
-
-export type AppActions = TWSActions | TUserActions;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
-export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
+import type { TWSActions } from '../utils/types/actions';
 
 export type TWSStoreActions = {
   wsInit: typeof  WS_CONNECTION_START,
@@ -49,15 +22,28 @@ export type TWSStoreActions = {
   onMessage: typeof  WS_GET_MESSAGE,
 };
 
-// export * from './modelsData';
-// export * from './actions';
+// Определяем действия для WebSocket
+const wsActions: TWSStoreActions = {
+  wsInit: WS_CONNECTION_START,
+  wsSendMessage: WS_SEND_MESSAGE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE,
+};
 
+// Создаем store с помощью Redux Toolkit
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(socketMiddleware('wss://norma.nomoreparties.space/orders/all', wsActions)),
+  devTools: true, // Включение DevTools
+});
 
-
-
-
-
-
-
+// Типизация для приложения
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type AppActions = TWSActions;
+export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
 
 export default store;

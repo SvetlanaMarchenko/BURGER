@@ -6,7 +6,8 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
   } from '../actions/ws-action-types';
-  import type { IMessage, TWSActions } from '../actions/ws-action-types';
+  import type { TWSActions } from '../../utils/types/actions';
+  import type { IMessage} from '../../utils/types/modelsData';
   
   type TWSState = {
     wsConnected: boolean;
