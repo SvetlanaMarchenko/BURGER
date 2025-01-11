@@ -12,6 +12,8 @@ import {
   type TWSState = {
     wsConnected: boolean;
     messages: IMessage[];
+    orders: [];
+
   
     error?: Event;
   }
@@ -55,10 +57,15 @@ import {
           // Обработка происходит, когда с сервера возвращаются данные
           // В messages передадим данные, которые пришли с сервера
       case WS_GET_MESSAGE:
+        console.log("arrived: ", action.payload)  
+        const parsedMessage =  JSON.parse(action.payload)
+
+
         return {
           ...state,
                   error: undefined,
-          messages: [...state.messages, action.payload]
+          // messages: [...state.messages, action.payload],
+          orders: parsedMessage.orders
         };
       default:
         return state;

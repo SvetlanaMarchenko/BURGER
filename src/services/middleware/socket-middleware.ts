@@ -18,11 +18,23 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
       if (socket) {
 
                 // функция, которая вызывается при открытии сокета
-        socket.onopen = event => {
-          dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
-        };
+        // socket.onopen = event => {
+        //   dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
+        // };
 
-                // функция, которая вызывается при ошибке соединения
+        //         // функция, которая вызывается при ошибке соединения
+
+        socket.onopen = (event: Event) => {
+          const payload = {
+            type: event.type,
+            isTrusted: event.isTrusted,
+          };
+          dispatch({
+            type: 'WS_CONNECTION_SUCCESS',
+            payload: payload,
+          });
+        };
+        
         socket.onerror = event => {
           dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
         };

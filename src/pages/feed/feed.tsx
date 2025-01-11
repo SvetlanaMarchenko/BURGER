@@ -5,14 +5,21 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientItem from '../../components/burger-ingredients/ingredient-item';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; 
 import { Order } from '../../utils/types/orders';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux'; // useSelector для получения данных из состояния
+import { RootState } from '../../services/store'; // Путь может отличаться
 
 export function Feed() {
   const dispatch = useDispatch();
+  
+  // Получаем заказы из состояния
+  const orders = useSelector((state: RootState) => state.wsReducer.orders); 
+  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected); // Статус подключения
+
+  // Подключаем WebSocket
   const startWebSocket = () => {
     dispatch({ type: 'WS_CONNECTION_START' }); // Начинаем соединение
   };
+
   // Заглушка для демонстрации
   const value = 'Пример заголовка';
   const item = { _id: 123, name: 'Пример ингредиента примерный' };
@@ -26,9 +33,13 @@ export function Feed() {
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
-  const openModal = (item: Order) => {
-    dispatch(setCurrentIngredient(item));
-  };
+  // const openModal = (item: Order) => {
+  //   dispatch(setCurrentIngredient(item));
+  // };
+
+
+
+
 
   return (
     <div className={`${styles.appLayout}`}>
@@ -44,11 +55,11 @@ export function Feed() {
                 <div className={`${styles.orderNumber}`}>
                 <div className="text text_type_digits-default">Номер заказа</div>
                 <div>
-                  <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date()} />
+                  {/* <p className="text text_type_main-default text_color_inactive">{orders[0].createdAt}</p> */}
                 </div>
                 </div>
 
-                <IngredientItem
+                {/* <IngredientItem
                   className={`${styles.nazvanieBurgera} mb-6`}
                   key={item._id}
                   item={item}
@@ -56,10 +67,32 @@ export function Feed() {
                     navigate(`/orders/${item.number}`, {state: {backgroundLocation: '/'}})
                     return openModal(item)
                   }}
-                />
+                /> */}
+
+          <div>
+            
+            {orders && orders.length > 0 ? (
+              <div>
+                {/* Display the ID */}
+                <p>Название: {orders[0]._id}</p>
+                
+                {/* Display the image (if _id is supposed to be a URL, otherwise update the src to a valid image URL) */}
+                <img src={orders[0]._id} alt="OK" />
+                
+                {/* Display the number */}
+                <p>Номер: {orders[0].number}</p>
+                <p>{orders[0].createdAt}</p>
+              </div>
+            ) : (
+              <div>Загрузка заказов...</div>
+            )}
+          </div>
+
+
                     <button onClick={startWebSocket}>
       Start WebSocket
     </button>
+
               </section>
             </main>
           </div>
