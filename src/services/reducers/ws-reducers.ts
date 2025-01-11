@@ -13,6 +13,8 @@ import {
     wsConnected: boolean;
     messages: IMessage[];
     orders: [];
+    total: number;
+    totalToday: number
 
   
     error?: Event;
@@ -65,7 +67,9 @@ import {
           ...state,
                   error: undefined,
           // messages: [...state.messages, action.payload],
-          orders: parsedMessage.orders
+          orders: parsedMessage.orders,
+          total: parsedMessage.total,
+          totalToday: parsedMessage.totalToday
         };
       default:
         return state;
