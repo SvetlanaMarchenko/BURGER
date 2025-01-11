@@ -60,5 +60,10 @@
 .orderListBox{
   width: 272px;
   display: flex;
+}
 
+.orderListResultInProgress{
+  display: flex;
+  flex-direction: column;
+  color: #00CCCC;
 }

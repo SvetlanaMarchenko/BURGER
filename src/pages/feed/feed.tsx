@@ -104,11 +104,20 @@ export function Feed() {
           {/* <BurgerConstructor className=" mr-4" /> */}
           <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-10`}>
             <div className={`${styles.subheading}  mb-6`}>
-              <h1 className={` ${styles.orderListBox} text text_type_main-medium`}>Готовы: {orders[0].number}</h1>
-            
-
+              <h1 className={` ${styles.orderListBox} text text_type_main-medium`}>Готовы: </h1>
+              
               <h1 className={` ${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
             </div>
+
+              <div className={`${styles.orderListResultInProgress} text text_type_digits-medium`}>
+                {orders.slice(0, 5).map((order, index) => (
+                  <div key={order._id || index}>{order.number}</div>
+                ))}
+              </div>
+              
+            
+
+            
             <h1 className={` text text_type_main-medium mt-15`}>Выполнено за все время:</h1>
             <h1 className={` text text_type_digits-large mb-15`}>{total}</h1>
             <h1 className={` text text_type_main-medium`}>Выполнено за сегодня:</h1>
