@@ -6,7 +6,7 @@
   flex-direction: column;
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  /* text-align: center; */
   overflow: hidden;
   height: 100vh;
   box-sizing: border-box;
@@ -87,3 +87,30 @@
   align-items: flex-start;
   flex-direction: column
 }
+
+.orderImage {
+  position: relative; /* Для наложения */
+  margin: -9px;
+  z-index: 2; /* Изначально все элементы на одном уровне */
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 1; /* Изображение по умолчанию полностью видимое */
+}
+
+
+.orderImage.hidden {
+  opacity: 0; /* Скрываем следующие изображения */
+}
+
+.orderImage:first-child {
+  left: 0; /* У первого элемента отступа нет */
+}
+
+.orderListAndCost{
+  display: flex;
+  flex-direction: row;
+
+}
+
