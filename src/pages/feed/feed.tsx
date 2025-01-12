@@ -1,18 +1,42 @@
+import { useEffect } from 'react';
 import styles from './feed.module.css';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import IngredientItem from '../../components/burger-ingredients/ingredient-item';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; 
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'; 
 import { Order } from '../../utils/types/orders';
 import { useDispatch, useSelector } from 'react-redux'; // useSelector для получения данных из состояния
 import { RootState } from '../../services/store'; // Путь может отличаться
+import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
 
 export function Feed() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDataIngredients());
+  }, [dispatch]);
+  
   
   // Получаем заказы из состояния
-  const orders = useSelector((state: RootState) => state.wsReducer.orders); 
+  const orders = useSelector((state: RootState) => {
+    console.log("state: ", state)
+    const ingredientLib = state.ingredients.allIngredients
+    const rawOrders = state.wsReducer.orders
+    console.log("rawOrders: ", rawOrders)
+    const fullOrders = rawOrders?.map(ro => {
+      return {
+        ...ro,
+        ingredients: ro.ingredients?.map(oi => {
+          return ingredientLib.find(il => il._id === oi)  
+        })
+      };
+    })
+  
+    console.log("fullOrders:", fullOrders)
+
+    return fullOrders;
+  }); 
   const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected); // Статус подключения
   const total = useSelector((state: RootState) => state.wsReducer.total);
   const totalToday = useSelector((state: RootState) => state.wsReducer.totalToday);
@@ -54,41 +78,26 @@ export function Feed() {
 
             <main className={styles.scrollContainer} onScroll={handleScroll}>
               <section className={`${styles.orderSection}`}>
-                <div className={`${styles.orderNumber}`}>
-                <div className="text text_type_digits-default">Номер заказа</div>
+                
                 <div>
-                  {/* <p className="text text_type_main-default text_color_inactive">{orders[0].createdAt}</p> */}
-                </div>
-                </div>
+                  {orders && orders.length > 0 ? (
+                    
+                    <div className={`${styles.orderName} mb-6`}>
+                      <div className={`${styles.orderNumber} mt-6 mb-6`}>
+                      <div className="text text_type_digits-default"># {orders[0].number}</div>
+                      <div className="text text_type_main-default text_color_inactive">{orders[0].createdAt}</div>
+                    </div>
+                      <div className={` text text_type_main-medium mb-6`}>{orders[0].name}</div>
+                        <div>
+                          <img src={orders[0].ingredients[0].image} alt="OK" />
+                          <CurrencyIcon type="primary" className="ml-2" />
+                        </div>
 
-                {/* <IngredientItem
-                  className={`${styles.nazvanieBurgera} mb-6`}
-                  key={item._id}
-                  item={item}
-                  onClick={() => {
-                    navigate(`/orders/${item.number}`, {state: {backgroundLocation: '/'}})
-                    return openModal(item)
-                  }}
-                /> */}
-
-          <div>
-            
-            {orders && orders.length > 0 ? (
-              <div>
-                {/* Display the ID */}
-                <p>Название: {orders[0]._id}</p>
-                
-                {/* Display the image (if _id is supposed to be a URL, otherwise update the src to a valid image URL) */}
-                <img src={orders[0]._id} alt="OK" />
-                
-                {/* Display the number */}
-                <p>Номер: {orders[0].number}</p>
-                <p>{orders[0].createdAt}</p>
-              </div>
-            ) : (
-              <div>Загрузка заказов...</div>
-            )}
-          </div>
+                    </div>
+                  ) : (
+                    <div>Загрузка заказов...</div>
+                  )}
+                </div>
 
 
                     <button onClick={startWebSocket}>
@@ -102,13 +111,13 @@ export function Feed() {
 
 
 
-          <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-10`}>
+          <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-25`}>
           <div className={`${styles.subheading} mb-6`}>
             <h1 className={`${styles.orderListBox} text text_type_main-medium`}>Готовы:</h1>
             <h1 className={`${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
           </div>
 
-          <div className={`${styles.ordersColumn} text text_type_digits-medium`}>
+          <div className={`${styles.ordersColumn} text text_type_digits-default`}>
 
             {orders && orders.length > 0 ? (
               <>
