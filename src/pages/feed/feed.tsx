@@ -101,28 +101,57 @@ export function Feed() {
 
 
 
-          {/* <BurgerConstructor className=" mr-4" /> */}
+
           <div className={`${styles.ordersList} text text_type_main-large ml-15 mt-10`}>
-            <div className={`${styles.subheading}  mb-6`}>
-              <h1 className={` ${styles.orderListBox} text text_type_main-medium`}>Готовы: </h1>
-              
-              <h1 className={` ${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
-            </div>
-
-              <div className={`${styles.orderListResultInProgress} text text_type_digits-medium`}>
-                {orders.slice(0, 5).map((order, index) => (
-                  <div key={order._id || index}>{order.number}</div>
-                ))}
-              </div>
-              
-            
-
-            
-            <h1 className={` text text_type_main-medium mt-15`}>Выполнено за все время:</h1>
-            <h1 className={` text text_type_digits-large mb-15`}>{total}</h1>
-            <h1 className={` text text_type_main-medium`}>Выполнено за сегодня:</h1>
-            <h1 className={` text text_type_digits-large mb-15`}>{totalToday}</h1>
+          <div className={`${styles.subheading} mb-6`}>
+            <h1 className={`${styles.orderListBox} text text_type_main-medium`}>Готовы:</h1>
+            <h1 className={`${styles.orderListBox} text text_type_main-medium ml-9`}>В работе:</h1>
           </div>
+
+          <div className={`${styles.ordersColumn} text text_type_digits-medium`}>
+
+            {orders && orders.length > 0 ? (
+              <>
+                {/* Заказы со статусом "done" */}
+                {orders.filter(order => order.status === "done").length > 0 ? (
+                  <div className={`${styles.orderListResultDone}`}>
+                    {orders
+                      .filter(order => order.status === "done")
+                      .slice(0, 5)
+                      .map(order => (
+                        <div key={order._id}>{order.number}</div>
+                      ))}
+                  </div>
+                ) : (
+                  <div>0</div>
+                )}
+
+                {/* Заказы со статусом "pending" */}
+                {orders.filter(order => order.status === "pending").length > 0 ? (
+                  <div className={`${styles.orderListResultInProgress} ml-9`}>
+                    {orders
+                      .filter(order => order.status === "pending")
+                      .slice(0, 5)
+                      .map(order => (
+                        <div key={order._id}>{order.number}</div>
+                      ))}
+                  </div>
+                ) : (
+                  <div className='ml-9'>0</div>
+                )}
+              </>
+            ) : (
+              <div>Загрузка заказов...</div>
+            )}
+          </div>
+
+
+          <h1 className={`text text_type_main-medium mt-15`}>Выполнено за все время:</h1>
+          <h1 className={`text text_type_digits-large mb-15`}>{total}</h1>
+          <h1 className={`text text_type_main-medium`}>Выполнено за сегодня:</h1>
+          <h1 className={`text text_type_digits-large mb-15`}>{totalToday}</h1>
+        </div>
+
 
 
 

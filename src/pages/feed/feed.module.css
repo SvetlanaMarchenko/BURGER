@@ -62,8 +62,21 @@
   display: flex;
 }
 
-.orderListResultInProgress{
+.orderListResultDone{
   display: flex;
   flex-direction: column;
   color: #00CCCC;
+  width: 272px;
+  align-items: flex-start;
+}
+
+.orderListResultInProgress{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ordersColumn{
+  display: flex;
+  flex-direction: row;
 }
