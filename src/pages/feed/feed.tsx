@@ -5,7 +5,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
 import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
-import {OrderCard} from './order-card';
+import { OrderCard } from './order-card';
 
 export function Feed() {
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ export function Feed() {
   };
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
+    // Получение прокрутки
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
@@ -60,8 +61,11 @@ export function Feed() {
             <h1 className={`${styles.mainTitle} text text_type_main-large`}>Лента заказов</h1>
             <div className={`${styles.burgerBar} mt-6`} />
 
-            <main className={styles.scrollContainer} onScroll={handleScroll}>
-              <section className={styles.orderSection}>
+            <main className={styles.scrollContainer} >
+              <section 
+                className={styles.orderSection} 
+                onScroll={handleScroll} 
+              >
                 {orders?.map(order => <OrderCard key={order._id} order={order} />)}
                 {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
               </section>

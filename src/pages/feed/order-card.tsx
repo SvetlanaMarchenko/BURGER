@@ -9,11 +9,6 @@ export const OrderCard = ({ order }: { order: any }) => (
         <div className={`${styles.orderNumber} mt-6 mb-6`}>
           <div className="text text_type_digits-default"># {order.number}</div>
           <div className="text text_type_main-default text_color_inactive">{order.createdAt}</div>
-
-          {/* <div className="text text_type_main-default text_color_inactive">
-
-          <FormattedDate date={order.createdAt} />
-        </div> */}
         </div>
         <div className={`text text_type_main-medium mb-6`}>{order.name}</div>
         <div className={`${styles.orderListAndCostInGeneral} mb-6`}>
