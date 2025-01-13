@@ -52,8 +52,6 @@ export function Feed() {
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
-
-
   return (
     <div className={styles.appLayout}>
       <DndProvider backend={HTML5Backend}>
