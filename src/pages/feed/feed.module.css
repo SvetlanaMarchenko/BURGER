@@ -99,23 +99,25 @@
   height: 71px;
   width: 77px;
   border: 2px solid #4C4CFF;
-  opacity: 1; /* Изображение по умолчанию полностью видимое */
+  opacity: 1; 
+  object-fit: cover; 
 }
 
 .blurImage{
-  position: relative; /* Для наложения */
+  position: relative;
   margin: -9px;
-  z-index: 2; /* Изначально все элементы на одном уровне */
+  z-index: 2;
   border-radius: 50%;
   height: 71px;
   width: 77px;
   border: 2px solid #4C4CFF;
-  opacity: 0.4;; /* Изображение по умолчанию полностью видимое */
+  opacity: 0.4;
+  object-fit: cover;
 }
 
 
 .orderImage.hidden {
-  opacity: 0; /* Скрываем следующие изображения */
+  opacity: 0; 
 }
 
 .orderImage:first-child {

@@ -71,25 +71,39 @@ const FeedNumber = () => {
             <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
             {orders[0].name}
             </h1>
-            <h1 className={`${styles.statusOrder} text text_type_main-default mb-15`}>Выполнен</h1>
+            <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
+              {orders[0].status === "done" && <div>Выполнен</div>}
+              {orders[0].status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>} 
+              {orders[0].status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
+            </div>
             <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>Состав:</h1>
           </section>
 
-          <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll}>
-            <div className={`${styles.orderIngredient} mb-4 text text_type_main-default text_color_inactive`}>
+          <section className={`${styles.orderIngredientOptions} pr-6 mb-4`}>
+          {orders[0].ingredients.map((ingredient, index) => (
+            <div
+              key={index}
+              className={`${styles.orderIngredient} mb-4 text text_type_main-default text_color_inactive`}
+            >
               <div>
-                <h1 className="text text_type_main-default mr-4">{item.img}</h1>
+                <img
+                  src={ingredient?.image}
+                  className={`${styles.orderNumberImage} text text_type_main-default mr-4`}
+                  alt={ingredient?.name || "Ингредиент"}
+                />
               </div>
               <div className={styles.orderIngredientName}>
-                <p className="text text_type_main-medium">{item.name}</p>
+                <p className="text text_type_main-medium">{ingredient?.name}</p>
               </div>
+              
               <div>
                 <p className="text text_type_digits-default">
-                  {item.quantity} x {item.price}
+                  {ingredient.quantity} x {ingredient.price}
                 </p>
               </div>
-              <CurrencyIcon type="primary" className="ml-2" />
+              <CurrencyIcon type="primary" className="ml-2"/>
             </div>
+          ))}
           </section>
 
           <section className={`mt-10 ${styles.orderResult}`}>
@@ -97,8 +111,9 @@ const FeedNumber = () => {
               className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
               date={new Date()}
             />
-            <p className="text text_type_digits-default">{item.price}</p>
+            <p className="text text_type_digits-default">{orders[0].fullOrderPrice} </p>
             <CurrencyIcon type="primary" className="ml-2" />
+
           </section>
         </>
       ) : (

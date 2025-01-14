@@ -59,6 +59,12 @@
   justify-content: flex-start;
 }
 
+.statusOrderOther{
+  display: flex;
+  justify-content: flex-start;
+
+}
+
 .orderIngredient{
   display: flex;
   justify-content: flex-start;
@@ -87,5 +93,16 @@
 
 .orderIngredientOptions{
   max-height: 376px;
+}
+
+.orderNumberImage{
+  width: 64px;
+  height: 64px;
+  padding: 4px 0px 4px 0px;
+  gap: 0px;
+  border-radius: 100px 0px 0px 0px;
+  border: 2px 0px 0px 0px;
+  opacity: 0px;
+  object-fit: cover;
 
 }
