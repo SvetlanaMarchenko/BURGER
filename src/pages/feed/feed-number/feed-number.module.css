@@ -69,6 +69,7 @@
   display: flex;
   justify-content: flex-start;
   width: 608px;
+  align-items: center;
 
 }
 
@@ -89,20 +90,25 @@
 
 .orderNumber{
   text-align: center;
+
 }
 
 .orderIngredientOptions{
-  max-height: 376px;
+  /* max-height: 376px; */
+  overflow-y: scroll;
+  max-height: 180px;
+  overflow-x: hidden;
+
 }
 
-.orderNumberImage{
+.orderNumberImage {
   width: 64px;
   height: 64px;
   padding: 4px 0px 4px 0px;
-  gap: 0px;
-  border-radius: 100px 0px 0px 0px;
-  border: 2px 0px 0px 0px;
-  opacity: 0px;
   object-fit: cover;
-
+  border: 2px solid transparent; /* используем transparent */
+  border-image: linear-gradient(to right, #4C4CFF, purple) 1;
+  border-radius: 50%; /* скругляем границы, делая их круглыми */
 }
+
+
