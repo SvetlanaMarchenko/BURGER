@@ -34,7 +34,7 @@
   flex-direction: column;
   align-items: flex-start;
   overflow-y: scroll;
-  /* max-height: 100px; */
+  max-height: 500px;
   overflow-x: hidden;
 }
 
@@ -134,7 +134,7 @@
 }
 
 .extraIngredients{
-  position: relative;
+  position: relative; /* Для наложения */
   margin: -40px;
   z-index: 2; 
 }
@@ -143,8 +143,10 @@
   display: flex;
   flex-direction: row;
   width: 536px;
+  flex-direction: row;
   align-items: center;
 }
+
 
 .subsection{
 background-color: #1C1C21;

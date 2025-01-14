@@ -64,7 +64,7 @@ export function Feed() {
             <main className={styles.scrollContainer} >
               <section 
                 className={styles.orderSection} 
-                onScroll={handleScroll} 
+                onScroll={handleScroll}
               >
                 {orders?.map(order => <OrderCard key={order._id} order={order} />)}
                 {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}

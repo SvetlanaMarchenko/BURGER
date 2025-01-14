@@ -74,7 +74,7 @@
 }
 
 .orderIngredientName{
-  width: 414px;
+  width: 390px;
 }
 
 .orderResult{
@@ -94,7 +94,6 @@
 }
 
 .orderIngredientOptions{
-  /* max-height: 376px; */
   overflow-y: scroll;
   max-height: 180px;
   overflow-x: hidden;
