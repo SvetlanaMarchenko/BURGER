@@ -93,26 +93,27 @@
 
 .orderImage {
   position: relative; /* Для наложения */
+  display: flex;
   margin: -9px;
   z-index: 2; /* Изначально все элементы на одном уровне */
   border-radius: 50%;
   height: 71px;
   width: 77px;
   border: 2px solid #4C4CFF;
-  border-image: linear-gradient(to right, #4C4CFF, purple) 1;
   opacity: 1; 
   object-fit: cover; 
+  background: black;
 }
 
 .blurImage{
   position: relative;
+  background: black;
   margin: -9px;
   z-index: 2;
   border-radius: 50%;
   height: 71px;
   width: 77px;
   border: 2px solid #4C4CFF;
-  border-image: linear-gradient(to right, #4C4CFF, purple) 1;
   opacity: 0.4;
   object-fit: cover;
 }
@@ -130,7 +131,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 445px;
+  width: 400px;
 }
 
 .extraIngredients{

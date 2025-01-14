@@ -55,7 +55,6 @@ export function Feed() {
 
   return (
     <div className={styles.appLayout}>
-      <DndProvider backend={HTML5Backend}>
         <div className={styles.ingredientsBox}>
           <div className={`${styles.ingredientsSection} mt-10`}>
             <h1 className={`${styles.mainTitle} text text_type_main-large`}>Лента заказов</h1>
@@ -102,7 +101,6 @@ export function Feed() {
             <h1 className="text text_type_digits-large mb-15">{totalToday}</h1>
           </div>
         </div>
-      </DndProvider>
     </div>
   );
 }

@@ -120,15 +120,13 @@
   flex-direction: row;
   justify-content: flex-start;
   width: 830px;
+  align-items: center;
 }
 
 .orderTime{
   width: 556px;
 }
 
-.orderImage{
-  width: 796px;
-}
 
 .orderIngredientOptions{
   max-height: 376px;
@@ -136,6 +134,46 @@
 
 .orderName{
   width: 830px;;
+}
+
+.orderImage{
+  position: relative; /* Для наложения */
+  display: flex;
+  margin: -9px;
+  z-index: 2; /* Изначально все элементы на одном уровне */
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 1; 
+  object-fit: cover; 
+  background: black;
+}
+
+.blurImage{
+  position: relative;
+  background: black;
+  margin: -9px;
+  z-index: 2;
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 0.4;
+  object-fit: cover;
+}
+
+.orderListAndCost{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 696px;
+}
+
+.extraIngredients{
+  position: relative; /* Для наложения */
+  margin: -40px;
+  z-index: 2; 
 }
 
 

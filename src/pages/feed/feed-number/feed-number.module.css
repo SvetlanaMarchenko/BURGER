@@ -108,6 +108,7 @@
   border: 2px solid transparent; /* используем transparent */
   border-image: linear-gradient(to right, #4C4CFF, purple) 1;
   border-radius: 50%; /* скругляем границы, делая их круглыми */
+  background: black;
 }
 
 
