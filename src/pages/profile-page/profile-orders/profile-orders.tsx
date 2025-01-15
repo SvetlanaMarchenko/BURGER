@@ -1,5 +1,5 @@
 import styles from './profile-orders.module.css';
-import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'; // Убедитесь, что этот компонент импортирован
+import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../services/store';
@@ -38,8 +38,6 @@ export function ProfileOrders() {
   });
 
   const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
-  const total = useSelector((state: RootState) => state.wsReducer.total);
-  const totalToday = useSelector((state: RootState) => state.wsReducer.totalToday);
 
   const startWebSocket = () => {
     if (!wsConnected) {
@@ -54,64 +52,63 @@ export function ProfileOrders() {
 
   return (
     <div className={`${styles.profileOrder}`}>
-            <NavigationProfilePage />
+      <NavigationProfilePage />
       {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
-        <div className={`${styles.ingredientsBox}`}>
-          <div className={`${styles.ingredientsSection} mt-10`}>
-
-            <div className={`${styles.burgerBar} mt-6`} />
-
-            <main className={styles.scrollContainer} onScroll={handleScroll}>
+      <div className={`${styles.ingredientsBox}`}>
+        <div className={`${styles.ingredientsSection} mt-10`}>
+          <div className={`${styles.burgerBar} mt-6`} />
+          <main className={styles.scrollContainer} onScroll={handleScroll}>
             {orders?.length > 0 ? (
-              <section className={`${styles.orderSection} mb-6`}>
-              <div className={`${styles.orderNumber}`}>
-                <h1 className="text text_type_digits-default mb-6">
-                  # {orders[0].number}
-                </h1> 
-
-                <div
-                  className="text text_type_main-default text_color_inactive">
-                  {orders[0].createdAt}
-                </div>
-              </div>
-
-                <h1 className={`${styles.orderName} text text_type_main-medium mb-2`}>
-                        {/* alt={selectedData.name} */}
-                        {orders[0].name}
-                </h1>
-                <h1 className={`${styles.statusOrder} text text_type_main-default mb-6`}>Выполнен</h1>
-
-
-                <section className={`${styles.orderResult}`}>
-
-
-                <div className={`${styles.orderListAndCost}`}>
-                {orders[0].ingredientsToShow.map((ingredient, index) => (
-                  <div key={index}>
-                    <img
-                        src={ingredient?.image}
-                        className={orders[0].extraIngredients > 0 && index === 5 ? styles.blurImage: styles.orderImage}  // Применяем styles.blur если условие верно
-                        alt="Ингредиент"
-                        />
+              orders.map((order, idx) => (
+                <section key={idx} className={`${styles.orderSection} mb-6`}>
+                  <div className={`${styles.orderNumber}`}>
+                    <h1 className="text text_type_digits-default mb-6">
+                      # {order.number}
+                    </h1>
+                    <FormattedDate
+                      className="text text_type_main-default text_color_inactive"
+                      date={new Date(order.createdAt)}
+                    />
                   </div>
-                ))}
-                {orders[0].extraIngredients > 0 && (
-                  <div className={styles.extraIngredients}>+{orders[0].extraIngredients}</div>
-                )}
-              </div>
 
-                <p className="text text_type_digits-default">
-                    {orders[0].fullOrderPrice}
-                </p>
-                <CurrencyIcon type="primary" className="ml-2" />
+                  <h1 className={`${styles.orderName} text text_type_main-medium mb-2`}>
+                    {order.name}
+                  </h1>
+                  <h1 className={`${styles.statusOrder} text text_type_main-default mb-6`}>
+                    {order.status === 'done' ? 'Выполнен' : 'В процессе'}
+                  </h1>
+
+                  <section className={`${styles.orderResult}`}>
+                    <div className={`${styles.orderListAndCost}`}>
+                      {order.ingredientsToShow.map((ingredient, index) => (
+                        <div key={index}>
+                          <img
+                            src={ingredient?.image}
+                            className={`${index === maxIngredientsInRow - 1 && order.extraIngredients > 0 ? styles.blurImage : styles.orderImage}`}
+                            alt={ingredient?.name || 'Ингредиент'}
+                          />
+                        </div>
+                      ))}
+                      {order.extraIngredients > 0 && (
+                        <div className={styles.extraIngredients}>
+                          +{order.extraIngredients}
+                        </div>
+                      )}
+                    </div>
+
+                    <p className="text text_type_digits-default">
+                      {order.fullOrderPrice}
+                    </p>
+                    <CurrencyIcon type="primary" className="ml-2" />
+                  </section>
                 </section>
-              </section>
+              ))
             ) : (
               <p>Загрузка заказов...</p>
             )}
-            </main>
-          </div>
+          </main>
         </div>
+      </div>
     </div>
   );
 }

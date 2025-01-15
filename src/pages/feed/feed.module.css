@@ -34,7 +34,7 @@
   flex-direction: column;
   align-items: flex-start;
   overflow-y: scroll;
-  max-height: 500px;
+  max-height: 730px;
   overflow-x: hidden;
 }
 
