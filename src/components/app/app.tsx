@@ -48,16 +48,24 @@ function App() {
     <div className={style.appLayout}>
        <AppHeader />
 
-      {state?.backgroundLocation && (
+       {state?.backgroundLocation && (
         <Routes>
-            <Route
-              path='/ingredients/:ingredientId'
-              element={
-                <Modal onClose={() => {navigate(-1)}}>
-                  <IngredientDetails />
-                </Modal>
-              }
-            />
+          <Route
+            path='/ingredients/:ingredientId'
+            element={
+              <Modal onClose={() => { navigate(-1); }}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal onClose={() => { navigate(-1); }}>
+                <FeedNumber />
+              </Modal>
+            }
+          />
         </Routes>
       )}
 

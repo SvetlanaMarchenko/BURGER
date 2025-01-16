@@ -4,15 +4,35 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../services/store';
-import { fetchDataIngredients } from '../../services/actions/ingredients-actions';
+import { fetchDataIngredients, fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
 import { OrderCard } from './order-card';
+
+import { useParams, useLocation, useNavigate,  } from 'react-router-dom';
+import { Order} from '../../utils/types/orders';
+
 
 export function Feed() {
   const dispatch = useDispatch();
+  const { id } = useParams(); 
+  const location = useLocation(); // Текущий маршрут
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchDataIngredients());
   }, [dispatch]);
+
+  useEffect(() => {
+    const isIngredientOrFeedOrOrder =
+      location.pathname.startsWith('/feed/') ||
+      location.pathname.startsWith('/profile/orders/');
+    
+    if (isIngredientOrFeedOrOrder && id) {
+      dispatch(fetchDataIngredientsAndSetCurrent(id));
+    } else {
+      dispatch(fetchDataIngredients());
+    }
+  }, [dispatch, location.pathname, id]);
+
 
   const maxIngredientsInRow = 6;
 
@@ -53,6 +73,11 @@ export function Feed() {
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
+  const handleOrderClick = (order: Order) => {
+    navigate(`/feed/${order.number}`, { state: { backgroundLocation: location } });
+  };
+
+
   return (
     <div className={styles.appLayout}>
         <div className={styles.ingredientsBox}>
@@ -65,7 +90,17 @@ export function Feed() {
                 className={styles.orderSection} 
                 onScroll={handleScroll}
               >
-                {orders?.map(order => <OrderCard key={order._id} order={order} />)}
+
+              {orders?.map(order => {
+                return (
+                  <OrderCard
+                    key={order.number} 
+                    order={order}
+                    onClick={() => handleOrderClick(order)}
+                  />
+                );
+              })}
+                              
                 {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
               </section>
             </main>
