@@ -59,7 +59,7 @@ import {
           // Обработка происходит, когда с сервера возвращаются данные
           // В messages передадим данные, которые пришли с сервера
       case WS_GET_MESSAGE:
-        console.log("arrived: ", action.payload)  
+        // console.log("arrived: ", action.payload)  
         const parsedMessage =  JSON.parse(action.payload)
 
 

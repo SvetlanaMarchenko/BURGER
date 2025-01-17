@@ -28,6 +28,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
+  const wantedOrderNumber = useMatch("/feed/:number")?.params?.number;
   
   useEffect(() => {
     if(
@@ -62,7 +63,7 @@ function App() {
             path='/feed/:number'
             element={
               <Modal onClose={() => { navigate(-1); }}>
-                <FeedNumber />
+                <FeedNumber orderNumber={wantedOrderNumber} />
               </Modal>
             }
           />
@@ -84,7 +85,7 @@ function App() {
 
         <Route path="/ingredients/:id" element={<IngredientsIdPage />} />
 
-        <Route path="/feed/:number" element={<FeedNumber />} />
+        <Route path="/feed/:number" element={<FeedNumber orderNumber={wantedOrderNumber} />} />
         <Route path="/profile/orders" element={<OnlyAuth element={ProfileOrders} />} />
 
         <Route path="/profile/orders/:number" element={<OnlyAuth element={OrdersNumber} />} />

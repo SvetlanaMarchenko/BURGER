@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './feed.module.css';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -9,6 +9,8 @@ import { OrderCard } from './order-card';
 
 import { useParams, useLocation, useNavigate,  } from 'react-router-dom';
 import { Order} from '../../utils/types/orders';
+import FeedNumber from '../feed/feed-number/feed-number';
+
 
 
 export function Feed() {
@@ -77,6 +79,20 @@ export function Feed() {
     navigate(`/feed/${order.number}`, { state: { backgroundLocation: location } });
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для отображения модального окна
+  const [selectedOrder, setSelectedOrder] = useState(null); // Состояние для хранения выбранного заказа
+
+  const openModal = (order: any) => {
+    handleOrderClick(order)
+    // setSelectedOrder(order);  // Сохраняем выбранный заказ
+    // setIsModalOpen(true);  // Открываем модальное окно
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);  // Закрываем модальное окно
+    setSelectedOrder(null);  // Очищаем выбранный заказ
+  };
+
 
   return (
     <div className={styles.appLayout}>
@@ -89,6 +105,7 @@ export function Feed() {
               <section 
                 className={styles.orderSection} 
                 onScroll={handleScroll}
+
               >
 
               {orders?.map(order => {
@@ -96,7 +113,7 @@ export function Feed() {
                   <OrderCard
                     key={order.number} 
                     order={order}
-                    onClick={() => handleOrderClick(order)}
+                    openModal={openModal} 
                   />
                 );
               })}
@@ -134,6 +151,10 @@ export function Feed() {
             <h1 className="text text_type_digits-large mb-15">{total}</h1>
             <h1 className="text text_type_main-medium">Выполнено за сегодня:</h1>
             <h1 className="text text_type_digits-large mb-15">{totalToday}</h1>
+
+            {/* {isModalOpen && selectedOrder && (
+          <FeedNumber order={selectedOrder} onClose={closeModal} />
+        )} */}
           </div>
         </div>
     </div>

@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState } from '../../../services/store';
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 
-const FeedNumber = () => {
+const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,34 +49,95 @@ const FeedNumber = () => {
     });
   });
 
-  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
+  console.log(orders)
+  const order = orders.find(o => o.number === parseInt(orderNumber))
+  // const order = fullOrders
+
+  // const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
-  const startWebSocket = () => {
-    if (!wsConnected) {
-      dispatch({ type: 'WS_CONNECTION_START' });
-    }
-  };
+  // const startWebSocket = () => {
+  //   if (!wsConnected) {
+  //     dispatch({ type: 'WS_CONNECTION_START' });
+  //   }
+  // };
 
   return (
-    <div className={`${styles.moduleOrderLayout}`}>
-      {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
+    <div className={`${styles.moduleOrderLayout}`}> Halo order {orderNumber}
+      <section className={`${styles.orderDetailsMain} mt-30`}>
+        <h1 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
+          # {order.number}
+        </h1>
+        <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
+          {order.name}
+        </h1>
+        <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
+          {order.status === "done" && <div>Выполнен</div>}
+          {order.status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>}
+          {order.status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
+        </div>
+        <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>Состав:</h1>
+      </section>
+
+      <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll}>
+        {Array.from(
+          new Map(
+            order.ingredients.map((ingredient) => [ingredient._id, ingredient])
+          ).values()
+        ).map((ingredient, index) => (
+          <div
+            key={index}
+            className={`${styles.orderIngredient} mb-4 text text_type_main-default`}
+          >
+            <div>
+              <img
+                src={ingredient?.image}
+                className={`${styles.orderNumberImage} text text_type_main-default mr-4`}
+                alt={ingredient?.name || "Ингредиент"}
+              />
+            </div>
+            <div className={`${styles.orderIngredientName} text text_type_main-default`}>
+              {ingredient?.name}
+            </div>
+            <div>
+              <p className="text text_type_digits-default">
+                {ingredient.price}
+              </p>
+            </div>
+            <CurrencyIcon type="primary" className="ml-2" />
+          </div>
+        ))}
+      </section>
+
+      <section className={`mt-10 ${styles.orderResult}`}>
+        <div
+          className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
+        >
+          {order.createdAt}
+        </div>
+        <p className="text text_type_digits-default">{order.fullOrderPrice}</p>
+        <CurrencyIcon type="primary" className="ml-2" />
+      </section>
+
+          
+
+      {/* {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
       {orders?.length > 0 ? (
         <>
           <section className={`${styles.orderDetailsMain} mt-30`}>
             <h1 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
-              # {orders[0].number}
+              # {order.number}
             </h1>
             <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
-              {orders[0].name}
+              {order.name}
             </h1>
             <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
-              {orders[0].status === "done" && <div>Выполнен</div>}
-              {orders[0].status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>}
-              {orders[0].status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
+              {order.status === "done" && <div>Выполнен</div>}
+              {order.status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>}
+              {order.status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
             </div>
             <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>Состав:</h1>
           </section>
@@ -84,7 +145,7 @@ const FeedNumber = () => {
           <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll}>
   {Array.from(
     new Map(
-      orders[0].ingredients.map((ingredient) => [ingredient._id, ingredient])
+      order.ingredients.map((ingredient) => [ingredient._id, ingredient])
     ).values()
   ).map((ingredient, index) => (
     <div
@@ -103,7 +164,7 @@ const FeedNumber = () => {
       </div>
       <div>
         <p className="text text_type_digits-default">
-          {orders[0].numberOfRepeatedIngredient[ingredient._id] || 0} x {ingredient.price}
+          {ingredient.price}
         </p>
       </div>
       <CurrencyIcon type="primary" className="ml-2" />
@@ -116,15 +177,15 @@ const FeedNumber = () => {
             <div
               className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
             >
-              {orders[0].createdAt}
+              {order.createdAt}
             </div>
-            <p className="text text_type_digits-default">{orders[0].fullOrderPrice}</p>
+            <p className="text text_type_digits-default">{order.fullOrderPrice}</p>
             <CurrencyIcon type="primary" className="ml-2" />
           </section>
         </>
       ) : (
         <p>Загрузка заказов...</p>
-      )}
+      )} */}
     </div>
   );
 };

@@ -3,8 +3,8 @@ import styles from './feed.module.css';
 import { CurrencyIcon,FormattedDate  } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-export const OrderCard = ({ order }: { order: any }) => (
-    <div className={`${styles.subsection} mb-2`}key={order._id}>
+export const OrderCard = ({ order, openModal }: { order: any, openModal: (order: any) => void }) => (
+  <div className={`${styles.subsection} mb-2`} onClick={() => openModal(order)}>  {/* Вызываем openModal при клике */}
       <div className={`${styles.orderName} mb-6`}>
         <div className={`${styles.orderNumber} mt-6 mb-6`}>
           <div className="text text_type_digits-default"># {order.number}</div>
