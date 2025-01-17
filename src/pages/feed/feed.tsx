@@ -19,21 +19,28 @@ export function Feed() {
   const location = useLocation(); // Текущий маршрут
   const navigate = useNavigate();
 
+  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
+
   useEffect(() => {
     dispatch(fetchDataIngredients());
   }, [dispatch]);
 
   useEffect(() => {
-    const isIngredientOrFeedOrOrder =
-      location.pathname.startsWith('/feed/') ||
-      location.pathname.startsWith('/profile/orders/');
-    
-    if (isIngredientOrFeedOrOrder && id) {
-      dispatch(fetchDataIngredientsAndSetCurrent(id));
-    } else {
-      dispatch(fetchDataIngredients());
+    const shouldConnectWebSocket =
+      location.pathname.startsWith('/feed') ||
+      location.pathname.startsWith('/profile');
+  
+    if (shouldConnectWebSocket && !wsConnected) {
+      dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket
     }
-  }, [dispatch, location.pathname, id]);
+  
+    // Очистка подключения при выходе с этих страниц
+    return () => {
+      if (wsConnected && !shouldConnectWebSocket) {
+        dispatch({ type: 'WS_CONNECTION_CLOSED' }); // Закрытие WebSocket
+      }
+    };
+  }, [dispatch, location.pathname, wsConnected]);
 
 
   const maxIngredientsInRow = 6;
@@ -60,15 +67,10 @@ export function Feed() {
     });
   });
 
-  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
   const total = useSelector((state: RootState) => state.wsReducer.total);
   const totalToday = useSelector((state: RootState) => state.wsReducer.totalToday);
 
-  const startWebSocket = () => {
-    if (!wsConnected) {
-      dispatch({ type: 'WS_CONNECTION_START' });
-    }
-  };
+
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
     // Получение прокрутки
@@ -118,7 +120,7 @@ export function Feed() {
                 );
               })}
                               
-                {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
+
               </section>
             </main>
           </div>
