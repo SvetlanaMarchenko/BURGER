@@ -49,7 +49,6 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
     });
   });
 
-  console.log(orders)
   const order = orders.find(o => o.number === parseInt(orderNumber))
   // const order = fullOrders
 
@@ -66,7 +65,7 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
   // };
 
   return (
-    <div className={`${styles.moduleOrderLayout}`}> Halo order {orderNumber}
+    <div className={`${styles.moduleOrderLayout}`}> 
       <section className={`${styles.orderDetailsMain} mt-30`}>
         <h1 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
           # {order.number}
