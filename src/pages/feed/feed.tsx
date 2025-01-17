@@ -15,12 +15,10 @@ import useWebSocketOrders from '../../services/use-ws-order-profile';
 
 
 export function Feed() {
-  const dispatch = useDispatch();
-  const { id } = useParams(); 
   const location = useLocation(); // Текущий маршрут
   const navigate = useNavigate();
 
-  const { wsConnected, orders, total, totalToday } = useWebSocketOrders(location.pathname);
+  const { orders, total, totalToday } = useWebSocketOrders(location.pathname);
   
 
 

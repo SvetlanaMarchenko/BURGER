@@ -1,68 +1,15 @@
 import styles from './feed-number.module.css';
-
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect } from 'react';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../services/store';
-import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
+import useWebSocketOrders from '../../../services/use-ws-order-profile';
 
 const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
-  const dispatch = useDispatch();
+  const { orders } = useWebSocketOrders(location.pathname);
 
-  useEffect(() => {
-    dispatch(fetchDataIngredients());
-  }, [dispatch]);
-
-  const maxIngredientsInRow = 6;
-
-  const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.wsReducer.orders;
-
-    const fullOrders = rawOrders?.map(order => ({
-      ...order,
-      ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
-    }));
-
-    return fullOrders?.map(order => {
-      const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
-
-      const ingredientCount = order.ingredients.reduce((acc: Record<string, number>, ingredient) => {
-        if (ingredient && ingredient._id) {
-          acc[ingredient._id] = (acc[ingredient._id] || 0) + 1;
-        }
-        return acc;
-      }, {});
-
-      return {
-        ...order,
-        fullOrderPrice: orderPrice,
-        ingredientsToShow: order.ingredients.slice(0, maxIngredientsInRow),
-        extraIngredients: Math.max(order.ingredients.length - maxIngredientsInRow, 0),
-        numberOfRepeatedIngredient: ingredientCount,
-      };
-    });
-  });
-
-  const order = orders.find(o => o.number === parseInt(orderNumber))
-  // const order = fullOrders
-
-  // const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
-
+  const order = orders?.find(o => o.number === parseInt(orderNumber));
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
     console.log('Scrolled:', event.currentTarget.scrollTop);
   };
 
-  // const startWebSocket = () => {
-  //   if (!wsConnected) {
-  //     dispatch({ type: 'WS_CONNECTION_START' });
-  //   }
-  // };
 
   return (
     <div className={`${styles.moduleOrderLayout}`}> 

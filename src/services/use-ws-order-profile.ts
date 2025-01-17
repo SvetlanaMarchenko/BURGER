@@ -17,6 +17,7 @@ export const useWebSocketOrders = (locationPathname: string) => {
   useEffect(() => {
     const shouldConnectWebSocket =
       locationPathname.startsWith('/feed') ||
+      locationPathname.startsWith('/feed/') ||
       locationPathname.startsWith('/profile');
 
     if (shouldConnectWebSocket && !wsConnected) {
