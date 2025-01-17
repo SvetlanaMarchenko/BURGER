@@ -5,45 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../services/store';
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 import NavigationProfilePage from '../navigation-profile-page';
+import useWebSocketOrders from '../../../services/use-ws-order-profile';
 
 export function ProfileOrders() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchDataIngredients());
-  }, [dispatch]);
-
   const maxIngredientsInRow = 6;
 
-  const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.wsReducer.orders;
+    const { orders, total, totalToday } = useWebSocketOrders(location.pathname);
 
-    const fullOrders = rawOrders?.map(order => ({
-      ...order,
-      ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
-    }));
-
-    return fullOrders?.map(order => {
-      const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
-      return {
-        ...order,
-        fullOrderPrice: orderPrice,
-        ingredientsToShow: order.ingredients.slice(0, maxIngredientsInRow),
-        extraIngredients: Math.max(order.ingredients.length - maxIngredientsInRow, 0),
-      };
-    });
-  });
-
-  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
-
-  const startWebSocket = () => {
-    if (!wsConnected) {
-      dispatch({ type: 'WS_CONNECTION_START' });
-    }
-  };
+  
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
     // Получение прокрутки
@@ -53,7 +22,7 @@ export function ProfileOrders() {
   return (
     <div className={`${styles.profileOrder}`}>
       <NavigationProfilePage />
-      {!wsConnected && <button onClick={startWebSocket}>Start WebSocket</button>}
+
       <div className={`${styles.ingredientsBox}`}>
         <div className={`${styles.ingredientsSection} mt-10`}>
           <div className={`${styles.burgerBar} mt-6`} />

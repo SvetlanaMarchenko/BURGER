@@ -15,15 +15,15 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
     <div className={`${styles.moduleOrderLayout}`}> 
       <section className={`${styles.orderDetailsMain} mt-30`}>
         <h1 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
-          # {order.number}
+          # {order?.number}
         </h1>
         <h1 className={`${styles.orderName} text text_type_main-medium mb-3`}>
-          {order.name}
+          {order?.name}
         </h1>
         <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
-          {order.status === "done" && <div>Выполнен</div>}
-          {order.status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>}
-          {order.status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
+          {order?.status === "done" && <div>Выполнен</div>}
+          {order?.status === "pending" && <div className={`${styles.statusOrderOther}`}>Готовится</div>}
+          {order?.status === "created" && <div className={`${styles.statusOrderOther}`}>Создан</div>}
         </div>
         <h1 className={`${styles.orderName} text text_type_main-medium mb-6`}>Состав:</h1>
       </section>
@@ -31,7 +31,7 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
       <section className={`${styles.orderIngredientOptions} pr-6 mb-4`} onScroll={handleScroll}>
         {Array.from(
           new Map(
-            order.ingredients.map((ingredient) => [ingredient._id, ingredient])
+            order?.ingredients.map((ingredient) => [ingredient._id, ingredient])
           ).values()
         ).map((ingredient, index) => (
           <div
@@ -62,9 +62,9 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
         <div
           className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
         >
-          {order.createdAt}
+          {order?.createdAt}
         </div>
-        <p className="text text_type_digits-default">{order.fullOrderPrice}</p>
+        <p className="text text_type_digits-default">{order?.fullOrderPrice}</p>
         <CurrencyIcon type="primary" className="ml-2" />
       </section>
 
