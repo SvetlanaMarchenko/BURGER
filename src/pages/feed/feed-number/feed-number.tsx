@@ -50,7 +50,7 @@ const FeedNumber = ({ orderNumber }: { orderNumber: any}) => {
             </div>
             <div>
               <p className="text text_type_digits-default">
-                {ingredient.price}
+              {order?.ingredientCounter[ingredient._id]} x {ingredient?.price}
               </p>
             </div>
             <CurrencyIcon type="primary" className="ml-2" />

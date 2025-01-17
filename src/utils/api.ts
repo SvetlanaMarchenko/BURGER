@@ -114,7 +114,7 @@ const fetchWithAuth = async (endpoint: string, options: RequestInit = {}): Promi
 };
 
 
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
   if (!refreshToken) {
