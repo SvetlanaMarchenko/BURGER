@@ -10,6 +10,7 @@ import { OrderCard } from './order-card';
 import { useParams, useLocation, useNavigate,  } from 'react-router-dom';
 import { Order} from '../../utils/types/orders';
 import FeedNumber from '../feed/feed-number/feed-number';
+import useWebSocketOrders from '../../services/use-ws-order-profile';
 
 
 
@@ -19,57 +20,8 @@ export function Feed() {
   const location = useLocation(); // Текущий маршрут
   const navigate = useNavigate();
 
-  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
-
-  useEffect(() => {
-    dispatch(fetchDataIngredients());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const shouldConnectWebSocket =
-      location.pathname.startsWith('/feed') ||
-      location.pathname.startsWith('/profile');
+  const { wsConnected, orders, total, totalToday } = useWebSocketOrders(location.pathname);
   
-    if (shouldConnectWebSocket && !wsConnected) {
-      dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket
-    }
-  
-    // Очистка подключения при выходе с этих страниц
-    return () => {
-      if (wsConnected && !shouldConnectWebSocket) {
-        dispatch({ type: 'WS_CONNECTION_CLOSED' }); // Закрытие WebSocket
-      }
-    };
-  }, [dispatch, location.pathname, wsConnected]);
-
-
-  const maxIngredientsInRow = 6;
-
-  const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.wsReducer.orders;
-
-    const fullOrders = rawOrders?.map(order => ({
-      ...order,
-      ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
-    }));
-
-    return fullOrders?.map(order => {
-      const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
-      return {
-        ...order,
-        fullOrderPrice: orderPrice,
-        ingredientsToShow: order.ingredients.slice(0, maxIngredientsInRow),
-        extraIngredients: Math.max(order.ingredients.length - maxIngredientsInRow, 0),
-      };
-    });
-  });
-
-  const total = useSelector((state: RootState) => state.wsReducer.total);
-  const totalToday = useSelector((state: RootState) => state.wsReducer.totalToday);
-
 
 
   const handleScroll = (event: React.UIEvent<HTMLElement>) => {
