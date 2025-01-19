@@ -133,8 +133,9 @@
 }
 
 .extraIngredients{
-  position: relative; /* Для наложения */
-  margin: -40px;
+  display: flex;
+  justify-content: center;
+  margin: -10px;
   z-index: 2; 
 }
 

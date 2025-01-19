@@ -18,7 +18,7 @@ import { RootState } from '../../services/store';
 import { Feed } from '../../pages/feed/feed';
 import FeedNumber from '../../pages/feed/feed-number/feed-number';
 import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
-import OrdersNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';
+import OrderNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';
 
  
 function App() {
@@ -29,6 +29,7 @@ function App() {
   const navigate = useNavigate();
   const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
   const wantedOrderNumber = useMatch("/feed/:number")?.params?.number;
+  const profileOrderNumber = useMatch("/profile/orders/:number")?.params?.number;
   
   useEffect(() => {
     if(
@@ -67,7 +68,16 @@ function App() {
               </Modal>
             }
           />
+          <Route
+            path='//profile/orders/:number'
+            element={
+              <Modal onClose={() => { navigate(-1); }}>
+                <OrderNumber orderNumber={profileOrderNumber} />
+              </Modal>
+            }
+          />
         </Routes>
+        
       )}
 
       <Routes location={state?.backgroundLocation || location}>    
@@ -88,7 +98,8 @@ function App() {
         <Route path="/feed/:number" element={<FeedNumber orderNumber={wantedOrderNumber} />} />
         <Route path="/profile/orders" element={<OnlyAuth element={ProfileOrders} />} />
 
-        <Route path="/profile/orders/:number" element={<OnlyAuth element={OrdersNumber} />} />
+        <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderNumber orderNumber={profileOrderNumber} />} />} />
+
         
       </Routes>
     </div>
