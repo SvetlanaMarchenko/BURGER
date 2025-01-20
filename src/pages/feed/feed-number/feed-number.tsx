@@ -1,12 +1,12 @@
 import styles from './feed-number.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import useWebSocketOrders from '../../../services/use-ws-order-profile';
-import { Order } from '../../../utils/types/orders'; // Типы должны быть определены
+import { Order } from '../../../utils/types/orders'; 
 import {Ingredient} from '../../../utils/types/ingredients';
 
 
 export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) => {
-  const { orders } = useWebSocketOrders('/feed'); // Укажите правильный URL для WebSocket
+  const { orders } = useWebSocketOrders('/feed'); 
 
   const order = orders?.find((o: Order) => o.number === Number(orderNumber));
 
@@ -14,9 +14,8 @@ export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) =>
     return <p>Заказ не найден.</p>;
   }
 
-  // Удаление дубликатов ингредиентов
   const uniqueIngredients = Array.from(
-    new Map(order.ingredients.map((ingr) => [ingr._id, ingr])).values()
+    new Map(order.ingredients.map((ingr: Ingredient) => [ingr._id, ingr])).values()
   );
 
   return (
@@ -37,7 +36,7 @@ export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) =>
       </section>
 
       <section className={`${styles.orderIngredientOptions} pr-6 mb-4`}>
-        {uniqueIngredients.map((ingredient: Ingredient, index: number) => (
+        {uniqueIngredients.map((ingredient: Ingredient) => (
           <div key={ingredient._id} className={`${styles.orderIngredient} mb-4`}>
             <img
               src={ingredient.image}
