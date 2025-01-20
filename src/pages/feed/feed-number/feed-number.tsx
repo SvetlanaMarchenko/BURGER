@@ -1,7 +1,9 @@
 import styles from './feed-number.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import useWebSocketOrders from '../../../services/use-ws-order-profile';
-import { Order, Ingredient } from '../../../utils/types/orders'; // Типы должны быть определены
+import { Order } from '../../../utils/types/orders'; // Типы должны быть определены
+import {Ingredient} from '../../../utils/types/ingredients';
+
 
 export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) => {
   const { orders } = useWebSocketOrders('/feed'); // Укажите правильный URL для WebSocket
@@ -54,11 +56,10 @@ export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) =>
       </section>
 
       <section className={`mt-10 ${styles.orderResult}`}>
-        <span
-          className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
-        >
-          {new Date(order.createdAt).toLocaleString()}
-        </span>
+      <FormattedDate
+                  className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
+                  date={new Date(order.createdAt)}
+                />
         <span className="text text_type_digits-default">{order.fullOrderPrice}</span>
         <CurrencyIcon type="primary" />
       </section>

@@ -22,10 +22,7 @@ const AppHeader = () => {
           to="/feed" className={({ isActive }) => 
             isActive ? `${styles.active1} text text_type_main-default` : "text text_type_main-default text_color_inactive pr-5"
           }>
-
-          {/* <button className="text text_type_main-default text_color_inactive pr-5"> */}
             Лента Заказов
-          {/* </button> */}
         </NavLink>
       </nav>
 

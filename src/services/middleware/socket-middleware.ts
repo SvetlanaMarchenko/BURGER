@@ -34,18 +34,15 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                 socket.onmessage = event => {
                     const { data } = event;
 
-                    // Проверяем, если сервер вернул ошибку о токене
                     try {
                         const parsedData = JSON.parse(data);
                         if (parsedData.message === 'Invalid or missing token') {
-                            // Если токен невалиден или отсутствует
-                            localStorage.removeItem('accessToken'); // Удаляем токен из localStorage
+                            localStorage.removeItem('accessToken'); 
                             dispatch({
-                                type: 'USER_LOGOUT', // Здесь можно отправить экшн для логаута или перенаправления на страницу входа
+                                type: 'USER_LOGOUT',
                             });
                             console.error('Invalid or missing token');
                         } else {
-                            // Если это не ошибка токена, отправляем данные в store
                             dispatch({ type: 'WS_GET_MESSAGE', payload: data });
                         }
                     } catch (error) {
@@ -59,7 +56,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
 
                 if (type === 'WS_SEND_MESSAGE') {
                     const message = payload;
-                    socket.send(JSON.stringify(message)); // Отправляем сообщение на сервер
+                    socket.send(JSON.stringify(message));
                 }
             }
 

@@ -8,7 +8,10 @@ export const OrderCard = ({ order, openModal }: { order: any, openModal: (order:
       <div className={`${styles.orderName} mb-6`}>
         <div className={`${styles.orderNumber} mt-6 mb-6`}>
           <div className="text text_type_digits-default"># {order.number}</div>
-          <div className="text text_type_main-default text_color_inactive">{order.createdAt}</div>
+          <FormattedDate
+                      className="text text_type_main-default text_color_inactive"
+                      date={new Date(order.createdAt)}
+                    />
         </div>
         <div className={`text text_type_main-medium mb-6`}>{order.name}</div>
         <div className={`${styles.orderListAndCostInGeneral} mb-6`}>

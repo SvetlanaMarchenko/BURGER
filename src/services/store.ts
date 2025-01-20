@@ -12,9 +12,6 @@ import {
 
 import type { TWSActions } from '../utils/types/actions';
 
-const accessToken = localStorage.getItem('accessToken');
-const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : null;
-
 // Определяем URL для WebSocket в зависимости от текущего пути
 const locationPathname = window.location.pathname;
 
