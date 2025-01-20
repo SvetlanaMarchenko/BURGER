@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState } from '../services/store';
 import { fetchDataIngredients } from '../services/actions/ingredients-actions';
 
 export const useWebSocketOrders = (locationPathname: string) => {
