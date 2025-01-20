@@ -17,7 +17,8 @@ export const useWebSocketOrders = (locationPathname: string) => {
     const shouldConnectWebSocket =
       locationPathname.startsWith('/feed') ||
       locationPathname.startsWith('/feed/') ||
-      locationPathname.startsWith('/profile');
+      locationPathname.startsWith('/profile') ||
+      locationPathname.startsWith('/profile/orders')
 
     if (shouldConnectWebSocket && !wsConnected) {
       dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket

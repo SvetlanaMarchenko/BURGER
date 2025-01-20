@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './root-reducer';
-import { ThunkAction } from 'redux-thunk';
 import { socketMiddleware } from './middleware/socket-middleware';
 import {
   WS_CONNECTION_CLOSED,
@@ -13,17 +12,13 @@ import {
 
 import type { TWSActions } from '../utils/types/actions';
 
-export type TWSStoreActions = {
-  wsInit: typeof  WS_CONNECTION_START,
-  wsSendMessage: typeof  WS_SEND_MESSAGE,
-  onOpen: typeof  WS_CONNECTION_SUCCESS,
-  onClose: typeof WS_CONNECTION_CLOSED,
-  onError: typeof  WS_CONNECTION_ERROR,
-  onMessage: typeof  WS_GET_MESSAGE,
-};
+const accessToken = localStorage.getItem('accessToken');
+const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : null;
 
-// Определяем действия для WebSocket
-const wsActions: TWSStoreActions = {
+// Определяем URL для WebSocket в зависимости от текущего пути
+const locationPathname = window.location.pathname;
+
+const wsActions: TWSActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -32,11 +27,28 @@ const wsActions: TWSStoreActions = {
   onMessage: WS_GET_MESSAGE,
 };
 
-// Создаем store с помощью Redux Toolkit
+// Условие для выбора URL WebSocket
+// let wsUrl = 'wss://norma.nomoreparties.space/orders/all'; // Default URL
+let wsUrl: string; // Инициализируем переменную wsUrl
+
+if (locationPathname.startsWith('/profile') || locationPathname.startsWith('/profile/orders')) {
+  // Если путь начинается с '/profile' или '/profile/orders', используем URL с токеном
+  const accessToken = localStorage.getItem('accessToken');
+  const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : '';
+  
+  wsUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
+} else if (locationPathname.startsWith('/feed') || locationPathname.startsWith('/feed/')) {
+  // Если путь начинается с '/feed' или '/feed/', используем URL без токена
+  wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+}
+
+// Теперь переменная wsUrl будет содержать правильный WebSocket URL в зависимости от пути
+
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(socketMiddleware('wss://norma.nomoreparties.space/orders/all', wsActions)),
+    getDefaultMiddleware().concat(socketMiddleware(wsUrl, wsActions)),
   devTools: true, // Включение DevTools
 });
 
@@ -47,3 +59,4 @@ export type AppActions = TWSActions;
 export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
 
 export default store;
+
