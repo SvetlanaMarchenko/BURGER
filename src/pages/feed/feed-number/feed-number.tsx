@@ -5,7 +5,11 @@ import { Order } from '../../../utils/types/orders';
 import {Ingredient} from '../../../utils/types/ingredients';
 
 
-export const FeedNumber = ({ orderNumber }: { orderNumber: number | string }) => {
+interface FeedNumberProps {
+  orderNumber: number | string; // Пропсы компонента
+}
+
+export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const { orders } = useWebSocketOrders('/feed'); 
 
   const order = orders?.find((o: Order) => o.number === Number(orderNumber));

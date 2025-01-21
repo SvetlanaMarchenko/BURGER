@@ -1,4 +1,3 @@
-// Define the IIngredient interface for the ingredients
 export interface IIngredient {
   id: string;
   name: string;
@@ -6,7 +5,6 @@ export interface IIngredient {
   price: number;
 }
 
-// IUserResponse interface for user details
 export interface IUserResponse {
   id: string;
   token: string;
@@ -14,7 +12,6 @@ export interface IUserResponse {
   success?: boolean;
 }
 
-// IMessageResponse interface for message response from the server
 export interface IMessageResponse {
   message: string;
   success: boolean;
@@ -23,12 +20,11 @@ export interface IMessageResponse {
   isBot?: boolean;
 }
 
-// IMessage interface for a message with additional fields like ingredients
 export interface IMessage extends Omit<IMessageResponse, 'success'> {
-  timestamp: number;   // Unix timestamp or other timestamp format
-  _id: string;         // Unique message identifier
-  number: number;      // Order or message number
-  status: string;      // Status (e.g., "done" or "pending")
-  updatedAt: string;   // Date/time of last update
-  ingredients: IIngredient[];  // List of ingredients (corrected to use IIngredient)
+  timestamp: number;   
+  _id: string;        
+  number: number;     
+  status: string;    
+  updatedAt: string;   
+  ingredients: IIngredient[];  
 }

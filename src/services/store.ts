@@ -8,6 +8,8 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_CLEAR_ORDERS
+
 } from './actions/ws-action-types';
 
 import type { TWSActions } from '../utils/types/actions';
@@ -22,20 +24,18 @@ const wsActions: TWSActions = {
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_MESSAGE,
+  onClear: WS_CLEAR_ORDERS
 };
 
-// Условие для выбора URL WebSocket
-// let wsUrl = 'wss://norma.nomoreparties.space/orders/all'; // Default URL
 let wsUrl: string; // Инициализируем переменную wsUrl
 
 if (locationPathname.startsWith('/profile') || locationPathname.startsWith('/profile/orders')) {
-  // Если путь начинается с '/profile' или '/profile/orders', используем URL с токеном
   const accessToken = localStorage.getItem('accessToken');
   const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : '';
+  console.log("profile", wsUrl)
   
   wsUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
 } else if (locationPathname.startsWith('/feed') || locationPathname.startsWith('/feed/')) {
-  // Если путь начинается с '/feed' или '/feed/', используем URL без токена
   wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 }
 

@@ -2,36 +2,37 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../services/store';
 import { fetchDataIngredients } from '../services/actions/ingredients-actions';
+import { WS_CLEAR_ORDERS, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/ws-action-types';
 
-export const useWebSocketOrders = (locationPathname: string) => {
+const useWebSocketOrders = (locationPathname: string) => {
   const dispatch = useDispatch();
   const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
   const maxIngredientsInRow = 6;
 
+  // Загружаем ингредиенты один раз при монтировании
   useEffect(() => {
     dispatch(fetchDataIngredients());
   }, [dispatch]);
 
   // Подключение к WebSocket
   useEffect(() => {
-    const shouldConnectWebSocket =
-      locationPathname.startsWith('/feed') ||
-      locationPathname.startsWith('/feed/') ||
-      locationPathname.startsWith('/profile') ||
-      locationPathname.startsWith('/profile/orders')
+    // const shouldConnectWebSocket =
+      // locationPathname.startsWith('/feed') 
 
-    if (shouldConnectWebSocket && !wsConnected) {
-      dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket
+    if (!wsConnected) {
+      dispatch({ type: WS_CONNECTION_START }); // Запуск WebSocket
+      // window.location.reload()
     }
 
     return () => {
-      if (wsConnected && !shouldConnectWebSocket) {
-        dispatch({ type: 'WS_CONNECTION_CLOSED' }); // Закрытие WebSocket
+      if (wsConnected) {
+        dispatch({ type: WS_CONNECTION_CLOSED }); // Закрытие WebSocket
+        dispatch({ type: WS_CLEAR_ORDERS }); // Очистка данных в wsReducer
       }
     };
   }, [dispatch, locationPathname, wsConnected]);
 
-  // Получение и обработка заказов
+  // Обработка заказов
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.wsReducer.orders;
@@ -46,7 +47,6 @@ export const useWebSocketOrders = (locationPathname: string) => {
     return fullOrders?.map(order => {
       const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
 
-      // Подсчёт количества повторений ингредиентов
       const ingredientCountMap = order.ingredients.reduce((acc, ingredient) => {
         const id = ingredient?._id;
         if (id) {
@@ -57,7 +57,7 @@ export const useWebSocketOrders = (locationPathname: string) => {
 
       return {
         ...order,
-        ingredientCounter: ingredientCountMap, // Количество повторений по каждому ID ингредиента
+        ingredientCounter: ingredientCountMap,
         fullOrderPrice: orderPrice,
         ingredientsToShow: order.ingredients.slice(0, maxIngredientsInRow),
         extraIngredients: Math.max(order.ingredients.length - maxIngredientsInRow, 0),

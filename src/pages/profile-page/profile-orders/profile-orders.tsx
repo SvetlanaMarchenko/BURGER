@@ -1,23 +1,51 @@
+import React, { useEffect } from 'react';
 import styles from './profile-orders.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NavigationProfilePage from '../navigation-profile-page';
 import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders';
+import { useDispatch } from 'react-redux';
+import { WS_CLEAR_ORDERS } from '../../../services/actions/ws-action-types';
+import { Ingredient } from '../../../utils/types/ingredients';
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
   const location = useLocation();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { orders } = useWebSocketOrders(location.pathname);
+
+  // useEffect(() => {
+  //   if (location.pathname === '/feed') {
+  //     dispatch({ type: WS_CLEAR_ORDERS });
+  //   }
+  // }, [location.pathname, dispatch]);
 
   const handleOrderClick = (order: Order) => {
     navigate(`/profile/orders/${order.number}`, { state: { backgroundLocation: location } });
   };
 
-  const handleScroll = (event: React.UIEvent<HTMLElement>) => {
-    console.log('Scrolled:', event.currentTarget.scrollTop);
+  const renderIngredients = (order: Order) => {
+    return order.ingredientsToShow?.slice(0, maxIngredientsInRow).map((ingredient: Ingredient, index: number) => (
+      <div
+        key={index}
+        className={`${styles.orderImageWrapper} ${
+          index === maxIngredientsInRow - 1 && order.extraIngredients > 0
+            ? styles.blurImageWrapper
+            : ''
+        }`}
+      >
+        <img
+          src={ingredient?.image}
+          className={order.extraIngredients > 0 && index === 5 ? styles.blurImage : styles.orderImage}
+          alt="Ингредиент"
+        />
+        {index === maxIngredientsInRow - 1 && order.extraIngredients > 0 && (
+          <div className={styles.extraIngredients}>+{order.extraIngredients}</div>
+        )}
+      </div>
+    ));
   };
 
   return (
@@ -26,7 +54,7 @@ export function ProfileOrders() {
 
       <div className={styles.ingredientsBox}>
         <div className={`${styles.ingredientsSection} mt-10`}>
-          <main className={styles.scrollContainer} onScroll={handleScroll}>
+          <main className={styles.scrollContainer}>
             {orders?.length > 0 ? (
               orders.map((order) => (
                 <section
@@ -50,29 +78,7 @@ export function ProfileOrders() {
                   </p>
 
                   <div className={styles.orderResult}>
-                    <div className={styles.orderListAndCost}>
-                      {order.ingredientsToShow?.slice(0, maxIngredientsInRow).map((ingredient, index) => (
-                        <div
-                          key={index}
-                          className={`${styles.orderImageWrapper} ${
-                            index === maxIngredientsInRow - 1 && order.extraIngredients > 0
-                              ? styles.blurImageWrapper
-                              : ''
-                          }`}
-                        >
-                          <img
-                            src={ingredient?.image}
-                            className={order.extraIngredients > 0 && index === 5 ? styles.blurImage: styles.orderImage}  
-                            alt="Ингредиент"
-                            />
-                          {index === maxIngredientsInRow - 1 && order.extraIngredients > 0 && (
-                            <div className={styles.extraIngredients}>
-                              +{order.extraIngredients}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                    <div className={styles.orderListAndCost}>{renderIngredients(order)}</div>
 
                     <div className={styles.orderPrice}>
                       <p className="text text_type_digits-default">{order.fullOrderPrice}</p>
