@@ -6,7 +6,7 @@ import {Ingredient} from '../../../utils/types/ingredients';
 
 
 interface FeedNumberProps {
-  orderNumber: number | string; // Пропсы компонента
+  orderNumber: number | string;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
@@ -19,7 +19,9 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   }
 
   const uniqueIngredients = Array.from(
-    new Map(order.ingredients.map((ingr: Ingredient) => [ingr._id, ingr])).values()
+    new Map(
+      (order.ingredients as Ingredient[]).map((ingr: Ingredient) => [ingr._id, ingr])
+    ).values()
   );
 
   return (

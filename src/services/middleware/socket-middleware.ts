@@ -71,7 +71,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                                     const result = await response.json();
                 
                                     if (result.accessToken) {
-                                        localStorage.setItem('accessToken', `Bearer ${result.accessToken}`); // Приведение к нужному формату
+                                        localStorage.setItem('accessToken', `${result.accessToken}`); // Приведение к нужному формату
                                         console.log('Access token refreshed');
                 
                                         // Закрытие старого WebSocket соединения и создание нового

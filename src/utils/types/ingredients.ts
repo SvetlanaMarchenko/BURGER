@@ -10,6 +10,7 @@ export interface Ingredient {
 }
 
 export type Ingredients = Ingredient[]; 
+export type ingredients = Ingredient[]; 
 
 
 
