@@ -6,7 +6,7 @@ import NavigationProfilePage from '../navigation-profile-page';
 import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders';
 import { useDispatch } from 'react-redux';
-import { WS_CLEAR_ORDERS } from '../../../services/actions/ws-action-types';
+import { WS_CONNECTION_START, WS_CLEAR_ORDERS } from '../../../services/actions/ws-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
 
 export function ProfileOrders() {
@@ -16,11 +16,15 @@ export function ProfileOrders() {
   const dispatch = useDispatch();
   const { orders } = useWebSocketOrders(location.pathname);
 
-  // useEffect(() => {
-  //   if (location.pathname === '/feed') {
-  //     dispatch({ type: WS_CLEAR_ORDERS });
-  //   }
-  // }, [location.pathname, dispatch]);
+  useEffect(() => {
+    // Запуск персонального WebSocket соединения
+    dispatch({ type: WS_CONNECTION_START });
+
+    return () => {
+      // Очистка соединения
+      dispatch({ type: WS_CLEAR_ORDERS });
+    };
+  }, [dispatch]);
 
   const handleOrderClick = (order: Order) => {
     navigate(`/profile/orders/${order.number}`, { state: { backgroundLocation: location } });
@@ -80,10 +84,12 @@ export function ProfileOrders() {
                   <div className={styles.orderResult}>
                     <div className={styles.orderListAndCost}>{renderIngredients(order)}</div>
 
-                    <div className={styles.orderPrice}>
-                      <p className="text text_type_digits-default">{order.fullOrderPrice}</p>
-                      <CurrencyIcon type="primary" />
+                   
+                    <div className={`${styles.priceOrder}text text_type_digits-default`}>
+                      {order.fullOrderPrice}&nbsp;<CurrencyIcon type="primary"  />
                     </div>
+                      
+                    
                   </div>
                 </section>
               ))

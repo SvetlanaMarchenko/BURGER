@@ -16,21 +16,23 @@ const useWebSocketOrders = (locationPathname: string) => {
 
   // Подключение к WebSocket
   useEffect(() => {
+    dispatch({ type: WS_CLEAR_ORDERS }); // по факту это CLEAR_ORDERS_AND_RESTART
+    // dispatch({ type: WS_CONNECTION_START });
     // const shouldConnectWebSocket =
       // locationPathname.startsWith('/feed') 
 
-    if (!wsConnected) {
-      dispatch({ type: WS_CONNECTION_START }); // Запуск WebSocket
-      // window.location.reload()
-    }
+    // if (!wsConnected) {
+    //   dispatch({ type: WS_CONNECTION_START }); // Запуск WebSocket
+    //   // window.location.reload()
+    // }
 
-    return () => {
-      if (wsConnected) {
-        dispatch({ type: WS_CONNECTION_CLOSED }); // Закрытие WebSocket
-        dispatch({ type: WS_CLEAR_ORDERS }); // Очистка данных в wsReducer
-      }
-    };
-  }, [dispatch, locationPathname, wsConnected]);
+    // return () => {
+    //   if (wsConnected) {
+    //     dispatch({ type: WS_CONNECTION_CLOSED }); // Закрытие WebSocket
+    //     dispatch({ type: WS_CLEAR_ORDERS }); // Очистка данных в wsReducer
+    //   }
+    // };
+  }, [dispatch]);
 
   // Обработка заказов
   const orders = useSelector((state: RootState) => {

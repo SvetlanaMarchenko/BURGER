@@ -2,6 +2,7 @@
 import styles from './feed.module.css';
 import { CurrencyIcon,FormattedDate  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Order } from '../../utils/types/orders';
+import { Ingredient } from '../../utils/types/ingredients';
 
 
 export const OrderCard = ({ order, openModal }: { order: Order, openModal: (order: Order) => void }) => (
@@ -17,7 +18,7 @@ export const OrderCard = ({ order, openModal }: { order: Order, openModal: (orde
         <div className={`text text_type_main-medium mb-6`}>{order.name}</div>
         <div className={`${styles.orderListAndCostInGeneral} mb-6`}>
           <div className={`${styles.orderListAndCost}`}>
-            {order.ingredientsToShow.map((ingredient, index) => (
+            {order.ingredientsToShow.map((ingredient: Ingredient, index:number ) => (
               <div key={index}>
                 <img
                     src={ingredient?.image}

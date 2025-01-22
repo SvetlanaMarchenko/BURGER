@@ -12,7 +12,7 @@ export interface Order {
   key: any,
   _id: string,
   status: 'done' | 'pending' | 'created';
-  ingredientsToShow: string,
+  ingredientsToShow: [],
   extraIngredients: number
 }
 export type Orders = Order[]; 
