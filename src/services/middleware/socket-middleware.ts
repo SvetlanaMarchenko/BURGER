@@ -1,9 +1,10 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppActions, AppDispatch, RootState, TWSStoreActions } from '../store';
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Middleware => {
+export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
+
         let feedUrl = wsUrl;
 
         return next => (action: AppActions) => {
@@ -90,22 +91,22 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSStoreActions): Mid
                     socket.send(JSON.stringify(message));
                 }
             }
-            if (type === 'WS_CLEAR_ORDERS') {
-                if (socket) {
-                    socket.close();
-                    socket = null;
-                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: null });
-                    // console.log("old feedUrl:", feedUrl)
-                    // const accessToken = localStorage.getItem('accessToken');
-                    // const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : '';
-                    // feedUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
+//             if (type === 'WS_CLEAR_ORDERS') {
+//                 if (socket) {
+//                     socket.close();
+//                     socket = null;
+// `                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: null });
+//                     // console.log("old feedUrl:", feedUrl)
+//                     // const accessToken = localStorage.getItem('accessToken');
+//                     // const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : '';
+//                     // feedUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
                     
                     
-                    // console.log("new feedUrl:", feedUrl)                    
-                }
-                dispatch({ type: 'WS_CONNECTION_START', payload: null });
+//                     // console.log("new feedUrl:", feedUrl)                    
+//                 }
+//                 dispatch({ type: 'WS_CONNECTION_START', payload: null });`
 
-            }
+            // }
 
             next(action);
         };

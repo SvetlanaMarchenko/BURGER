@@ -1,5 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppActions, AppDispatch, RootState, TWSStoreActions } from '../store';
+import { refreshAccessToken } from '../../utils/api';
 
 export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -12,14 +13,14 @@ export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
             const { dispatch } = store;
             const { type, payload } = action;
 
-            if (type === 'WS_CONNECTION_START') {
+            if (type === 'WS_PERS_CONNECTION_START') {
                 socket = new WebSocket(feedUrl);
             }
 
             if (socket) {
                 socket.onopen = (event: Event) => {
                     dispatch({
-                        type: 'WS_CONNECTION_SUCCESS',
+                        type: 'WS_PERS_CONNECTION_SUCCESS',
                         payload: {
                             type: event.type,
                             isTrusted: event.isTrusted,
@@ -28,71 +29,78 @@ export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
                 };
 
                 socket.onerror = (event: Event) => {
-                    dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
+                    dispatch({ type: 'WS_PERS_CONNECTION_ERROR', payload: event });
                 };
 
                 socket.onmessage = async (event: MessageEvent) => {
                     const { data } = event;
-                    const refreshToken = localStorage.getItem('refreshToken');
-                    const parsedRefreshToken = refreshToken ? refreshToken.split(' ')[1] : null;
 
-                    try {
-                        const parsedData = JSON.parse(data);
-                        if (parsedData.message === 'Invalid or missing token') {
-                            localStorage.removeItem('accessToken');
-                            dispatch({ type: 'USER_LOGOUT' });
-                            console.error('Invalid or missing token');
-                            if (parsedRefreshToken) {
-                                try {
-                                    const response = await fetch('YOUR_REFRESH_TOKEN_API_URL', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({ token: parsedRefreshToken }),
-                                    });
+                    const parsedData = JSON.parse(data);
+                    if (parsedData.message === 'Invalid or missing token') {
 
-                                    const result = await response.json();
+                        const refreshToken = localStorage.getItem('refreshToken');
 
-                                    if (result.accessToken) {
-                                        localStorage.setItem('accessToken', `Bearer ${result.accessToken}`);
-                                        console.log('Access token refreshed');
-                                        socket.close();
-                                        socket = new WebSocket(feedUrl);
-                                    } else {
-                                        console.error('Failed to refresh token');
-                                    }
-                                } catch (error) {
-                                    console.error('Error refreshing token:', error);
-                                }
-                            } else {
-                                console.error('No refresh token available');
-                            }
-                        } else {
-                            dispatch({ type: 'WS_GET_MESSAGE', payload: parsedData });
-                        }
-                    } catch (error) {
-                        console.error('Error parsing message data:', error);
+                        const accessToken = await refreshAccessToken()
+                        console.log('Access token refreshed');
+                        socket?.close();
+                        feedUrl = `wss://norma.nomoreparties.space/orders?token=${accessToken}`
+                        socket = new WebSocket(feedUrl);
+                    } else {
+                        dispatch({ type: 'WS_PERS_GET_MESSAGE', payload: parsedData });
                     }
+
+                //     try {
+                //         const parsedData = JSON.parse(data);
+                //         if (parsedData.message === 'Invalid or missing token') {
+                //             localStorage.removeItem('accessToken');
+                //             console.error('Invalid or missing token');
+                //             if (refreshToken) {
+                //                 try {
+                //                     const response = await fetch('YOUR_REFRESH_TOKEN_API_URL', {
+                //                         method: 'POST',
+                //                         headers: {
+                //                             'Content-Type': 'application/json',
+                //                         },
+                //                         body: JSON.stringify({ token: refreshToken }),
+                //                     });
+
+                //                     const result = await response.json();
+
+                //                     if (result.accessToken) {
+                //                         localStorage.setItem('accessToken', `Bearer ${result.accessToken}`);
+                //                         console.log('Access token refreshed');
+                //                         socket?.close();
+                //                         feedUrl = `wss://norma.nomoreparties.space/orders?token=${accessToken}`
+                //                         socket = new WebSocket(feedUrl);
+                //                     } else {
+                //                         console.error('Failed to refresh token');
+                //                     }
+                //                 } catch (error) {
+                //                     console.error('Error refreshing token:', error);
+                //                 }
+                //             } else {
+                //                 console.error('No refresh token available');
+                //             }
+                //         } else {
+                //             dispatch({ type: 'WS_PERS_GET_MESSAGE', payload: parsedData });
+                //         }
+                //     } catch (error) {
+                //         console.error('Error parsing message data:', error);
+                //     }
                 };
 
                 socket.onclose = (event: CloseEvent) => {
-                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
+                    dispatch({ type: 'WS_PERS_CONNECTION_CLOSED', payload: event });
                 };
-
-                if (type === 'WS_SEND_MESSAGE') {
-                    const message = payload;
-                    socket.send(JSON.stringify(message));
-                }
             }
 
-            if (type === 'WS_CLEAR_ORDERS') {
-                if (socket) {
-                    socket.close();
-                    socket = null;
-                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: null });
-                }
-            }
+            // if (type === 'WS_PERS_CLEAR_ORDERS') {
+            //     if (socket) {
+            //         socket.close();
+            //         socket = null;
+            //         dispatch({ type: 'WS_PERS_CONNECTION_CLOSED', payload: null });
+            //     }
+            // }
 
             next(action);
         };

@@ -16,7 +16,7 @@ const useWebSocketOrders = (locationPathname: string) => {
 
   // Подключение к WebSocket
   useEffect(() => {
-    dispatch({ type: WS_CLEAR_ORDERS }); // по факту это CLEAR_ORDERS_AND_RESTART
+    // dispatch({ type: WS_CLEAR_ORDERS }); // по факту это CLEAR_ORDERS_AND_RESTART
     // dispatch({ type: WS_CONNECTION_START });
     // const shouldConnectWebSocket =
       // locationPathname.startsWith('/feed') 

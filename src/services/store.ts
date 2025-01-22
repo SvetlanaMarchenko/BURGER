@@ -32,8 +32,8 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      socketMiddleware(wsUrl, wsActions),
-      socketMiddlewarePersonal(wsUrlPers, wsActions)
+      socketMiddleware(wsUrl),
+      socketMiddlewarePersonal(wsUrlPers)
     ),
   devTools: true, // Включение DevTools
 });

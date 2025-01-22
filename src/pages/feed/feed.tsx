@@ -13,7 +13,7 @@ export function Feed() {
   const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   if (location.pathname === '/profile/orders') {
+  //   if (location.pathname === '/feed') {
   //     dispatch({ type: WS_CLEAR_ORDERS });
   //   }
   // }, [location.pathname, dispatch]);
