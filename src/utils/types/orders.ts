@@ -14,5 +14,11 @@ export interface Order {
   status: 'done' | 'pending' | 'created';
   ingredientsToShow: [],
   extraIngredients: number
+
 }
+
+export interface currentOrder {
+  number: number
+}
+
 export type Orders = Order[]; 

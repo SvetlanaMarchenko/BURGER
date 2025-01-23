@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './profile-orders.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NavigationProfilePage from '../navigation-profile-page';
-// import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_PERS_CONNECTION_START} from '../../../services/actions/ws-personal-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
+import { RootState } from '../../../services/store';
+
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { orders } = useWebSocketOrders(location.pathname);
   const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.wsPersonalReducer.orders;
+  const ingredientLib = state.ingredients.allIngredients;
+  const rawOrders = state.wsPersonalReducer.orders;
+    
 
     const fullOrders = rawOrders?.map(order => ({
       ...order,
@@ -27,12 +28,12 @@ export function ProfileOrders() {
     }));
 
     return fullOrders?.map(order => {
-      const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
+      const orderPrice = order.ingredients.reduce((total: number, ingredient: Ingredient) => total + (ingredient?.price || 0), 0);
 
-      const ingredientCountMap = order.ingredients.reduce((acc, ingredient) => {
+      const ingredientCountMap = order.ingredients.reduce((acc :number, ingredient: Ingredient) => {
         const id = ingredient?._id;
         if (id) {
-          acc[id] = (acc[id] || 0) + 1;
+          acc[id]  = (acc[id] || 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
@@ -48,9 +49,7 @@ export function ProfileOrders() {
   });
 
   useEffect(() => {
-    // if (location.pathname === '/profile/orders') {
       dispatch({ type: WS_PERS_CONNECTION_START });
-    // }
   }, [location.pathname, dispatch]);
 
   const handleOrderClick = (order: Order) => {
@@ -115,8 +114,6 @@ export function ProfileOrders() {
                     <div className={`${styles.priceOrder}text text_type_digits-default`}>
                       {order.fullOrderPrice}&nbsp;<CurrencyIcon type="primary"  />
                     </div>
-                      
-                    
                   </div>
                 </section>
               ))

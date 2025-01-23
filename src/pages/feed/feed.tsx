@@ -1,22 +1,13 @@
-import React, { useEffect, Key } from 'react';
+
 import styles from './feed.module.css';
 import { OrderCard } from './order-card';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import useWebSocketOrders from '../../services/use-ws-order-profile';
-import { WS_CLEAR_ORDERS } from '../../services/actions/ws-action-types';
 import { Order } from '../../utils/types/orders';
 
 export function Feed() {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (location.pathname === '/feed') {
-  //     dispatch({ type: WS_CLEAR_ORDERS });
-  //   }
-  // }, [location.pathname, dispatch]);
 
   const { orders, total, totalToday } = useWebSocketOrders(location.pathname);
 
