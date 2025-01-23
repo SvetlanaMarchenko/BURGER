@@ -6,7 +6,7 @@ import {Ingredient} from '../../../utils/types/ingredients';
 
 
 interface FeedNumberProps {
-  orderNumber: number | string;
+  orderNumber: string | undefined;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {

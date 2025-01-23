@@ -8,8 +8,8 @@ interface ProtectedRouteElementProps{
   onlyUnAuth: boolean;
 }
 interface OnlyAuthProps{
-  [key: string]: any;
-  element: React.ComponentType<any>;
+  // element: React.ComponentType;
+  element: React.ComponentType<{}>
 }
 
 const ProtectedRouteElement: FC<ProtectedRouteElementProps> = ({ element: Component, onlyUnAuth = false}) => {
@@ -53,3 +53,5 @@ const ProtectedRouteElement: FC<ProtectedRouteElementProps> = ({ element: Compon
 
 export const OnlyAuth: FC<OnlyAuthProps> = (props) => <ProtectedRouteElement {...props} onlyUnAuth={false} />;
 export const OnlyUnAuth: FC<OnlyAuthProps> = (props) => <ProtectedRouteElement {...props} onlyUnAuth={true} />;
+
+
