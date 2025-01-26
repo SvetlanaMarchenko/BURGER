@@ -122,7 +122,7 @@ export const refreshAccessToken = async () => {
   }
 
   try {
-    const data = await requestFromApi(`${BASE_URL}/auth/token`, {
+    const data = await requestFromApi('/auth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

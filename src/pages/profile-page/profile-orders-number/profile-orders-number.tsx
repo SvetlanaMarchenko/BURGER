@@ -12,15 +12,17 @@ const OrderNumber: React.FC<OrderNumberProps> = ({ orderNumber }) => {
   const orders = useSelector((state: RootState) => state.wsPersonalReducer.orders || []);
   const ingredients = useSelector((state: RootState) => state.ingredients.allIngredients);
 
-  const currentOrder: string | undefined  = orders.find((order: Order) => order.number === Number(orderNumber));
+  const currentOrder: Order  = orders.find((order: Order) => order.number === Number(orderNumber));
   
 
   if (!currentOrder) {
     return <p>Заказ не найден.</p>;
   }
-  const orderIngredients = currentOrder.ingredients
-    .map(id => ingredients.find(ingredient => ingredient._id === id))
+  const orderIngredients  = currentOrder.ingredients
+  
+    .map((id:string)  => ingredients.find(ingredient => ingredient._id === id))
     .filter(Boolean) as Ingredient[];
+    
 
   const orderPrice = orderIngredients.reduce(
     (total, ingredient) => total + (ingredient?.price || 0),
@@ -40,7 +42,7 @@ const OrderNumber: React.FC<OrderNumberProps> = ({ orderNumber }) => {
       orderNumber={orderNumber}
       order={{
         ...currentOrder ,
-        ingredients: orderIngredients,
+        ingredients: orderIngredients as [],
         ingredientCounter,
         fullOrderPrice: orderPrice,
       }}

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
-import { fetchUserData, logoutUser, updateUserData } from '../../utils/api';
+import { fetchUserData, updateUserData } from '../../utils/api';
 import styles from './profile-page.module.css';
-import NavigationProfilePage from './navigation-profile-page.tsx';
+import NavigationProfilePage from './navigation-profile-page';
 
 interface PropInitialUserDataProps {
   email: string;

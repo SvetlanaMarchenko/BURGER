@@ -7,8 +7,6 @@ import {Ingredient} from '../../../utils/types/ingredients';
 
 interface FeedNumberProps {
   orderNumber: string | undefined;
-  // order: Order,
-  // ingregient: Ingredient
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = (orderNumber) => {

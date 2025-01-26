@@ -1,10 +1,11 @@
+import { Ingredient } from "./ingredients";
 
 export interface Order {
   number: number;
   name: string;
   type: string;
   price: number;
-  ingredients: string[];
+  ingredients: [];
   createdAt: string;
   fullOrderPrice: number;
   ingredientCounter: Record<string, number>;
@@ -13,7 +14,8 @@ export interface Order {
   _id: string,
   status: 'done' | 'pending' | 'created';
   ingredientsToShow: [],
-  extraIngredients: number
+  extraIngredients: number,
+  orderIngredients: []
 
 }
 

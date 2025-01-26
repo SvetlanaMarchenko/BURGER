@@ -7,14 +7,17 @@ import {
 } from '../actions/ws-personal-action-types';
 import type { TWSActions } from '../../utils/types/actions';
 import type { IMessage } from '../../utils/types/modelsData';
+import { Order } from '../../../utils/types/orders';[]; // Массив заказов
+
 
 type TWSState = {
   wsConnected: boolean;
   messages: IMessage[];
-  orders: []; // Массив заказов
+  orders: Order[]; // Массив заказов
   total: number; // Общее количество заказов
   totalToday: number; // Заказы за сегодня
   error?: Event;
+  ingredients: string;
 };
 
 const initialState: TWSState = {

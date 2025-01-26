@@ -9,8 +9,7 @@ export interface Ingredient {
   _id: string;
 }
 
-export type Ingredients = Ingredient[]; 
-export type ingredients = Ingredient[]; 
+export type Ingredients = Ingredient[];  
 
 
 

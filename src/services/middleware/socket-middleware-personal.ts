@@ -5,6 +5,9 @@ import { refreshAccessToken } from '../../utils/api';
 export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
+
+        // TODO: перенести рядом с new WebSocket. Читать токен ведь надо перед открытием соединения. Может человек уже перелогинился много раз
+        // Но не переносить сразу, исправлять последним, т.к. иначе лишимся лёгкого воспроизводства переконнекшна при плохом токене
         const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
         const wsUrlPers = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
         let feedUrl = wsUrlPers;
@@ -17,6 +20,10 @@ export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
                 socket = new WebSocket(feedUrl);
             }
 
+            // TODO: Все эти onopen, onerror и всё остальное нужно не inline определять, а отдельными функциями, чтобы
+            // можно было те же функции прицепить к будущему свежему сокету. Типа так:
+            // const socketOnOpenHandler = (event: Event) => {...}
+            // socket.onopen = socketOnOpenHandler
             if (socket) {
                 socket.onopen = (event: Event) => {
                     dispatch({
@@ -45,6 +52,9 @@ export const socketMiddlewarePersonal = (wsUrlPers: string): Middleware => {
                         socket?.close();
                         feedUrl = `wss://norma.nomoreparties.space/orders?token=${accessToken}`
                         socket = new WebSocket(feedUrl);
+                        // TODO: Это совсем свежий новый сокет, к нему нужно же прицепить все обработчики
+                        // типа так
+                        // socket.onopen = socketOnOpenHandler
                     } else {
                         dispatch({ type: 'WS_PERS_GET_MESSAGE', payload: parsedData });
                     }

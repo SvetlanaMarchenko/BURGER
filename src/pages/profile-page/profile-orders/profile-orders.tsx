@@ -23,14 +23,14 @@ export function ProfileOrders() {
     const fullOrders = rawOrders?.map(order => ({
       ...order,
       ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
+        ?.map((id: string) => ingredientLib.find(ingredient => ingredient?._id === id))
         .filter(Boolean),
     }));
 
     return fullOrders?.map(order => {
       const orderPrice = order.ingredients.reduce((total: number, ingredient: Ingredient) => total + (ingredient?.price || 0), 0);
 
-      const ingredientCountMap = order.ingredients.reduce((acc :number, ingredient: Ingredient) => {
+      const ingredientCountMap = order.ingredients.reduce((acc:Record<string, number>, ingredient: Ingredient) => {
         const id = ingredient?._id;
         if (id) {
           acc[id]  = (acc[id] || 0) + 1;

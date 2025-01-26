@@ -99,10 +99,10 @@
 }
 
 .orderImage{
-  position: relative; /* Для наложения */
+  position: relative;
   display: flex;
   margin: -9px;
-  z-index: 2; /* Изначально все элементы на одном уровне */
+  z-index: 2;
   border-radius: 50%;
   height: 71px;
   width: 77px;
@@ -147,7 +147,7 @@
 
 .priceOrder{
   display: flex;
-  
+
 
 }
 
