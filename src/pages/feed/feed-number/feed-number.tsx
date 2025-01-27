@@ -3,14 +3,37 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders'; 
 import {Ingredient} from '../../../utils/types/ingredients';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 interface FeedNumberProps {
   orderNumber: string | undefined;
 }
 
-export const FeedNumber: React.FC<FeedNumberProps> = (orderNumber) => {
+export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
+  const dispatch = useDispatch();
   const { orders } = useWebSocketOrders('/feed'); 
+  const location = useLocation(); // Получаем объект location
+  const locationPathname = location.pathname; // Получаем pathname
+
+  // Запуск или закрытие WebSocket соединения при изменении пути
+  useEffect(() => {
+    const shouldConnectWebSocket =
+      locationPathname.startsWith('/feed/') ||
+      locationPathname.startsWith('/profile/orders');
+
+    if (shouldConnectWebSocket) {
+      dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket
+    }
+
+    return () => {
+      if (shouldConnectWebSocket) {
+        dispatch({ type: 'WS_CONNECTION_CLOSED' }); // Закрытие WebSocket
+      }
+    };
+  }, [dispatch, locationPathname]);
 
   const order = orders?.find((o: Order) => o.number === Number(orderNumber));
 
@@ -52,10 +75,12 @@ export const FeedNumber: React.FC<FeedNumberProps> = (orderNumber) => {
             <span className={`${styles.orderIngredientName} text text_type_main-default`}>
               {ingredient.name}
             </span>
-            <span className="text text_type_digits-default">
+            <div className={styles.orderIngredientPrice}>
+            <span className={`text text_type_digits-default`}>
               {order.ingredientCounter[ingredient._id]} x {ingredient.price}
             </span>
             <CurrencyIcon type="primary" />
+            </div>
           </div>
         ))}
       </section>

@@ -77,4 +77,10 @@
   background: black;
 }
 
+.orderIngredientPrice{
+  display: flex;
+  width: 245px;
+  justify-content: flex-end;
+}
+
 
