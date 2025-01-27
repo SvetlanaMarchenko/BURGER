@@ -5,59 +5,61 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import NavigationProfilePage from '../navigation-profile-page';
 import { Order } from '../../../utils/types/orders';
 import { useDispatch, useSelector } from 'react-redux';
-import { WS_PERS_CONNECTION_START} from '../../../services/actions/ws-personal-action-types';
+import { WS_PERS_CONNECTION_START } from '../../../services/actions/ws-personal-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
 import { RootState } from '../../../services/store';
-
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Получаем заказы из Redux
   const orders = useSelector((state: RootState) => {
-  const ingredientLib = state.ingredients.allIngredients;
-  const rawOrders = state.wsPersonalReducer.orders;
-    
+    const ingredientLib = state.ingredients.allIngredients;
+    const rawOrders = state.wsPersonalReducer.orders || [];
 
-    const fullOrders = rawOrders?.map(order => ({
-      ...order,
-      ingredients: order.ingredients
-        ?.map((id: string) => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
-    }));
+    return rawOrders.map((order) => {
+      const ingredients = order.ingredients
+        ?.map((id: string) => ingredientLib.find((ingredient) => ingredient?._id === id))
+        .filter(Boolean);
 
-    return fullOrders?.map(order => {
-      const orderPrice = order.ingredients.reduce((total: number, ingredient: Ingredient) => total + (ingredient?.price || 0), 0);
-
-      const ingredientCountMap = order.ingredients.reduce((acc:Record<string, number>, ingredient: Ingredient) => {
+      const orderPrice = ingredients.reduce((total: number, ingredient: Ingredient) => total + (ingredient?.price || 0), 0);
+      
+      const ingredientCountMap = ingredients.reduce((acc: Record<string, number>, ingredient: Ingredient) => {
         const id = ingredient?._id;
         if (id) {
-          acc[id]  = (acc[id] || 0) + 1;
+          acc[id] = (acc[id] || 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
 
       return {
         ...order,
-        ingredientCounter: ingredientCountMap,
+        ingredients,
         fullOrderPrice: orderPrice,
-        ingredientsToShow: order.ingredients.slice(0, maxIngredientsInRow),
-        extraIngredients: Math.max(order.ingredients.length - maxIngredientsInRow, 0),
+        ingredientCounter: ingredientCountMap,
+        ingredientsToShow: ingredients.slice(0, maxIngredientsInRow),
+        extraIngredients: Math.max(ingredients.length - maxIngredientsInRow, 0),
       };
     });
   });
 
+  // Подключение к WebSocket
   useEffect(() => {
-      dispatch({ type: WS_PERS_CONNECTION_START });
+    dispatch({ type: WS_PERS_CONNECTION_START });
   }, [location.pathname, dispatch]);
 
+  // Обработчик клика по заказу для перехода на страницу заказа
   const handleOrderClick = (order: Order) => {
     navigate(`/profile/orders/${order.number}`, { state: { backgroundLocation: location } });
+    openModal()
   };
 
+  // Отображение ингредиентов для одного заказа
   const renderIngredients = (order: Order) => {
-    return order.ingredientsToShow?.slice(0, maxIngredientsInRow).map((ingredient: Ingredient, index: number) => (
+    return order.ingredientsToShow.map((ingredient: Ingredient, index: number) => (
       <div
         key={index}
         className={`${styles.orderImageWrapper} ${
@@ -91,6 +93,7 @@ export function ProfileOrders() {
                   key={order.number}
                   className={`${styles.orderSection} mb-6`}
                   onClick={() => handleOrderClick(order)}
+                  
                 >
                   <div className={styles.orderNumber}>
                     <p className="text text_type_digits-default mb-6"># {order.number}</p>
@@ -110,9 +113,8 @@ export function ProfileOrders() {
                   <div className={styles.orderResult}>
                     <div className={styles.orderListAndCost}>{renderIngredients(order)}</div>
 
-                   
-                    <div className={`${styles.priceOrder}text text_type_digits-default`}>
-                      {order.fullOrderPrice}&nbsp;<CurrencyIcon type="primary"  />
+                    <div className={`${styles.priceOrder} text text_type_digits-default`}>
+                      {order.fullOrderPrice}&nbsp;<CurrencyIcon type="primary" />
                     </div>
                   </div>
                 </section>
@@ -126,3 +128,7 @@ export function ProfileOrders() {
     </div>
   );
 }
+function openModal() {
+  throw new Error('Function not implemented.');
+}
+

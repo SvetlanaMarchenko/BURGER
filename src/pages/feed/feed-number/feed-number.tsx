@@ -14,7 +14,8 @@ interface FeedNumberProps {
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const dispatch = useDispatch();
-  const { orders } = useWebSocketOrders('/feed'); 
+  const { orders } = useWebSocketOrders('/feed') ||
+  useWebSocketOrders('/profile/orders/'); ; 
   const location = useLocation(); // Получаем объект location
   const locationPathname = location.pathname; // Получаем pathname
 
@@ -22,7 +23,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   useEffect(() => {
     const shouldConnectWebSocket =
       locationPathname.startsWith('/feed/') ||
-      locationPathname.startsWith('/profile/orders');
+      locationPathname.startsWith('/profile/orders/');
 
     if (shouldConnectWebSocket) {
       dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket

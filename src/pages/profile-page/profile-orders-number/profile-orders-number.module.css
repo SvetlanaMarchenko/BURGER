@@ -4,6 +4,8 @@
   flex-direction: column;
   width: 640px;
   position: relative;
+  padding: 0 24px 0 24px;
+  margin: 60px 0 0 0;
 }
 
 .moduleOrderLayout{
@@ -23,15 +25,22 @@
   justify-content: flex-start;
 }
 
+.statusOrderOther{
+  display: flex;
+  justify-content: flex-start;
+
+}
+
 .orderIngredient{
   display: flex;
   justify-content: flex-start;
   width: 608px;
+  align-items: center;
 
 }
 
 .orderIngredientName{
-  width: 414px;
+  width: 390px;
 }
 
 .orderResult{
@@ -39,6 +48,7 @@
   flex-direction: row;
   justify-content: flex-start;
   width: 640px;
+  margin-bottom: 32px;
 }
 
 .orderTime{
@@ -47,9 +57,30 @@
 
 .orderNumber{
   text-align: center;
+
 }
 
 .orderIngredientOptions{
-  max-height: 376px;
+  overflow-y: scroll;
+  max-height: 180px;
+  overflow-x: hidden;
 
 }
+
+.orderNumberImage {
+  width: 71px;
+  height: 64px;
+  padding: 4px 0px 4px 0px;
+  object-fit: cover;
+  border: 2px solid #4C4CFF,; 
+  border-radius: 50%; 
+  background: black;
+}
+
+.orderIngredientPrice{
+  display: flex;
+  width: 245px;
+  justify-content: flex-end;
+}
+
+
