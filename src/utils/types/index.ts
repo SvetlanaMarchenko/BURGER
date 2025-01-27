@@ -8,6 +8,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_PERS_CONNECTION_START
 } from '../action-types';
 import type { TUserActions, TWSActions } from './actions';
 
@@ -23,6 +24,7 @@ export type TWSStoreActions = {
   onClose: typeof WS_CONNECTION_CLOSED,
   onError: typeof  WS_CONNECTION_ERROR,
   onMessage: typeof  WS_GET_MESSAGE,
+  onPersonalStart: typeof WS_PERS_CONNECTION_START
 };
 
 export * from './modelsData';

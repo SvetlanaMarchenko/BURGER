@@ -10,19 +10,16 @@
             return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
                 let socket: WebSocket | null = null;
                 let feedUrl = wsUrlPers;
-        
-                // Функция для обновления токена и переподключения сокета
                 const reconnectSocket = async () => {
                     const accessToken = await refreshAccessToken();
                     console.log('Access token refreshed');
-                    socket?.close(); // Закрываем старое соединение
+                    socket?.close(); 
                     const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
                     feedUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
-                    socket = new WebSocket(feedUrl); // Создаем новый сокет
-                    attachSocketHandlers(socket); // Привязываем обработчики к новому сокету
+                    socket = new WebSocket(feedUrl);
+                    attachSocketHandlers(socket); 
                 };
         
-                // Функция для привязки обработчиков к сокету
                 const attachSocketHandlers = (socket: WebSocket) => {
                     socket.onopen = (event: Event) => {
                         store.dispatch({
@@ -57,11 +54,11 @@
         
                     if (type === 'WS_PERS_CONNECTION_START' && !socket) {
                         socket = new WebSocket(feedUrl);
-                        attachSocketHandlers(socket); // Привязываем обработчики сразу после создания сокета
+                        attachSocketHandlers(socket);
                     }
         
                     if (type === 'WS_PERS_SEND_MESSAGE' && socket && socket.readyState === WebSocket.OPEN) {
-                        socket.send(JSON.stringify(payload)); // Отправляем сообщение
+                        socket.send(JSON.stringify(payload));
                     }
         
                     next(action);

@@ -5,7 +5,11 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_CONNECTION_START,
-  WS_CLEAR_ORDERS
+  WS_CLEAR_ORDERS,
+  WS_PERS_CONNECTION_START,
+  WS_PERS_SEND_MESSAGE
+
+
 } from  '../../services/actions/ws-action-types';
 
 import type { IMessage } from "../types/modelsData";
@@ -40,6 +44,17 @@ export interface IWSSendMessageAction {
 export interface TWSClearOrdersAction {
   type: typeof WS_CLEAR_ORDERS;
 }
+
+export interface IWSPersonalConnectionStart {
+  type: typeof WS_PERS_CONNECTION_START;
+}
+
+export interface IWSSendPersonalMessageAction {
+  readonly type: typeof WS_PERS_SEND_MESSAGE;
+  readonly payload: {message: string};
+}
+
+
 export type TWSActions =
   | IWSConnectionStart
   | IWSConnectionSuccessAction
@@ -48,3 +63,5 @@ export type TWSActions =
   | IWSGetMessageAction
   | IWSSendMessageAction
   | TWSClearOrdersAction
+  | IWSPersonalConnectionStart
+  | IWSSendPersonalMessageAction
