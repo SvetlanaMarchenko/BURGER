@@ -14,6 +14,7 @@ const ProtectedRouteElement: FC<ProtectedRouteElementProps> = ({ element: Compon
   const location = useLocation();
 
   useEffect(() => {
+
     const checkAuthStatus = async () => {
       const accessToken = localStorage.getItem('accessToken');
 

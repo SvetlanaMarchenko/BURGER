@@ -32,17 +32,19 @@ const Modal: FC <ModalProps> = ({ children, onClose }) => {
     <>
       <ModalOverlay onClose={onClose} />
       <div className={styles.modal}>
-      <button
-          onClick={() => {
-            console.log("Modal close button clicked");
-            onClose();
-          }}
-          className={`${styles.closeButton} mt-15 mr-10 mb-0 ml-0`}
-        >
-            <CloseIcon type="primary" />
+      
 
-        </button>
         {children}
+        <button
+        onClick={() => {
+          console.log("Modal close button clicked");
+          onClose();
+        }}
+        className={`${styles.closeButton} mt-15 mr-10 mb-0 ml-0`}
+      >
+        <CloseIcon type="primary" />AAA
+
+      </button>
       </div>
     </>,
     modalRoot

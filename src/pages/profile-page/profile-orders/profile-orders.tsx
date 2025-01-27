@@ -15,7 +15,6 @@ export function ProfileOrders() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Получаем заказы из Redux
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.wsPersonalReducer.orders || [];
@@ -46,18 +45,14 @@ export function ProfileOrders() {
     });
   });
 
-  // Подключение к WebSocket
   useEffect(() => {
     dispatch({ type: WS_PERS_CONNECTION_START });
   }, [location.pathname, dispatch]);
 
-  // Обработчик клика по заказу для перехода на страницу заказа
   const handleOrderClick = (order: Order) => {
     navigate(`/profile/orders/${order.number}`, { state: { backgroundLocation: location } });
-    openModal()
   };
 
-  // Отображение ингредиентов для одного заказа
   const renderIngredients = (order: Order) => {
     return order.ingredientsToShow.map((ingredient: Ingredient, index: number) => (
       <div
@@ -83,7 +78,6 @@ export function ProfileOrders() {
   return (
     <div className={styles.profileOrder}>
       <NavigationProfilePage />
-
       <div className={styles.ingredientsBox}>
         <div className={`${styles.ingredientsSection} mt-10`}>
           <main className={styles.scrollContainer}>
@@ -112,7 +106,6 @@ export function ProfileOrders() {
 
                   <div className={styles.orderResult}>
                     <div className={styles.orderListAndCost}>{renderIngredients(order)}</div>
-
                     <div className={`${styles.priceOrder} text text_type_digits-default`}>
                       {order.fullOrderPrice}&nbsp;<CurrencyIcon type="primary" />
                     </div>
@@ -127,8 +120,5 @@ export function ProfileOrders() {
       </div>
     </div>
   );
-}
-function openModal() {
-  throw new Error('Function not implemented.');
 }
 

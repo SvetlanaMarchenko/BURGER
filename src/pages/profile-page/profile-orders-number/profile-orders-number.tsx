@@ -1,6 +1,5 @@
 import styles from './profile-orders-number.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders'; 
 import {Ingredient} from '../../../utils/types/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +45,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
         .filter(Boolean),
     }));
 
-    return fullOrders?.map(order => {
+    return fullOrders?.map((order: Order)=> {
       const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
 
       const ingredientCountMap = order.ingredients.reduce((acc, ingredient) => {

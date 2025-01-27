@@ -45,6 +45,10 @@ function App() {
     }
   }, [allIngredients, dispatch]);
 
+  const OrderNumberWrapper = () => {
+    return <OrderNumber orderNumber={profileOrderNumber} />;
+  };
+
 
   return (
     <div className={style.appLayout}>
@@ -78,6 +82,8 @@ function App() {
           />
         </Routes>
       )}
+
+
       <Routes location={state?.backgroundLocation || location}>    
         <Route path="/" element={<HomePage />} />
         <Route path='/feed' element={<Feed/>} />
@@ -96,7 +102,7 @@ function App() {
         <Route path="/feed/:number" element={<FeedNumber orderNumber={wantedOrderNumber } />} />
         <Route path="/profile/orders" element={<OnlyAuth element={ProfileOrders} />} />
 
-        <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderNumber orderNumber={profileOrderNumber} />} />} />
+        <Route path="/profile/orders/:number" element={<OnlyAuth element={OrderNumberWrapper} />} />
 
         
       </Routes>
