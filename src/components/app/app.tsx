@@ -49,7 +49,6 @@ function App() {
     return <OrderNumber orderNumber={profileOrderNumber} />;
   };
 
-
   return (
     <div className={style.appLayout}>
        <AppHeader />
