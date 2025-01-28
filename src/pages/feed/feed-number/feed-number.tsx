@@ -1,61 +1,73 @@
 import styles from './feed-number.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import useWebSocketOrders from '../../../services/use-ws-order-profile';
 import { Order } from '../../../utils/types/orders'; 
-import {Ingredient} from '../../../utils/types/ingredients';
-import { useDispatch } from 'react-redux';
+import { Ingredient } from '../../../utils/types/ingredients';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
+import { AppDispatch, RootState } from '../../../services/store';
+import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
 
 interface FeedNumberProps {
-  orderNumber: string | undefined;
+  orderNumber: number | undefined;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
-  const dispatch = useDispatch();
-  const { orders } = useWebSocketOrders('/feed') ||
-  useWebSocketOrders('/profile/orders/'); ; 
-  const location = useLocation(); // Получаем объект location
-  const locationPathname = location.pathname; // Получаем pathname
+  const dispatch = useDispatch<AppDispatch>();
 
-  // Запуск или закрытие WebSocket соединения при изменении пути
+  // Получаем заказы из Redux
+  const orders = useSelector((state: RootState) => state.orders.orders);
+
+  // Получаем параметр 'number' из URL
+  const { number } = useParams<{ number: string }>();
+  const parsedNumber = number ? Number(number) : undefined;
+
+
+
+  // Загружаем данные о заказах, если компонент монтируется
   useEffect(() => {
-    const shouldConnectWebSocket =
-      locationPathname.startsWith('/feed/') ||
-      locationPathname.startsWith('/profile/orders/');
-
-    if (shouldConnectWebSocket) {
-      dispatch({ type: 'WS_CONNECTION_START' }); // Запуск WebSocket
+    if (parsedNumber) {
+      dispatch(fetchDataOrdersAndSetCurrent(parsedNumber)); // Получаем все заказы
     }
+  }, [dispatch, parsedNumber]);
 
-    return () => {
-      if (shouldConnectWebSocket) {
-        dispatch({ type: 'WS_CONNECTION_CLOSED' }); // Закрытие WebSocket
-      }
-    };
-  }, [dispatch, locationPathname]);
 
-  const order = orders?.find((o: Order) => o.number === Number(orderNumber));
+
+  // Находим нужный заказ по номеру
+  const order = orders?.find((o: Order) => o.number === parsedNumber);
 
   if (!order) {
     return <p>Заказ не найден.</p>;
   }
 
+  // Маппинг ингредиентов для заказа
   const uniqueIngredients = Array.from(
     new Map(
       (order.ingredients as Ingredient[]).map((ingr: Ingredient) => [ingr._id, ingr])
     ).values()
   );
 
+  // Подсчитаем количество каждого ингредиента в заказе
+  const ingredientCountMap = order.ingredients.reduce((acc, ingredient) => {
+    const id = ingredient?._id;
+    if (id) {
+      acc[id] = (acc[id] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Рассчитаем общую цену заказа
+  const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
+
   return (
     <div className={`${styles.moduleOrderLayout}`}>
       <section className={`${styles.orderDetailsMain} mt-30`}>
         <h2 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
-          # {order.number}
+          # {orderNumber} {/* Отображаем номер заказа */}
         </h2>
         <h3 className={`${styles.orderName} text text_type_main-medium mb-3`}>
-          {order.name}
+          {order.name} {/* Отображаем имя заказа */}
         </h3>
         <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
           {order.status === 'done' && <span>Выполнен</span>}
@@ -74,24 +86,24 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
               alt={ingredient.name || 'Ингредиент'}
             />
             <span className={`${styles.orderIngredientName} text text_type_main-default`}>
-              {ingredient.name}
+              {ingredient.name} {/* Отображаем имя ингредиента */}
             </span>
             <div className={styles.orderIngredientPrice}>
-            <span className={`text text_type_digits-default`}>
-              {order.ingredientCounter[ingredient._id]} x {ingredient.price}
-            </span>
-            <CurrencyIcon type="primary" />
+              <span className={`text text_type_digits-default`}>
+                {ingredientCountMap[ingredient._id]} x {ingredient.price} {/* Количество и цена */}
+              </span>
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         ))}
       </section>
 
       <section className={`mt-10 ${styles.orderResult}`}>
-      <FormattedDate
-                  className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
-                  date={new Date(order.createdAt)}
-                />
-        <span className="text text_type_digits-default">{order.fullOrderPrice}</span>
+        <FormattedDate
+          className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
+          date={new Date(order.createdAt)} // Дата создания заказа
+        />
+        <span className="text text_type_digits-default">{orderPrice}</span> {/* Общая цена */}
         <CurrencyIcon type="primary" />
       </section>
     </div>

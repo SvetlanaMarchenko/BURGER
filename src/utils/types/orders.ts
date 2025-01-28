@@ -1,4 +1,3 @@
-import { Ingredient } from "./ingredients";
 
 export interface Order {
   number: number;
