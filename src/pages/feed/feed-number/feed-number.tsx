@@ -8,6 +8,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
+import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 
 interface FeedNumberProps {
   orderNumber: number | undefined;
@@ -16,23 +17,36 @@ interface FeedNumberProps {
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Получаем заказы из Redux
-  const orders = useSelector((state: RootState) => state.orders.orders);
+  // Получаем заказы и ингредиенты из Redux
+  const orders = useSelector((state: RootState) => {
+    const ingredientLib = state.ingredients.allIngredients;
+    const rawOrders = state.orders.orders;
+
+    // Маппинг заказов с ингредиентами
+    const fullOrders = rawOrders?.map((order: Order) => ({
+      ...order,
+      ingredients: order.ingredients
+        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
+        .filter(Boolean),
+    }));
+
+    return fullOrders;
+  });
 
   // Получаем параметр 'number' из URL
   const { number } = useParams<{ number: string }>();
   const parsedNumber = number ? Number(number) : undefined;
 
-
-
-  // Загружаем данные о заказах, если компонент монтируется
+  // Загружаем данные о заказах и ингредиентах при монтировании компонента
   useEffect(() => {
     if (parsedNumber) {
       dispatch(fetchDataOrdersAndSetCurrent(parsedNumber)); // Получаем все заказы
     }
   }, [dispatch, parsedNumber]);
 
-
+  useEffect(() => {
+    dispatch(fetchDataIngredients()); // Загружаем ингредиенты
+  }, [dispatch]);
 
   // Находим нужный заказ по номеру
   const order = orders?.find((o: Order) => o.number === parsedNumber);
@@ -64,7 +78,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
     <div className={`${styles.moduleOrderLayout}`}>
       <section className={`${styles.orderDetailsMain} mt-30`}>
         <h2 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
-          # {orderNumber} {/* Отображаем номер заказа */}
+          # {order.number} {/* Отображаем номер заказа */}
         </h2>
         <h3 className={`${styles.orderName} text text_type_main-medium mb-3`}>
           {order.name} {/* Отображаем имя заказа */}

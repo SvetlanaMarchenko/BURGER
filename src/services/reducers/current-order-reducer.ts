@@ -44,6 +44,7 @@ export const ordersReducer = (state = initialState, action: AppActions): OrdersS
       return {
         ...state,
         currentOrder: action.payload,
+        
       };
 
     default:
