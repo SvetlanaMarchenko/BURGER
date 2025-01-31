@@ -14,15 +14,13 @@ interface FeedNumberProps {
    orderNumber: string | undefined ;
 }
 
-export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
+export const FeedNumber: React.FC<FeedNumberProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Получаем заказы и ингредиенты из Redux
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.orders.orders;
 
-    // Маппинг заказов с ингредиентами
     const fullOrders = rawOrders?.map((order: Order) => ({
       ...order,
       ingredients: order.ingredients
@@ -33,36 +31,31 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
     return fullOrders;
   });
 
-  // Получаем параметр 'number' из URL
   const { number } = useParams<{ number: string }>();
   const parsedNumber = number ? Number(number) : undefined;
 
-  // Загружаем данные о заказах и ингредиентах при монтировании компонента
   useEffect(() => {
     if (parsedNumber) {
-      dispatch(fetchDataOrdersAndSetCurrent(parsedNumber)); // Получаем все заказы
+      dispatch(fetchDataOrdersAndSetCurrent(parsedNumber));
     }
   }, [dispatch, parsedNumber]);
 
   useEffect(() => {
-    dispatch(fetchDataIngredients()); // Загружаем ингредиенты
+    dispatch(fetchDataIngredients());
   }, [dispatch]);
 
-  // Находим нужный заказ по номеру
-  const order = orders?.find((o: Order) => o.number === parsedNumber);
+  const order = orders?.find((o) => o.number === parsedNumber);
 
   if (!order) {
     return <p>Подождите.</p>;
   }
 
-  // Маппинг ингредиентов для заказа
   const uniqueIngredients = Array.from(
     new Map(
       (order.ingredients as Ingredient[]).map((ingr: Ingredient) => [ingr._id, ingr])
     ).values()
   );
 
-  // Подсчитаем количество каждого ингредиента в заказе
   const ingredientCountMap = order.ingredients.reduce((acc, ingredient) => {
     const id = ingredient?._id;
     if (id) {
@@ -71,17 +64,16 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
     return acc;
   }, {} as Record<string, number>);
 
-  // Рассчитаем общую цену заказа
   const orderPrice = order.ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
 
   return (
     <div className={`${styles.moduleOrderLayout}`}>
       <section className={`${styles.orderDetailsMain} mt-30`}>
         <h2 className={`${styles.orderNumber} text text_type_digits-default mb-10`}>
-          # {order.number} {/* Отображаем номер заказа */}
+          # {order.number}
         </h2>
         <h3 className={`${styles.orderName} text text_type_main-medium mb-3`}>
-          {order.name} {/* Отображаем имя заказа */}
+          {order.name} 
         </h3>
         <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
           {order.status === 'done' && <span>Выполнен</span>}
@@ -100,11 +92,11 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
               alt={ingredient.name || 'Ингредиент'}
             />
             <span className={`${styles.orderIngredientName} text text_type_main-default`}>
-              {ingredient.name} {/* Отображаем имя ингредиента */}
+              {ingredient.name}
             </span>
             <div className={styles.orderIngredientPrice}>
               <span className={`text text_type_digits-default`}>
-                {ingredientCountMap[ingredient._id]} x {ingredient.price} {/* Количество и цена */}
+                {ingredientCountMap[ingredient._id]} x {ingredient.price}
               </span>
               <CurrencyIcon type="primary" />
             </div>
@@ -115,9 +107,9 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
       <section className={`mt-10 ${styles.orderResult}`}>
         <FormattedDate
           className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
-          date={new Date(order.createdAt)} // Дата создания заказа
+          date={new Date(order.createdAt)}
         />
-        <span className="text text_type_digits-default">{orderPrice}</span> {/* Общая цена */}
+        <span className="text text_type_digits-default">{orderPrice}</span> 
         <CurrencyIcon type="primary" />
       </section>
     </div>
