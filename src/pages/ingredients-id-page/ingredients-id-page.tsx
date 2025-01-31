@@ -7,7 +7,7 @@ import style from './ingredients-id-page.module.css';
 import { AppDispatch } from '../../services/store';
 
 const IngredientsIdPage = () => {
-  const { id } = useParams<{ id: string | undefined }>();  
+  const { id } = useParams<{ id: string }>();  
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {

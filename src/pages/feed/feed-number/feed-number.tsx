@@ -11,7 +11,7 @@ import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 
 interface FeedNumberProps {
-   orderNumber: string | undefined ;
+   orderNumber: string ;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = () => {

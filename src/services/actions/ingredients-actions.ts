@@ -23,8 +23,8 @@ export const fetchIngredientsFailure = (error: string): { type: typeof FETCH_ING
   payload: error
 });
 
-export const fetchDataIngredients = (): ThunkAction<void, RootState, unknown, Action<string>> => {
-  return (dispatch) => {
+export const fetchDataIngredients = () => {
+  return (dispatch: (arg0: { type: string; payload?: string | Ingredients; }) => void) => {
     dispatch(fetchIngredientsRequest());
 
     requestFromApi('/ingredients')

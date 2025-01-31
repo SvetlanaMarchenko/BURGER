@@ -28,7 +28,7 @@ export function Feed() {
 
           <main className={styles.scrollContainer}>
             <section className={styles.orderSection}>
-              {orders?.map((order: Order) => (
+              {orders?.map(order => (
                 <OrderCard key={order.number} order={order} openModal={openModal} />
               ))}
             </section>
@@ -45,17 +45,17 @@ export function Feed() {
               <>
                 <div className={styles.orderListResultDone}>
                   {orders
-                    .filter((order: Order) => order.status === 'done')
+                    .filter((order) => order.status === 'done')
                     .slice(0, 5)
-                    .map((order: Order) => (
+                    .map((order) => (
                       <div key={order._id}>{order.number}</div>
                     ))}
                 </div>
                 <div className={`${styles.orderListResultInProgress} ml-9`}>
                   {orders
-                    .filter((order: Order) => order.status === 'pending')
+                    .filter((order) => order.status === 'pending')
                     .slice(0, 5)
-                    .map((order: Order) => (
+                    .map((order) => (
                       <div key={order._id}>{order.number}</div>
                     ))}
                 </div>

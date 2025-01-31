@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../services/store';
+import { AppDispatch, RootState } from '../services/store';
 import { fetchDataIngredients } from '../services/actions/ingredients-actions';
-import { WS_CLEAR_ORDERS, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/ws-action-types';
 import { Order } from '../utils/types/orders';
 
-const useWebSocketOrders = (locationPathname: string) => {
-  const dispatch = useDispatch();
+const useWebSocketOrders = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
   const maxIngredientsInRow = 6;
 

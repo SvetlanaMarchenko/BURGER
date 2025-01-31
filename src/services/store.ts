@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { Action, configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import rootReducer from './root-reducer';
 import { socketMiddleware } from './middleware/socket-middleware';
 import { socketMiddlewarePersonal } from './middleware/socket-middleware-personal';
@@ -40,7 +40,9 @@ export const store = configureStore({
 
 // Типизация для приложения
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<RootState, unknown, Action>;
+
 export type AppActions = TWSActions;
 export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
 

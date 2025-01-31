@@ -2,7 +2,7 @@
 import { FeedNumber } from '../../feed/feed-number/feed-number';
 
 interface OrderNumberProps {
-  orderNumber: string | undefined ;
+  orderNumber: string ;
 }
 
 const OrderNumber = ({ orderNumber }: OrderNumberProps) => {
