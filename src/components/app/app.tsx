@@ -19,19 +19,16 @@ import { Feed } from '../../pages/feed/feed';
 import FeedNumber from '../../pages/feed/feed-number/feed-number';
 import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
 import OrderNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';
-import { setCurrentOrder } from '../../services/actions/current-order-actions';
-
  
 function App() {
   const location = useLocation();
   let state = location.state
   const allIngredients = useSelector((state: RootState) => state.ingredients.allIngredients);
-  // const allOrders = useSelector((state: RootState) => state.orders.allOrders);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
   const wantedOrderNumber = useMatch("/feed/:number")?.params?.number;
-  const profileOrderNumber = useMatch("/profile/orders/:number")?.params?.number;
+  const profileOrderNumber  = useMatch("/profile/orders/:number")?.params?.number;
   
   useEffect(() => {
     if(
@@ -46,20 +43,6 @@ function App() {
       }
     }
   }, [allIngredients, dispatch]);
-
-  // useEffect(() => {
-  //   if(
-  //     wantedOrderNumber !== null &&
-  //       allOrders &&
-  //       allOrders.length > 0
-  //     ) {
-  //     const wantedOrder = allOrders.find(ord => ord._id === wantedOrderNumber)
-  //     if(!wantedOrder) {
-  //     } else {
-  //       dispatch(setCurrentOrder(wantedOrder))
-  //     }
-  //   }
-  // }, [allOrders, dispatch]);
 
   const OrderNumberWrapper = () => {
     return <OrderNumber orderNumber={profileOrderNumber} />;

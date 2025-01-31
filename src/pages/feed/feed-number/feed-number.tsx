@@ -4,14 +4,14 @@ import { Order } from '../../../utils/types/orders';
 import { Ingredient } from '../../../utils/types/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 
 interface FeedNumberProps {
-  orderNumber: number | undefined;
+   orderNumber: string | undefined ;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
@@ -52,7 +52,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const order = orders?.find((o: Order) => o.number === parsedNumber);
 
   if (!order) {
-    return <p>Заказ не найден.</p>;
+    return <p>Подождите.</p>;
   }
 
   // Маппинг ингредиентов для заказа
