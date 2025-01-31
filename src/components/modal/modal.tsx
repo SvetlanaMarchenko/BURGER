@@ -42,7 +42,7 @@ const Modal: FC <ModalProps> = ({ children, onClose }) => {
         }}
         className={`${styles.closeButton} mt-15 mr-10 mb-0 ml-0`}
       >
-        <CloseIcon type="primary" />AAA
+        <CloseIcon type="primary" />
 
       </button>
       </div>

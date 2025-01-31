@@ -20,7 +20,7 @@
 
 .closeButton{
   position: absolute;
-  top: 32px;
+  top: 0px;
   right: 0;
   padding: 0;
 }
