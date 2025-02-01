@@ -1,6 +1,4 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
-
-import { store } from '../store';
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -9,10 +7,12 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
   WS_PERS_CONNECTION_START
-} from '../action-types';
-import type { TUserActions, TWSActions } from './actions';
+} from '../../services/actions/ws-action-types';
+import type {TWSActions } from './actions';
+import store from '../../services/store';
 
-export type AppActions = TWSActions | TUserActions;
+
+export type AppActions = TWSActions;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
 export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
