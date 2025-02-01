@@ -2,8 +2,8 @@
 import styles from './feed.module.css';
 import { OrderCard } from './order-card';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useWebSocketOrders from '../../services/use-ws-order-profile';
-import { Order } from '../../utils/types/orders';
+import useWebSocketOrders from '../../../services/use-ws-order-profile';
+import { Order } from '../../../utils/types/orders';
 
 export function Feed() {
   const location = useLocation();

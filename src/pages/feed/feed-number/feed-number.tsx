@@ -5,7 +5,7 @@ import { Order } from '../../../utils/types/orders';
 import { Ingredient } from '../../../utils/types/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';

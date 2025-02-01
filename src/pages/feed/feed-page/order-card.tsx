@@ -1,7 +1,7 @@
 import styles from './feed.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Order } from '../../utils/types/orders';
-import { Ingredient } from '../../utils/types/ingredients';
+import { Order } from '../../../utils/types/orders';
+import { Ingredient } from '../../../utils/types/ingredients';
 
 interface OrderCardProps {
   order: Order;

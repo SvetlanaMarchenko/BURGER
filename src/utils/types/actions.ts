@@ -19,18 +19,22 @@ import { WS_PERS_CLEAR_ORDERS,
 import { Order } from './orders';
 
 
+
+
 export interface IWSConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface IWSConnectionSuccessAction {
   readonly type: typeof WS_CONNECTION_SUCCESS;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface IWSPersConnectionSuccessAction {
   readonly type: typeof WS_PERS_CONNECTION_SUCCESS;
+  readonly payload?: never; // Этот action не имеет payload
 }
-
 
 export interface IWSConnectionErrorAction {
   readonly type: typeof WS_CONNECTION_ERROR;
@@ -44,51 +48,52 @@ export interface IWSPersConnectionErrorAction {
 
 export interface IWSConnectionClosedAction {
   readonly type: typeof WS_CONNECTION_CLOSED;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface IWSPersConnectionClosedAction {
   readonly type: typeof WS_PERS_CONNECTION_CLOSED;
+  readonly payload?: never; // Этот action не имеет payload
 }
-
 
 export interface IWSSendMessageAction {
   readonly type: typeof WS_SEND_MESSAGE;
-  readonly payload: {message: string};
+  readonly payload: string; // Для этого действия ожидается строка
 }
 
 export interface IWSGetMessageAction {
   readonly type: typeof WS_GET_MESSAGE;
-  readonly payload: string;
+  readonly payload: string; // Для этого действия ожидается строка
 }
 
 export interface IWSPersGetMessageAction {
   readonly type: typeof WS_PERS_GET_MESSAGE;
   readonly payload: {
-    orders: Order[];
-    total: number;      
-    totalToday: number;   
+    orders: Order[];     // Массив заказов
+    total: number;       // Общая сумма
+    totalToday: number;  // Общая сумма за сегодня
   };
 }
 
-
 export interface TWSClearOrdersAction {
-  type: typeof WS_CLEAR_ORDERS;
+  readonly type: typeof WS_CLEAR_ORDERS;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface TWSClearPersOrdersAction {
-  type: typeof WS_PERS_CLEAR_ORDERS;
+  readonly type: typeof WS_PERS_CLEAR_ORDERS;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface IWSPersonalConnectionStart {
-  type: typeof WS_PERS_CONNECTION_START;
+  readonly type: typeof WS_PERS_CONNECTION_START;
+  readonly payload?: never; // Этот action не имеет payload
 }
 
 export interface IWSSendPersonalMessageAction {
   readonly type: typeof WS_PERS_SEND_MESSAGE;
-  readonly payload: {message: string};
+  readonly payload: { message: string }; // Для этого действия ожидается объект с сообщением
 }
-
-
 
 export type TWSActions =
   | IWSConnectionStart
@@ -104,5 +109,4 @@ export type TWSActions =
   | IWSPersConnectionClosedAction
   | IWSPersConnectionErrorAction
   | IWSGetMessageAction
-  | IWSPersGetMessageAction
-  
+  | IWSPersGetMessageAction;

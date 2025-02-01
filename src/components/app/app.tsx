@@ -15,7 +15,7 @@ import { setCurrentIngredient } from '../../services/actions/current-ingredient-
 import AppHeader from '../../components/app-header/app-header';
 import style from '../../components/app/app.module.css';
 import { RootState } from '../../services/store';
-import { Feed } from '../../pages/feed/feed';
+import { Feed } from '../../pages/feed/feed-page/feed';
 import FeedNumber from '../../pages/feed/feed-number/feed-number';
 import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
 import OrderNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';

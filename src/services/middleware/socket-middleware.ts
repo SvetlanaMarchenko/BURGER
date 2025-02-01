@@ -1,5 +1,7 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { AppActions, AppDispatch, RootState} from '../store';
+import { WS_CONNECTION_START, WS_SEND_MESSAGE } from '../actions/ws-action-types';
+type WebSocketPayload = string | Record<string, any>;
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -9,7 +11,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
 
         return next => (action: AppActions) => {
             const { dispatch } = store;
-            const { type } = action;
+            const { type,payload } = action;
 
             if (type === 'WS_CONNECTION_START') {
                 socket = new WebSocket(feedUrl);
@@ -77,9 +79,16 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                 socket.onclose = event => {
                     dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
                 };
-                if (type === 'WS_SEND_MESSAGE') {
-                    const message = payload;
+
+                if ('payload' in action) {
+                    if (type === WS_SEND_MESSAGE) {
+                    const message: WebSocketPayload = payload; 
                     socket.send(JSON.stringify(message));
+                    }
+                } else {
+                    if (type === WS_CONNECTION_START) {
+                    socket = new WebSocket(feedUrl);
+                    }
                 }
             }
             next(action);
