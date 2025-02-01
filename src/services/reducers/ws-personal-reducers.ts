@@ -6,12 +6,12 @@ import {
   WS_PERS_CLEAR_ORDERS,
 } from '../actions/ws-personal-action-types';
 import type { TWSActions } from '../../utils/types/actions';
-import { Order } from '../../utils/types/orders';
+import { RawOrder } from '../../utils/types/raw-orders';
 
 
 type TWSState = {
   wsConnected: boolean;
-  orders: Order []; 
+  orders: RawOrder []; 
   total: number;
   totalToday: number;
   error?: Event;

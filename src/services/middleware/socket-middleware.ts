@@ -6,7 +6,7 @@ type WebSocketPayload = string | Record<string, any>;
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         // let socket: WebSocket | null = null;
-        let socket: WebSocket | null
+        let socket: WebSocket | null = null;
         let feedUrl = wsUrl;
 
         return next => (action: AppActions) => {
@@ -58,7 +58,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                                     if (result.accessToken) {
                                         localStorage.setItem('accessToken', `${result.accessToken}`);
                                         console.log('Access token refreshed');
-                                        socket.close();
+                                        socket?.close();
                                         socket = new WebSocket(feedUrl);
                                     } else {
                                         console.error('Failed to refresh token');
