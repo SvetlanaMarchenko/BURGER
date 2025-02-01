@@ -1,21 +1,21 @@
-import { Orders } from '../../utils/types/orders';
+import { RawOrders } from '../../utils/types/raw-orders';
 import { AppActions, FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actions/current-order-actions';
 
-interface OrdersState {
-  orders: Orders | [];
+interface RawOrdersState {
+  orders: RawOrders | [];
   loading: boolean;
   error: string | null;
-  currentOrder: Orders | null;
+  // currentOrder: Orders | null;
 }
 
-const initialState: OrdersState = {
+const initialState: RawOrdersState = {
   orders: [],
   loading: false,
   error: null,
-  currentOrder: null,
+  // currentOrder: null,
 };
 
-export const ordersReducer = (state = initialState, action: AppActions): OrdersState => {
+export const ordersReducer = (state = initialState, action: AppActions): RawOrdersState => {
   switch (action.type) {
     case FETCH_ORDERS_REQUEST:
       return {
@@ -39,11 +39,11 @@ export const ordersReducer = (state = initialState, action: AppActions): OrdersS
         error: action.payload, 
       };
 
-    case 'SET_CURRENT_ORDER': 
-      return {
-        ...state,
-        currentOrder: action.payload,
-      };
+    // case 'SET_CURRENT_ORDER': 
+    //   return {
+    //     ...state,
+    //     currentOrder: action.payload,
+    //   };
 
     default:
       return state;

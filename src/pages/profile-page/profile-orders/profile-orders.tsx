@@ -24,9 +24,9 @@ export function ProfileOrders() {
         ?.map((id: string) => ingredientLib.find((ingredient) => ingredient?._id === id))
         .filter(Boolean);
 
-      const orderPrice = ingredients.reduce((total: number, ingredient: Ingredient) => total + (ingredient?.price || 0), 0);
+      const orderPrice = ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
       
-      const ingredientCountMap = ingredients.reduce((acc: Record<string, number>, ingredient: Ingredient) => {
+      const ingredientCountMap = ingredients.reduce((acc, ingredient) => {
         const id = ingredient?._id;
         if (id) {
           acc[id] = (acc[id] || 0) + 1;

@@ -1,37 +1,38 @@
 import styles from './feed-number.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { RawOrder } from '../../../utils/types/raw-orders'; 
 import { Order } from '../../../utils/types/orders'; 
 import { Ingredient } from '../../../utils/types/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 
 interface FeedNumberProps {
-   orderNumber: string ;
+  orderNumber: string | undefined;
 }
 
-export const FeedNumber: React.FC<FeedNumberProps> = () => {
+export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.orders.orders;
-    
-    const fullOrders = rawOrders?.map((order: Order) => ({
+
+    const fullOrders = rawOrders?.map((order: RawOrder) => ({
       ...order,
       ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient._id === id)) // Find ingredient by _id
-        .filter((ingredient): ingredient is Ingredient => ingredient !== undefined), // Ensure valid ingredients
+        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
+        .filter(Boolean) as Ingredient[],
     }));
-    
+
     return fullOrders;
   });
 
-  const { number } = useParams();
+  const { number } = useParams<{ number: string }>();
   const parsedNumber = number ? Number(number) : undefined;
 
   useEffect(() => {
@@ -41,13 +42,13 @@ export const FeedNumber: React.FC<FeedNumberProps> = () => {
   }, [dispatch, parsedNumber]);
 
   useEffect(() => {
-    dispatch(fetchDataIngredients());
+    dispatch(fetchDataIngredients()); 
   }, [dispatch]);
 
-  const order = orders?.find((o) => o.number === parsedNumber);
+  const order = orders?.find((o: Order) => o.number === parsedNumber);
 
   if (!order) {
-    return <p>Подождите.</p>;
+    return <p>Заказ не найден.</p>;
   }
 
   const uniqueIngredients = Array.from(
@@ -73,7 +74,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = () => {
           # {order.number}
         </h2>
         <h3 className={`${styles.orderName} text text_type_main-medium mb-3`}>
-          {order.name} 
+          {order.name}
         </h3>
         <div className={`${styles.statusOrder} text text_type_main-default mb-15`}>
           {order.status === 'done' && <span>Выполнен</span>}
@@ -92,11 +93,11 @@ export const FeedNumber: React.FC<FeedNumberProps> = () => {
               alt={ingredient.name || 'Ингредиент'}
             />
             <span className={`${styles.orderIngredientName} text text_type_main-default`}>
-              {ingredient.name}
+              {ingredient.name} 
             </span>
             <div className={styles.orderIngredientPrice}>
               <span className={`text text_type_digits-default`}>
-                {ingredientCountMap[ingredient._id]} x {ingredient.price}
+                {ingredientCountMap[ingredient._id]} x {ingredient.price} 
               </span>
               <CurrencyIcon type="primary" />
             </div>
@@ -107,7 +108,7 @@ export const FeedNumber: React.FC<FeedNumberProps> = () => {
       <section className={`mt-10 ${styles.orderResult}`}>
         <FormattedDate
           className={`${styles.orderTime} text text_type_main-default text_color_inactive`}
-          date={new Date(order.createdAt)}
+          date={new Date(order.createdAt)} 
         />
         <span className="text text_type_digits-default">{orderPrice}</span> 
         <CurrencyIcon type="primary" />

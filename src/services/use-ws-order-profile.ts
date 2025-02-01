@@ -5,7 +5,7 @@ import { fetchDataIngredients } from '../services/actions/ingredients-actions';
 import { Order } from '../utils/types/orders';
 import { Ingredient } from '../utils/types/ingredients';
 
-const useWebSocketOrders = () => {
+const useWebSocketOrders = (pathname: string) => {
   const dispatch = useDispatch<AppDispatch>()
   const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
   const maxIngredientsInRow = 6;

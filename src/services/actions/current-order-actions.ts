@@ -1,4 +1,4 @@
-import { Orders } from '../../utils/types/orders';
+import { RawOrders } from '../../utils/types/raw-orders';
 import { requestFromApi } from '../../utils/api';
 import { AppDispatch } from '../store';
 
@@ -10,7 +10,7 @@ export const fetchOrdersRequest = (): { type: typeof FETCH_ORDERS_REQUEST } => (
   type: FETCH_ORDERS_REQUEST
 });
 
-export const fetchOrdersSuccess = (orders: Orders): { type: typeof FETCH_ORDERS_SUCCESS; payload: Orders } => ({
+export const fetchOrdersSuccess = (orders: RawOrders): { type: typeof FETCH_ORDERS_SUCCESS; payload: RawOrders } => ({
   type: FETCH_ORDERS_SUCCESS,
   payload: orders
 });

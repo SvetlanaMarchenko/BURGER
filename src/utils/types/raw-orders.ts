@@ -1,11 +1,11 @@
 import { Ingredient } from "./ingredients";
 
-export interface Order {
+export interface RawOrder {
   number: number;
   name: string;
   type: string;
   price: number;
-  ingredients: Ingredient[];
+  ingredients: string[];
   createdAt: string;
   fullOrderPrice: number;
   ingredientCounter: Record<string, number>;
@@ -23,4 +23,4 @@ export interface currentOrder {
   number: number
 }
 
-export type Orders = Order[]; 
+export type RawOrders = RawOrder[]; 
