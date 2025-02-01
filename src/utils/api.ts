@@ -194,7 +194,6 @@ const logoutUser = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
   if (!refreshToken) {
-    console.log('Нет токена для выхода');
     return;
   }
 

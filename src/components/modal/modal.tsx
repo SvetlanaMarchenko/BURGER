@@ -16,7 +16,6 @@ const Modal: FC <ModalProps> = ({ children, onClose }) => {
   React.useEffect(() => {
     
     const handleEsc = (event: KeyboardEvent) => {
-      console.log("this: ", this)
       if (event.key === 'Escape') {
         onClose();
       }

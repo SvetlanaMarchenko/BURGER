@@ -8,6 +8,7 @@ import { WS_PERS_CONNECTION_START } from '../../../services/actions/ws-personal-
 import { Ingredient } from '../../../utils/types/ingredients';
 import { RootState } from '../../../services/store';
 import NavigationProfilePage from '../profile-page/navigation-profile-page';
+import { RawOrder } from '../../../utils/types/raw-orders';
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
@@ -19,10 +20,10 @@ export function ProfileOrders() {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.wsPersonalReducer.orders || [];
 
-    return rawOrders.map((order) => {
+    const fullOrders = rawOrders.map((order: RawOrder) => {
       const ingredients = order.ingredients
-        ?.map((id: string) => ingredientLib.find((ingredient) => ingredient?._id === id))
-        .filter(Boolean);
+        ?.map((id) => ingredientLib.find((ingredient) => ingredient?._id === id))
+        .filter(Boolean) as Ingredient[]
 
       const orderPrice = ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
       
@@ -43,6 +44,9 @@ export function ProfileOrders() {
         extraIngredients: Math.max(ingredients.length - maxIngredientsInRow, 0),
       };
     });
+
+    return fullOrders;
+
   });
 
   useEffect(() => {

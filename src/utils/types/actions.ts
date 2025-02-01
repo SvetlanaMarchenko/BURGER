@@ -16,7 +16,7 @@ import { WS_PERS_CLEAR_ORDERS,
         WS_PERS_CONNECTION_ERROR,
         WS_PERS_GET_MESSAGE
 } from '../../services/actions/ws-personal-action-types';
-import { Order } from './orders';
+import { RawOrder } from './raw-orders';
 
 
 
@@ -69,7 +69,7 @@ export interface IWSGetMessageAction {
 export interface IWSPersGetMessageAction {
   readonly type: typeof WS_PERS_GET_MESSAGE;
   readonly payload: {
-    orders: Order[];     // Массив заказов
+    orders: RawOrder[];     // Массив заказов
     total: number;       // Общая сумма
     totalToday: number;  // Общая сумма за сегодня
   };
