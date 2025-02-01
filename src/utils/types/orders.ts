@@ -4,7 +4,7 @@ export interface Order {
   name: string;
   type: string;
   price: number;
-  ingredients: [];
+  ingredients: string[];
   createdAt: string;
   fullOrderPrice: number;
   ingredientCounter: Record<string, number>;

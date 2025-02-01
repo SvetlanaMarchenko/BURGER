@@ -1,19 +1,18 @@
 import { Orders } from '../../utils/types/orders';
-import { FETCH_ORDERS_FAILURE, FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS } from '../actions/current-order-actions';
-import { AppActions } from '../store';
+import { AppActions, FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actions/current-order-actions';
 
 interface OrdersState {
   orders: Orders | [];
   loading: boolean;
   error: string | null;
-  currentOrder: Orders | null; // Чтобы хранить текущий заказ
+  currentOrder: Orders | null;
 }
 
 const initialState: OrdersState = {
   orders: [],
   loading: false,
   error: null,
-  currentOrder: null, // Начальное значение для текущего заказа
+  currentOrder: null,
 };
 
 export const ordersReducer = (state = initialState, action: AppActions): OrdersState => {
@@ -28,7 +27,7 @@ export const ordersReducer = (state = initialState, action: AppActions): OrdersS
     case FETCH_ORDERS_SUCCESS:
       return {
         ...state,
-        orders: action.payload, // Применяем полученные заказы
+        orders: action.payload, 
         loading: false,
         error: null,
       };
@@ -37,14 +36,13 @@ export const ordersReducer = (state = initialState, action: AppActions): OrdersS
       return {
         ...state,
         loading: false,
-        error: action.payload, // Сохраняем ошибку в состоянии
+        error: action.payload, 
       };
 
-    case 'SET_CURRENT_ORDER': // Обработаем действие для установки текущего заказа
+    case 'SET_CURRENT_ORDER': 
       return {
         ...state,
         currentOrder: action.payload,
-        
       };
 
     default:

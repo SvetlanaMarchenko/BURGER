@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../services/store';
 import { fetchDataIngredients } from '../services/actions/ingredients-actions';
 import { Order } from '../utils/types/orders';
+import { Ingredient } from '../utils/types/ingredients';
 
 const useWebSocketOrders = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -22,8 +23,8 @@ const useWebSocketOrders = () => {
     const fullOrders = rawOrders?.map((order: Order) => ({
       ...order,
       ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
+      ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
+      .filter((ingredient): ingredient is Ingredient => ingredient !== undefined)
     }));
 
     return fullOrders?.map(order => {

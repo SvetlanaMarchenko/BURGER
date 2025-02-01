@@ -1,9 +1,8 @@
 import {requestFromApi} from '../../utils/api.js'
 import {setCurrentIngredient} from './current-ingredient-actions.js'
 import { Ingredients } from '../../utils/types/ingredients';
-import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
-import { RootState, AppDispatch } from '../store.js';
+import { AppDispatch } from '../store.js';
 
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';

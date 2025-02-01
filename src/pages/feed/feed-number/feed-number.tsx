@@ -20,18 +20,18 @@ export const FeedNumber: React.FC<FeedNumberProps> = () => {
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;
     const rawOrders = state.orders.orders;
-
+    
     const fullOrders = rawOrders?.map((order: Order) => ({
       ...order,
       ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean),
+        ?.map(id => ingredientLib.find(ingredient => ingredient._id === id)) // Find ingredient by _id
+        .filter((ingredient): ingredient is Ingredient => ingredient !== undefined), // Ensure valid ingredients
     }));
-
+    
     return fullOrders;
   });
 
-  const { number } = useParams<{ number: string }>();
+  const { number } = useParams();
   const parsedNumber = number ? Number(number) : undefined;
 
   useEffect(() => {

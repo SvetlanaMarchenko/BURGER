@@ -1,22 +1,21 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import type { AppActions, AppDispatch, RootState, TWSStoreActions } from '../store';
+import type { AppActions, AppDispatch, RootState} from '../store';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        let socket: WebSocket | null = null;
-
+        // let socket: WebSocket | null = null;
+        let socket: WebSocket | null
         let feedUrl = wsUrl;
 
         return next => (action: AppActions) => {
             const { dispatch } = store;
-            const { type, payload } = action;
+            const { type } = action;
 
             if (type === 'WS_CONNECTION_START') {
                 socket = new WebSocket(feedUrl);
             }
             
             if (socket) {
-                // Обработчики событий WebSocket
                 socket.onopen = (event: Event) => {
                     dispatch({
                         type: 'WS_CONNECTION_SUCCESS',
@@ -38,17 +37,12 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                 
                     try {
                         const parsedData = JSON.parse(data);
-                
-                        // Проверка на недействительный или отсутствующий токен
                         if (parsedData.message === 'Invalid or missing token') {
                             localStorage.removeItem('accessToken');
                             dispatch({ type: 'USER_LOGOUT' });
                             console.error('Invalid or missing token');
-                            
-                            // Если есть refresh token
                             if (parsedRefreshToken) {
                                 try {
-                                    // Запрос на обновление токена
                                     const response = await fetch('YOUR_REFRESH_TOKEN_API_URL', {
                                         method: 'POST',
                                         headers: {
@@ -60,12 +54,10 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                                     const result = await response.json();
                 
                                     if (result.accessToken) {
-                                        localStorage.setItem('accessToken', `${result.accessToken}`); // Приведение к нужному формату
+                                        localStorage.setItem('accessToken', `${result.accessToken}`);
                                         console.log('Access token refreshed');
-                
-                                        // Закрытие старого WebSocket соединения и создание нового
                                         socket.close();
-                                        socket = new WebSocket(feedUrl); // Новый WebSocket с обновленным токеном
+                                        socket = new WebSocket(feedUrl);
                                     } else {
                                         console.error('Failed to refresh token');
                                     }
@@ -76,7 +68,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                                 console.error('No refresh token available');
                             }
                         } else {
-                            // Обработка нормального сообщения WebSocket
                             dispatch({ type: 'WS_GET_MESSAGE', payload: data });
                         }
                     } catch (error) {
@@ -91,23 +82,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                     socket.send(JSON.stringify(message));
                 }
             }
-//             if (type === 'WS_CLEAR_ORDERS') {
-//                 if (socket) {
-//                     socket.close();
-//                     socket = null;
-// `                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: null });
-//                     // console.log("old feedUrl:", feedUrl)
-//                     // const accessToken = localStorage.getItem('accessToken');
-//                     // const parsedAccessToken = accessToken ? accessToken.split(' ')[1] : '';
-//                     // feedUrl = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
-                    
-                    
-//                     // console.log("new feedUrl:", feedUrl)                    
-//                 }
-//                 dispatch({ type: 'WS_CONNECTION_START', payload: null });`
-
-            // }
-
             next(action);
         };
     }) as Middleware;

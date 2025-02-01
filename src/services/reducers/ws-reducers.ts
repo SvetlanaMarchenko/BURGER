@@ -6,20 +6,17 @@ import {
   WS_CLEAR_ORDERS, 
 } from '../actions/ws-action-types';
 import type { TWSActions } from '../../utils/types/actions';
-import type { IMessage } from '../../utils/types/modelsData';
 
 type TWSState = {
   wsConnected: boolean;
-  messages: IMessage[];
-  orders: []; // Массив заказов
-  total: number; // Общее количество заказов
-  totalToday: number; // Заказы за сегодня
+  orders: []; 
+  total: number;
+  totalToday: number;
   error?: Event;
 };
 
 const initialState: TWSState = {
   wsConnected: false,
-  messages: [],
   orders: [],
   total: 0,
   totalToday: 0,
@@ -58,10 +55,10 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
         totalToday: parsedMessage.totalToday,
       };
 
-    case WS_CLEAR_ORDERS: // Новое действие для сброса заказов
+    case WS_CLEAR_ORDERS: 
       return {
-        ...initialState, // Сбрасываем состояние
-        wsConnected: state.wsConnected, // Сохраняем текущее состояние соединения
+        ...initialState,
+        wsConnected: state.wsConnected,
       };
 
     default:

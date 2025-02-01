@@ -20,11 +20,3 @@ export interface IMessageResponse {
   isBot?: boolean;
 }
 
-export interface IMessage extends Omit<IMessageResponse, 'success'> {
-  timestamp: number;   
-  _id: string;        
-  number: number;     
-  status: string;    
-  updatedAt: string;   
-  ingredients: IIngredient[];  
-}

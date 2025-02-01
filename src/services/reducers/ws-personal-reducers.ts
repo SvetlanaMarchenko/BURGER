@@ -3,29 +3,27 @@ import {
   WS_PERS_CONNECTION_ERROR,
   WS_PERS_CONNECTION_CLOSED,
   WS_PERS_GET_MESSAGE,
-  WS_PERS_CLEAR_ORDERS, 
+  WS_PERS_CLEAR_ORDERS,
 } from '../actions/ws-personal-action-types';
 import type { TWSActions } from '../../utils/types/actions';
-import type { IMessage } from '../../utils/types/modelsData';
-import { Order } from '../../../utils/types/orders';[]; // Массив заказов
+import { Order } from '../../utils/types/orders';
 
 
 type TWSState = {
   wsConnected: boolean;
-  messages: IMessage[];
-  orders: Order[]; // Массив заказов
-  total: number; // Общее количество заказов
-  totalToday: number; // Заказы за сегодня
-  error?: Event;
-  ingredients: string;
+  orders: Order[];     
+  total: number;         
+  totalToday: number;  
+  error?: string | null;
+  ingredients: string;   
 };
 
 const initialState: TWSState = {
   wsConnected: false,
-  messages: [],
   orders: [],
   total: 0,
   totalToday: 0,
+  ingredients: '',
 };
 
 export const wsPersonalReducer = (state = initialState, action: TWSActions): TWSState => {
@@ -33,14 +31,14 @@ export const wsPersonalReducer = (state = initialState, action: TWSActions): TWS
     case WS_PERS_CONNECTION_SUCCESS:
       return {
         ...state,
-        error: undefined,
+        error: undefined, 
         wsConnected: true,
       };
 
     case WS_PERS_CONNECTION_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload, 
         wsConnected: false,
       };
 
@@ -52,19 +50,19 @@ export const wsPersonalReducer = (state = initialState, action: TWSActions): TWS
       };
 
     case WS_PERS_GET_MESSAGE:
-      const parsedMessage = action.payload;
+      const { orders, total, totalToday } = action.payload;
       return {
         ...state,
-        error: undefined,
-        orders: parsedMessage.orders,
-        total: parsedMessage.total,
-        totalToday: parsedMessage.totalToday,
+        error: undefined, 
+        orders,      
+        total,           
+        totalToday,       
       };
 
-    case WS_PERS_CLEAR_ORDERS: // Новое действие для сброса заказов
+    case WS_PERS_CLEAR_ORDERS:
       return {
-        ...initialState, // Сбрасываем состояние
-        wsConnected: state.wsConnected, // Сохраняем текущее состояние соединения
+        ...initialState,
+        wsConnected: state.wsConnected,
       };
 
     default:
