@@ -2,12 +2,10 @@ import { Orders } from '../../utils/types/orders';
 import { requestFromApi } from '../../utils/api';
 import { AppDispatch } from '../store';
 
-// Action Types
 export const FETCH_ORDERS_REQUEST = 'FETCH_ORDERS_REQUEST';
 export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 export const FETCH_ORDERS_FAILURE = 'FETCH_ORDERS_FAILURE';
 
-// Action Creators
 export const fetchOrdersRequest = (): { type: typeof FETCH_ORDERS_REQUEST } => ({
   type: FETCH_ORDERS_REQUEST
 });
@@ -22,7 +20,6 @@ export const fetchOrdersFailure = (error: string): { type: typeof FETCH_ORDERS_F
   payload: error
 });
 
-// Thunk Action Creator for fetching orders and setting the current order
 export const fetchDataOrdersAndSetCurrent = (number: number) => {
   return async (dispatch: AppDispatch) => {
     dispatch(fetchOrdersRequest());
@@ -43,14 +40,12 @@ export const fetchDataOrdersAndSetCurrent = (number: number) => {
   };
 };
 
-// Action types for Redux
 export type FetchOrdersRequestAction = ReturnType<typeof fetchOrdersRequest>;
 export type FetchOrdersSuccessAction = ReturnType<typeof fetchOrdersSuccess>;
 export type FetchOrdersFailureAction = ReturnType<typeof fetchOrdersFailure>;
 
-// Combining all actions in AppActions
 export type AppActions =
   | FetchOrdersRequestAction
   | FetchOrdersSuccessAction
   | FetchOrdersFailureAction
-  | SetCurrentOrderAction; // Make sure you have this SetCurrentOrderAction type somewhere in your code
+

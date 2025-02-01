@@ -13,8 +13,10 @@ import {
 import { WS_PERS_CLEAR_ORDERS, 
         WS_PERS_CONNECTION_SUCCESS, 
         WS_PERS_CONNECTION_CLOSED, 
-        WS_PERS_CONNECTION_ERROR 
+        WS_PERS_CONNECTION_ERROR,
+        WS_PERS_GET_MESSAGE
 } from '../../services/actions/ws-personal-action-types';
+import { Order } from './orders';
 
 
 export interface IWSConnectionStart {
@@ -59,6 +61,16 @@ export interface IWSGetMessageAction {
   readonly payload: string;
 }
 
+export interface IWSPersGetMessageAction {
+  readonly type: typeof WS_PERS_GET_MESSAGE;
+  readonly payload: {
+    orders: Order[];
+    total: number;      
+    totalToday: number;   
+  };
+}
+
+
 export interface TWSClearOrdersAction {
   type: typeof WS_CLEAR_ORDERS;
 }
@@ -92,4 +104,5 @@ export type TWSActions =
   | IWSPersConnectionClosedAction
   | IWSPersConnectionErrorAction
   | IWSGetMessageAction
+  | IWSPersGetMessageAction
   

@@ -5,7 +5,7 @@ import { RegisterPage } from '../../pages/register-page/register-page';
 import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';
 import { ResetPasswordPage } from '../../pages/reset-password-page/reset-password-page';
 import { HomePage } from '../../pages/home-page/home-page';
-import ProfilePage from '../../pages/profile-page/profile-page';
+import ProfilePage from '../../pages/profile-page/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';

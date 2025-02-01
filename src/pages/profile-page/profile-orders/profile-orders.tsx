@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import styles from './profile-orders.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import NavigationProfilePage from '../navigation-profile-page';
 import { Order } from '../../../utils/types/orders';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_PERS_CONNECTION_START } from '../../../services/actions/ws-personal-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
 import { RootState } from '../../../services/store';
+import NavigationProfilePage from '../profile-page/navigation-profile-page';
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;

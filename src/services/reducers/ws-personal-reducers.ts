@@ -11,11 +11,10 @@ import { Order } from '../../utils/types/orders';
 
 type TWSState = {
   wsConnected: boolean;
-  orders: Order[];     
-  total: number;         
-  totalToday: number;  
-  error?: string | null;
-  ingredients: string;   
+  orders: Order []; 
+  total: number;
+  totalToday: number;
+  error?: Event;
 };
 
 const initialState: TWSState = {
@@ -23,7 +22,6 @@ const initialState: TWSState = {
   orders: [],
   total: 0,
   totalToday: 0,
-  ingredients: '',
 };
 
 export const wsPersonalReducer = (state = initialState, action: TWSActions): TWSState => {
@@ -55,8 +53,8 @@ export const wsPersonalReducer = (state = initialState, action: TWSActions): TWS
         ...state,
         error: undefined, 
         orders,      
-        total,           
-        totalToday,       
+        total,     
+        totalToday,
       };
 
     case WS_PERS_CLEAR_ORDERS:

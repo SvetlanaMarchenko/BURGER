@@ -2,29 +2,9 @@ import { Action, configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/too
 import rootReducer from './root-reducer';
 import { socketMiddleware } from './middleware/socket-middleware';
 import { socketMiddlewarePersonal } from './middleware/socket-middleware-personal';
-import {
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_GET_MESSAGE,
-  WS_SEND_MESSAGE,
-  WS_CLEAR_ORDERS,
-  FETCH_ORDERS_REQUEST
-
-} from './actions/ws-action-types';
 
 import type { TWSActions } from '../utils/types/actions';
 
-// const wsActions:  = {
-//   wsInit: WS_CONNECTION_START,
-//   wsSendMessage: WS_SEND_MESSAGE,
-//   onOpen: WS_CONNECTION_SUCCESS,
-//   onClose: WS_CONNECTION_CLOSED,
-//   onError: WS_CONNECTION_ERROR,
-//   onMessage: WS_GET_MESSAGE,
-//   onClear: WS_CLEAR_ORDERS
-// };
 
 const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
 const wsUrlPers = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;

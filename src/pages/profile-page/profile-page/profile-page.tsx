@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchUserData, updateUserData } from '../../utils/api';
+import { fetchUserData, updateUserData } from '../../../utils/api';
 import styles from './profile-page.module.css';
 import NavigationProfilePage from './navigation-profile-page';
 
