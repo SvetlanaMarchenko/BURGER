@@ -5,6 +5,7 @@ type WebSocketPayload = string | Record<string, any>;
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
+        // let socket: WebSocket | null = null;
         let socket: WebSocket | null = null;
         let feedUrl = wsUrl;
 
