@@ -19,6 +19,8 @@ export function Feed() {
     handleOrderClick(order);
   };
 
+  
+
   return (
     <div className={styles.appLayout}>
       <div className={styles.ingredientsBox}>

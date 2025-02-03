@@ -13,6 +13,10 @@ const useWebSocketOrders = (pathname: string) => {
 
   useEffect(() => {
     dispatch(fetchDataIngredients());
+    dispatch({ type: 'WS_CONNECTION_START' });
+    return function cleanup() {
+      dispatch({ type: 'WS_CONNECTION_CLOSE' });
+    };
   }, [dispatch]);
 
 

@@ -8,7 +8,7 @@ import { WS_CONNECTION_START } from './services/actions/ws-action-types.js';
 
 const rootElement = document.getElementById('root')!;
 
-store.dispatch({type: WS_CONNECTION_START });
+// store.dispatch({type: WS_CONNECTION_START });
 
 createRoot(rootElement).render(
   <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>

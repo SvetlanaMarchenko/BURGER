@@ -51,6 +51,9 @@ export function ProfileOrders() {
 
   useEffect(() => {
     dispatch({ type: WS_PERS_CONNECTION_START });
+    return function cleanup() {
+      dispatch({ type: 'WS_PERS_CONNECTION_CLOSE' });
+    };
   }, [location.pathname, dispatch]);
 
   const handleOrderClick = (order: Order) => {

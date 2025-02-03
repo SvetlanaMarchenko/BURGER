@@ -46,7 +46,7 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
       };
 
     case WS_GET_MESSAGE:
-      const parsedMessage = JSON.parse(action.payload);
+      const parsedMessage = action.payload;
       return {
         ...state,
         error: undefined,
