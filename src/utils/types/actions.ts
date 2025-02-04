@@ -7,12 +7,14 @@ import {
   WS_CONNECTION_START,
   WS_CLEAR_ORDERS,
   WS_PERS_CONNECTION_START,
-  WS_PERS_SEND_MESSAGE
+  WS_PERS_SEND_MESSAGE,
+  WS_CONNECTION_CLOSE
 } from  '../../services/actions/ws-action-types';
 
 import { WS_PERS_CLEAR_ORDERS, 
         WS_PERS_CONNECTION_SUCCESS, 
         WS_PERS_CONNECTION_CLOSED, 
+        WS_PERS_CONNECTION_CLOSE,
         WS_PERS_CONNECTION_ERROR,
         WS_PERS_GET_MESSAGE
 } from '../../services/actions/ws-personal-action-types';
@@ -53,6 +55,16 @@ export interface IWSConnectionClosedAction {
 
 export interface IWSPersConnectionClosedAction {
   readonly type: typeof WS_PERS_CONNECTION_CLOSED;
+  readonly payload?: never; // Этот action не имеет payload
+}
+
+export interface IWSConnectionCloseAction {
+  readonly type: typeof WS_CONNECTION_CLOSE;
+  readonly payload?: never; // Этот action не имеет payload
+}
+
+export interface IWSPersConnectionCloseAction {
+  readonly type: typeof WS_PERS_CONNECTION_CLOSE;
   readonly payload?: never; // Этот action не имеет payload
 }
 
@@ -113,4 +125,6 @@ export type TWSActions =
   | IWSPersConnectionClosedAction
   | IWSPersConnectionErrorAction
   | IWSGetMessageAction
-  | IWSPersGetMessageAction;
+  | IWSPersGetMessageAction
+  | IWSPersConnectionCloseAction
+  | IWSConnectionCloseAction

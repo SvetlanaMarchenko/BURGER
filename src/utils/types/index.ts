@@ -5,8 +5,9 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
-  WS_SEND_MESSAGE,
-  WS_PERS_CONNECTION_START
+  WS_PERS_CONNECTION_START,
+  WS_CONNECTION_CLOSE,
+  WS_PERS_CONNECTION_CLOSE
 } from '../../services/actions/ws-action-types';
 import type {TWSActions } from './actions';
 import store from '../../services/store';
@@ -21,7 +22,7 @@ export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootStat
 export type TWSStoreActions = {
 
   start: typeof WS_PERS_CONNECTION_START | typeof  WS_CONNECTION_START
-  stop: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_CLOSED
+  stop: typeof WS_PERS_CONNECTION_CLOSE | typeof WS_CONNECTION_CLOSE
   stopped: typeof WS_PERS_CONNECTION_CLOSED | typeof WS_CONNECTION_CLOSED
   connectedSuccessfully: typeof WS_PERS_CONNECTION_SUCCESS | typeof WS_CONNECTION_SUCCESS
   error: typeof WS_PERS_CONNECTION_ERROR | typeof WS_CONNECTION_ERROR

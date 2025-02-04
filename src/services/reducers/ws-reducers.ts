@@ -1,6 +1,7 @@
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   WS_CLEAR_ORDERS, 
@@ -45,6 +46,14 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
         error: undefined,
         wsConnected: false,
       };
+
+    
+    case WS_CONNECTION_CLOSE:
+        return {
+          ...state,
+          error: undefined,
+          wsConnected: false,
+        };
 
     case WS_GET_MESSAGE:
       const parsedMessage = action.payload;
