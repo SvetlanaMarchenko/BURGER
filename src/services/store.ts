@@ -1,14 +1,8 @@
 import { Action, configureStore, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import rootReducer from './root-reducer';
-import { socketMiddleware } from './middleware/socket-middleware-2';
-import { socketMiddlewarePersonal } from './middleware/socket-middleware-personal';
+import { socketMiddleware } from './middleware/socket-middleware';
 
 import type { TWSActions } from '../utils/types/actions';
-
-
-const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
-// const wsUrlPers = `wss://norma.nomoreparties.space/orders?token=${parsedAccessToken}`;
-// const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
 const wsAll = socketMiddleware(
   'wss://norma.nomoreparties.space/orders/all',

@@ -1,96 +1,67 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import type { AppActions, AppDispatch, RootState} from '../store';
-import { WS_CONNECTION_START, WS_SEND_MESSAGE } from '../actions/ws-action-types';
-type WebSocketPayload = string | Record<string, any>;
+import type { AppActions, AppDispatch, RootState } from '../store';
+import { refreshAccessToken } from '../../utils/api';
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsUrl: string, actions, addTokenToUrl: boolean): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        // let socket: WebSocket | null = null;
         let socket: WebSocket | null = null;
-        let feedUrl = wsUrl;
 
-        return next => (action: AppActions) => {
-            const { dispatch } = store;
-            const { type,payload } = action;
+        let feedUrl = wsUrl
+        if(addTokenToUrl) {
+            const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
+            feedUrl = `${wsUrl}token=${parsedAccessToken}`;
+        }
+        
+        const reconnectSocket = async () => {
+            const accessToken = await refreshAccessToken();
+            console.log('Access token refreshed');
+            socket?.close(); 
+            const parsedAccessToken = localStorage.getItem('accessToken')?.split(' ')[1] || '';
+            feedUrl = `${wsUrl}token=${parsedAccessToken}`
+            socket = new WebSocket(feedUrl);
+            attachSocketHandlers(socket); 
+        };
 
-            if (type === 'WS_CONNECTION_START') {
-                socket = new WebSocket(feedUrl);
-            }
-            
-            if (socket) {
-                socket.onopen = (event: Event) => {
-                    dispatch({
-                        type: 'WS_CONNECTION_SUCCESS',
-                        payload: {
-                            type: event.type,
-                            isTrusted: event.isTrusted,
-                        },
-                    });
-                };
+        const attachSocketHandlers = (socket: WebSocket) => {
+            socket.onopen = (event: Event) => {
+                store.dispatch({
+                    type: actions.connectedSuccessfully,
+                    payload: { type: event.type, isTrusted: event.isTrusted },
+                });
+            };
 
-                socket.onerror = event => {
-                    dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
-                };
+            socket.onerror = (event: Event) => {
+                store.dispatch({ type: actions.error, payload: event });
+            };
 
-                socket.onmessage = async event => {
-                    const { data } = event;
-                    const refreshToken = localStorage.getItem('refreshToken');
-                    const parsedRefreshToken = refreshToken ? refreshToken.split(' ')[1] : null;
-                
-                    try {
-                        const parsedData = JSON.parse(data);
-                        if (parsedData.message === 'Invalid or missing token') {
-                            localStorage.removeItem('accessToken');
-                            dispatch({ type: 'USER_LOGOUT' });
-                            console.error('Invalid or missing token');
-                            if (parsedRefreshToken) {
-                                try {
-                                    const response = await fetch('YOUR_REFRESH_TOKEN_API_URL', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({ token: parsedRefreshToken })
-                                    });
-                
-                                    const result = await response.json();
-                
-                                    if (result.accessToken) {
-                                        localStorage.setItem('accessToken', `${result.accessToken}`);
-                                        console.log('Access token refreshed');
-                                        socket?.close();
-                                        socket = new WebSocket(feedUrl);
-                                    } else {
-                                        console.error('Failed to refresh token');
-                                    }
-                                } catch (error) {
-                                    console.error('Error refreshing token:', error);
-                                }
-                            } else {
-                                console.error('No refresh token available');
-                            }
-                        } else {
-                            dispatch({ type: 'WS_GET_MESSAGE', payload: data });
-                        }
-                    } catch (error) {
-                        console.error('Error parsing message data:', error);
-                    }
-                };
-                socket.onclose = event => {
-                    dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
-                };
+            socket.onmessage = async (event: MessageEvent) => {
+                const { data } = event;
+                const parsedData = JSON.parse(data);
 
-                if ('payload' in action) {
-                    if (type === WS_SEND_MESSAGE) {
-                    const message: WebSocketPayload = payload; 
-                    socket.send(JSON.stringify(message));
-                    }
+                if (parsedData.message === 'Invalid or missing token') {
+                    await reconnectSocket();
                 } else {
-                    if (type === WS_CONNECTION_START) {
-                    socket = new WebSocket(feedUrl);
-                    }
+                    store.dispatch({ type: actions.messageRecieved, payload: parsedData });
                 }
+            };
+
+            socket.onclose = (event: CloseEvent) => {
+                store.dispatch({ type: actions.stopped });
+            };
+        };
+
+        return (next) => (action: AppActions) => {
+            const { type } = action;
+
+            if (type === actions.start && !socket) {
+                socket = new WebSocket(feedUrl);
+                attachSocketHandlers(socket);
             }
+
+            else if(type === actions.stop && socket) {
+                socket.close()
+            }
+
             next(action);
         };
     }) as Middleware;
