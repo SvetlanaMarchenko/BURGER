@@ -4,7 +4,6 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './services/store.js';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { WS_CONNECTION_START } from './services/actions/ws-action-types.js';
 
 const rootElement = document.getElementById('root')!;
 
