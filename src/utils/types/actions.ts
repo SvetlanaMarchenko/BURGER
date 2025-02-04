@@ -63,7 +63,11 @@ export interface IWSSendMessageAction {
 
 export interface IWSGetMessageAction {
   readonly type: typeof WS_GET_MESSAGE;
-  readonly payload: string; // Для этого действия ожидается строка
+  readonly payload: {
+    orders: RawOrder[];     // Массив заказов
+    total: number;       // Общая сумма
+    totalToday: number;  // Общая сумма за сегодня
+  };
 }
 
 export interface IWSPersGetMessageAction {
