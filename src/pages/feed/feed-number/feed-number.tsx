@@ -4,6 +4,8 @@ import { RawOrder } from '../../../utils/types/raw-orders';
 import { Order } from '../../../utils/types/orders'; 
 import { Ingredient } from '../../../utils/types/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -18,19 +20,22 @@ interface FeedNumberProps {
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.orders.orders;
+  const selectIngredients = (state: RootState) => state.ingredients.allIngredients;
+  const selectRawOrders = (state: RootState) => state.orders.orders;
 
-    const fullOrders = rawOrders?.map((order: RawOrder) => ({
-      ...order,
-      ingredients: order.ingredients
-        ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
-        .filter(Boolean) as Ingredient[],
-    }));
-
-    return fullOrders;
-  });
+  const orders = useSelector(
+    createSelector(
+      [selectRawOrders, selectIngredients],
+      (rawOrders, ingredientLib) => {
+        return rawOrders?.map((order: RawOrder) => ({
+          ...order,
+          ingredients: order.ingredients
+            ?.map(id => ingredientLib.find(ingredient => ingredient?._id === id))
+            .filter(Boolean) as Ingredient[],
+        })) || [];
+      }
+    )
+  );
 
   const { number } = useParams<{ number: string }>();
   const parsedNumber = number ? Number(number) : undefined;

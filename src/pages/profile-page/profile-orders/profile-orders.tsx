@@ -9,6 +9,7 @@ import { Ingredient } from '../../../utils/types/ingredients';
 import { AppDispatch, RootState } from '../../../services/store';
 import NavigationProfilePage from '../profile-page/navigation-profile-page';
 import { RawOrder } from '../../../utils/types/raw-orders';
+import { createSelector } from 'reselect';
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
@@ -16,38 +17,38 @@ export function ProfileOrders() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const orders = useSelector((state: RootState) => {
-    const ingredientLib = state.ingredients.allIngredients;
-    const rawOrders = state.wsPersonalReducer.orders || [];
-
-    const fullOrders = rawOrders.map((order: RawOrder) => {
-      const ingredients = order.ingredients
-        ?.map((id) => ingredientLib.find((ingredient) => ingredient?._id === id))
-        .filter(Boolean) as Ingredient[]
-
-      const orderPrice = ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
-      
-      const ingredientCountMap = ingredients.reduce((acc, ingredient) => {
-        const id = ingredient?._id;
-        if (id) {
-          acc[id] = (acc[id] || 0) + 1;
-        }
-        return acc;
-      }, {} as Record<string, number>);
-
-      return {
-        ...order,
-        ingredients,
-        fullOrderPrice: orderPrice,
-        ingredientCounter: ingredientCountMap,
-        ingredientsToShow: ingredients.slice(0, maxIngredientsInRow),
-        extraIngredients: Math.max(ingredients.length - maxIngredientsInRow, 0),
-      };
-    });
-
-    return fullOrders;
-
-  });
+  const orders = useSelector(createSelector(
+    [
+      (state: RootState) => state.wsPersonalReducer.orders || [], 
+      (state: RootState) => state.ingredients.allIngredients 
+    ],
+    (rawOrders, ingredientLib) => {
+      return rawOrders.map((order: RawOrder) => {
+        const ingredients = order.ingredients
+          ?.map((id) => ingredientLib.find((ingredient) => ingredient?._id === id))
+          .filter(Boolean) as Ingredient[];
+  
+        const orderPrice = ingredients.reduce((total, ingredient) => total + (ingredient?.price || 0), 0);
+  
+        const ingredientCountMap = ingredients.reduce((acc, ingredient) => {
+          const id = ingredient?._id;
+          if (id) {
+            acc[id] = (acc[id] || 0) + 1;
+          }
+          return acc;
+        }, {} as Record<string, number>);
+  
+        return {
+          ...order,
+          ingredients,
+          fullOrderPrice: orderPrice,
+          ingredientCounter: ingredientCountMap,
+          ingredientsToShow: ingredients.slice(0, maxIngredientsInRow),
+          extraIngredients: Math.max(ingredients.length - maxIngredientsInRow, 0),
+        };
+      });
+    }
+  ));
 
   useEffect(() => {
     dispatch({ type: WS_PERS_CONNECTION_START });
