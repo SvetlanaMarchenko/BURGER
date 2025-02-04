@@ -23,7 +23,7 @@ export const fetchIngredientsFailure = (error: string): { type: typeof FETCH_ING
 });
 
 export const fetchDataIngredients = () => {
-  return (dispatch: (arg0: { type: string; payload?: string | Ingredients; }) => void) => {
+  return (dispatch: AppDispatch) => {
     dispatch(fetchIngredientsRequest());
 
     requestFromApi('/ingredients')
@@ -31,6 +31,7 @@ export const fetchDataIngredients = () => {
       .catch(error => dispatch(fetchIngredientsFailure(error.toString())));
   };
 };
+
 
 export const fetchDataIngredientsAndSetCurrent = (ingredient_id: string) => {
   return async (dispatch: AppDispatch) => {

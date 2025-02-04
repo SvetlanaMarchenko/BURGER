@@ -6,7 +6,7 @@ import { Order } from '../../../utils/types/orders';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_PERS_CONNECTION_START } from '../../../services/actions/ws-personal-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
-import { RootState } from '../../../services/store';
+import { AppDispatch, RootState } from '../../../services/store';
 import NavigationProfilePage from '../profile-page/navigation-profile-page';
 import { RawOrder } from '../../../utils/types/raw-orders';
 
@@ -14,7 +14,7 @@ export function ProfileOrders() {
   const maxIngredientsInRow = 6;
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const orders = useSelector((state: RootState) => {
     const ingredientLib = state.ingredients.allIngredients;

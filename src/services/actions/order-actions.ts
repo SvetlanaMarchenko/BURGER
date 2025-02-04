@@ -5,6 +5,7 @@ import { Ingredients } from '../../utils/types/ingredients';
 
 
 import { fetchWithAuth } from '../../utils/api';
+import { AppDispatch } from '../store';
 
 
 export interface CreateOrderRequestProps {
@@ -27,7 +28,7 @@ export const createOrderSuccess = (orderId : number) => ({ type: CREATE_ORDER_SU
 export const createOrderFailure = (error: string): CreateOrderFailureProps => ({ type: CREATE_ORDER_FAILURE, payload: error });
 
 export const createOrder = (ingredients: Ingredients) => {
-  return async (dispatch: any) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(createOrderRequest());
 
     try {

@@ -7,8 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 const rootElement = document.getElementById('root')!;
 
-// store.dispatch({type: WS_CONNECTION_START });
-
 createRoot(rootElement).render(
   <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
     <Provider store={store}>
