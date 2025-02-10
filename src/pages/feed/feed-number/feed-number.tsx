@@ -3,27 +3,25 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { RawOrder } from '../../../utils/types/raw-orders'; 
 import { Order } from '../../../utils/types/orders'; 
 import { Ingredient } from '../../../utils/types/ingredients';
-import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { AppDispatch, RootState } from '../../../services/store';
+import { RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
 import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
+import { useAppDispatch, useAppSelector } from '../../../utils/types/hook';
 
 interface FeedNumberProps {
   orderNumber: string | undefined;
 }
 
 export const FeedNumber: React.FC<FeedNumberProps> = ({ orderNumber }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const selectIngredients = (state: RootState) => state.ingredients.allIngredients;
   const selectRawOrders = (state: RootState) => state.orders.orders;
 
-  const orders = useSelector(
+  const orders = useAppSelector(
     createSelector(
       [selectRawOrders, selectIngredients],
       (rawOrders, ingredientLib) => {

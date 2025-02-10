@@ -9,7 +9,7 @@ import ProfilePage from '../../pages/profile-page/profile-page/profile-page';
 import IngredientsIdPage from '../../pages/ingredients-id-page/ingredients-id-page';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
-import { useDispatch, useSelector } from 'react-redux';
+
 import Modal from '../modal/modal';
 import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import AppHeader from '../../components/app-header/app-header';
@@ -19,12 +19,13 @@ import { Feed } from '../../pages/feed/feed-page/feed';
 import FeedNumber from '../../pages/feed/feed-number/feed-number';
 import {ProfileOrders} from '../../pages/profile-page/profile-orders/profile-orders';
 import OrderNumber from '../../pages/profile-page/profile-orders-number/profile-orders-number';
+import { useAppDispatch, useAppSelector } from '../../utils/types/hook';
  
 function App() {
   const location = useLocation();
   let state = location.state
-  const allIngredients = useSelector((state: RootState) => state.ingredients.allIngredients);
-  const dispatch = useDispatch();
+  const allIngredients = useAppSelector((state: RootState) => state.ingredients.allIngredients);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const wantedIngredientId = useMatch("/ingredients/:ingredientId")?.params?.ingredientId;
   const wantedOrderNumber = useMatch("/feed/:number")?.params?.number;

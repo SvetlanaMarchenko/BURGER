@@ -12,11 +12,12 @@ import {
 import type {TWSActions } from './actions';
 import store from '../../services/store';
 import { WS_PERS_CONNECTION_CLOSED, WS_PERS_CONNECTION_ERROR, WS_PERS_CONNECTION_SUCCESS, WS_PERS_GET_MESSAGE } from '../../services/actions/ws-personal-action-types';
+import { Action } from 'redux';
 
 
 export type AppActions = TWSActions;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = ThunkDispatch<RootState, unknown, AppActions>;
+export type AppDispatch = ThunkDispatch<RootState, unknown, Action>;
 export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActions>;
 
 export type TWSStoreActions = {

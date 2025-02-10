@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styles from './order-details.module.css';
 import doneImage from './done.png';
-import { useSelector } from 'react-redux';
 import { SelectCurrentOrderDetails } from '../../services/selectors';
+import { useAppSelector } from '../../utils/types/hook';
 
 const OrderDetails: React.FC = () => {
-   const { orderId, isLoading, errorInOrder } = useSelector(SelectCurrentOrderDetails);
+   const { orderId, isLoading, errorInOrder } = useAppSelector(SelectCurrentOrderDetails);
 
    const orderDetailsLayout = () => {
       if (isLoading) {

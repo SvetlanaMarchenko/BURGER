@@ -1,9 +1,9 @@
 
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
-  const selectedData = useSelector(
+  // eslint-disable-next-line no-undef
+  const selectedData = useAppSelector(
     (a) => a.currentIngredient
   );
   if (!selectedData) {

@@ -7,9 +7,11 @@ export interface Ingredient {
   image: string;
   key: any;
   _id: string;
+  
 }
 
 export type Ingredients = Ingredient[];  
+export type wantedIngredient = Ingredient
 
 
 

@@ -3,13 +3,13 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, setBun, removeBun, removeIngredient, replaceIngredient } from '../../services/actions/constructor-actions';
 import { useDrop, useDrag } from 'react-dnd';
 import { createOrder } from '../../services/actions/order-actions'; 
 import { useNavigate } from 'react-router-dom'; 
 import { Ingredient} from '../../utils/types/ingredients';
-import { RootState, AppDispatch } from '../../services/store';
+import { RootState} from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../utils/types/hook';
 
 
 interface DraggableIngredientProps {
@@ -62,8 +62,8 @@ const DraggableIngredient: React.FC<DraggableIngredientProps> = ({ ingredient, i
 const BurgerConstructor: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate(); 
-  const { bun, ingredients } = useSelector((state: RootState) => state.burgerConstructor);
-  const dispatch: AppDispatch = useDispatch();
+  const { bun, ingredients } = useAppSelector((state: RootState) => state.burgerConstructor);
+  const dispatch=  useAppDispatch();
 
   const moveIngredient = (fromIndex: number, toIndex: number) => {
     if (fromIndex !== toIndex) {

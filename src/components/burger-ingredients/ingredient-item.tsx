@@ -1,9 +1,9 @@
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
 import { Ingredient } from '../../utils/types/ingredients';
 import { RootState } from '../../services/store';
+import { useAppSelector } from '../../utils/types/hook';
 
 export interface IngredientItemProps {
   item: Ingredient;
@@ -11,8 +11,8 @@ export interface IngredientItemProps {
 }
 
 const IngredientItem: React.FC<IngredientItemProps> = ({ item, onClick }) => {
-  const ingredientsInConstructor = useSelector((state: RootState) => state.burgerConstructor.ingredients);
-  const bunInConstructor = useSelector((state: RootState) => state.burgerConstructor.bun);
+  const ingredientsInConstructor = useAppSelector((state: RootState) => state.burgerConstructor.ingredients);
+  const bunInConstructor = useAppSelector((state: RootState) => state.burgerConstructor.bun);
 
   const ingredientInConstructorCount = item.type === 'bun'
     ? (bunInConstructor && bunInConstructor._id === item._id ? 1 : 0)

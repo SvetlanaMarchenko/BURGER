@@ -3,21 +3,21 @@ import styles from './profile-orders.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Order } from '../../../utils/types/orders';
-import { useDispatch, useSelector } from 'react-redux';
 import { WS_PERS_CONNECTION_START } from '../../../services/actions/ws-personal-action-types';
 import { Ingredient } from '../../../utils/types/ingredients';
-import { AppDispatch, RootState } from '../../../services/store';
+import { RootState } from '../../../services/store';
 import NavigationProfilePage from '../profile-page/navigation-profile-page';
 import { RawOrder } from '../../../utils/types/raw-orders';
 import { createSelector } from 'reselect';
+import { useAppDispatch, useAppSelector } from '../../../utils/types/hook';
 
 export function ProfileOrders() {
   const maxIngredientsInRow = 6;
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
-  const orders = useSelector(createSelector(
+  const orders = useAppSelector(createSelector(
     [
       (state: RootState) => state.wsPersonalReducer.orders || [], 
       (state: RootState) => state.ingredients.allIngredients 

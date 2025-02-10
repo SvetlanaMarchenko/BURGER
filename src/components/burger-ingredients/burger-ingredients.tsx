@@ -1,23 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchDataIngredients, fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
 import IngredientItem from './ingredient-item.jsx';
 import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import {useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router-dom';
 import { Ingredient } from '../../utils/types/ingredients';
-import { RootState, AppDispatch } from '../../services/store';
+import { RootState } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../utils/types/hook';
 
   const BurgerIngredients: React.FC = () => {
   const [current, setCurrent] = useState('Булки');
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch =  useAppDispatch ();
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams(); 
 
-  const { allIngredients = [], isLoading, error } = useSelector((state: RootState) => state.ingredients || {});
+  const { allIngredients = [], isLoading, error } = useAppSelector((state: RootState) => state.ingredients || {});
 
   const bunsRef = useRef<HTMLDivElement | null>(null);
   const saucesRef = useRef<HTMLDivElement | null>(null);

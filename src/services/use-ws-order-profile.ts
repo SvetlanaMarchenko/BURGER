@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../services/store';
+import { RootState } from '../services/store';
 import { fetchDataIngredients } from '../services/actions/ingredients-actions';
 import { Ingredient } from '../utils/types/ingredients';
 import { RawOrder } from '../utils/types/raw-orders';
 import { createSelector } from 'reselect';
+import { useAppDispatch, useAppSelector } from '../utils/types/hook';
 
 const useWebSocketOrders = (pathname: string) => {
-  const dispatch = useDispatch<AppDispatch>()
-  const wsConnected = useSelector((state: RootState) => state.wsReducer.wsConnected);
+  const dispatch = useAppDispatch()
+  const wsConnected = useAppSelector((state: RootState) => state.wsReducer.wsConnected);
   const maxIngredientsInRow = 6;
 
 
@@ -21,7 +21,7 @@ const useWebSocketOrders = (pathname: string) => {
   }, [dispatch]);
 
 
-  const orders = useSelector(createSelector(
+  const orders = useAppSelector(createSelector(
     [(state: RootState) => state.wsReducer.orders, (state: RootState) => state.ingredients.allIngredients],
     (rawOrders, ingredientLib) => {
       const fullOrders = rawOrders?.map((order: RawOrder) => ({
@@ -54,8 +54,8 @@ const useWebSocketOrders = (pathname: string) => {
     }
   ));
 
-  const total = useSelector((state: RootState) => state.wsReducer.total);
-  const totalToday = useSelector((state: RootState) => state.wsReducer.totalToday);
+  const total = useAppSelector((state: RootState) => state.wsReducer.total);
+  const totalToday = useAppSelector((state: RootState) => state.wsReducer.totalToday);
 
   return { wsConnected, orders, total, totalToday };
 };

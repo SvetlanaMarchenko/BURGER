@@ -18,6 +18,7 @@ import { WS_PERS_CLEAR_ORDERS,
         WS_PERS_CONNECTION_ERROR,
         WS_PERS_GET_MESSAGE
 } from '../../services/actions/ws-personal-action-types';
+import { Ingredient } from './ingredients';
 import { RawOrder } from './raw-orders';
 
 export interface IWSConnectionStart {
@@ -107,6 +108,7 @@ export interface IWSSendPersonalMessageAction {
   readonly type: typeof WS_PERS_SEND_MESSAGE;
   readonly payload: { message: string }; 
 }
+
 
 export type TWSActions =
   | IWSConnectionStart
