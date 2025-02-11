@@ -1,9 +1,8 @@
 import {requestFromApi} from '../../utils/api.js'
 import {setCurrentIngredient} from './current-ingredient-actions.js'
 import { Ingredients } from '../../utils/types/ingredients';
-import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
-import { RootState, AppDispatch } from '../store.js';
+import { AppDispatch } from '../store.js';
 
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
@@ -23,8 +22,8 @@ export const fetchIngredientsFailure = (error: string): { type: typeof FETCH_ING
   payload: error
 });
 
-export const fetchDataIngredients = (): ThunkAction<void, RootState, unknown, Action<string>> => {
-  return (dispatch) => {
+export const fetchDataIngredients = () => {
+  return (dispatch: AppDispatch) => {
     dispatch(fetchIngredientsRequest());
 
     requestFromApi('/ingredients')
@@ -32,6 +31,7 @@ export const fetchDataIngredients = (): ThunkAction<void, RootState, unknown, Ac
       .catch(error => dispatch(fetchIngredientsFailure(error.toString())));
   };
 };
+
 
 export const fetchDataIngredientsAndSetCurrent = (ingredient_id: string) => {
   return async (dispatch: AppDispatch) => {

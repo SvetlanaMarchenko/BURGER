@@ -18,9 +18,12 @@ const AppHeader = () => {
 
       <nav className={`${styles.navigationBarLeft} mb-4 mt-4`}>
         <ListIcon type="secondary" className={`${styles.icon} pl-5 pr-2`} />
-        <button className="text text_type_main-default text_color_inactive pr-5">
-          Лента Заказов
-        </button>
+        <NavLink
+          to="/feed" className={({ isActive }) => 
+            isActive ? `${styles.active1} text text_type_main-default` : "text text_type_main-default text_color_inactive pr-5"
+          }>
+            Лента Заказов
+        </NavLink>
       </nav>
 
       <div className={styles.logoContainer}>

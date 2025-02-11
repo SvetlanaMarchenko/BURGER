@@ -1,0 +1,156 @@
+
+
+.appLayout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  margin: 0 auto;
+  /* text-align: center; */
+  overflow: hidden;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.p{
+  margin-bottom: 0;
+}
+
+.ingredientsBox {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow-y: hidden;
+  justify-content: space-around;
+}
+
+.mainTitle{
+  display: flex;
+}
+
+.orderSection{
+  width: 584px;
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: scroll;
+  max-height: 730px;
+  overflow-x: hidden;
+}
+
+
+.orderNumber{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 536px;
+
+}
+
+
+.ordersList{
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+  align-items: flex-start;
+ }
+
+.subheading{
+  display: flex;
+  width: 580px;
+}
+
+.orderListBox{
+  width: 272px;
+  display: flex;
+}
+
+.orderListResultDone{
+  display: flex;
+  flex-direction: column;
+  color: #00CCCC;
+  width: 272px;
+  align-items: flex-start;
+}
+
+.orderListResultInProgress{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ordersColumn{
+  display: flex;
+  flex-direction: row;
+}
+
+.orderName{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+    margin: 0 0 0 24px;
+}
+
+.orderImage {
+  position: relative; /* Для наложения */
+  display: flex;
+  margin: -9px;
+  z-index: 2; /* Изначально все элементы на одном уровне */
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 1; 
+  object-fit: cover; 
+  background: black;
+}
+
+.blurImage{
+  position: relative;
+  background: black;
+  margin: -9px;
+  z-index: 2;
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 0.4;
+  object-fit: cover;
+}
+
+
+.orderImage.hidden {
+  opacity: 0; 
+}
+
+.orderImage:first-child {
+  left: 0; /* У первого элемента отступа нет */
+}
+
+.orderListAndCost{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 400px;
+}
+
+.extraIngredients{
+  position: relative; /* Для наложения */
+  margin: -40px;
+  z-index: 2; 
+}
+
+.orderListAndCostInGeneral{
+  display: flex;
+  flex-direction: row;
+  width: 536px;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.subsection{
+background-color: #1C1C21;
+width: 584px;
+border-radius: 40px;
+}

@@ -114,7 +114,7 @@ const fetchWithAuth = async (endpoint: string, options: RequestInit = {}): Promi
 };
 
 
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
   if (!refreshToken) {
@@ -122,7 +122,7 @@ const refreshAccessToken = async () => {
   }
 
   try {
-    const data = await requestFromApi(`${BASE_URL}/auth/token`, {
+    const data = await requestFromApi('/auth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -194,7 +194,6 @@ const logoutUser = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   
   if (!refreshToken) {
-    console.log('Нет токена для выхода');
     return;
   }
 

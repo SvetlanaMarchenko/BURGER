@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styles from './order-details.module.css';
 import doneImage from './done.png';
-import { useSelector } from 'react-redux';
 import { SelectCurrentOrderDetails } from '../../services/selectors';
+import { useAppSelector } from '../../utils/types/hook';
 
 const OrderDetails: React.FC = () => {
-   const { orderId, isLoading, errorInOrder } = useSelector(SelectCurrentOrderDetails);
+   const { orderId, isLoading, errorInOrder } = useAppSelector(SelectCurrentOrderDetails);
 
    const orderDetailsLayout = () => {
       if (isLoading) {
@@ -13,7 +13,7 @@ const OrderDetails: React.FC = () => {
       }
 
       if (errorInOrder) {
-         return <p className="text text_type_main-default">Что-то пошло не так. Сделайте заказ заново</p>;
+         return <p className="text text_type_main-default">Что-то пошло не так. Возможно, вы не зарегистрированы или нет ни одного ингредиента в Бургере</p>;
       }
 
       if (orderId) {

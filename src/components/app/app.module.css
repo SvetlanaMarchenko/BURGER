@@ -4,7 +4,7 @@
   max-width: 1340px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  /* text-align: center; */
   overflow: hidden;
   height: 100vh;
   box-sizing: border-box;

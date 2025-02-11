@@ -1,9 +1,8 @@
-import React, { useState, useEffect, FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
 import { PasswordInput, Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
-import { fetchUserData, logoutUser, updateUserData } from '../../utils/api';
+import { fetchUserData, updateUserData } from '../../../utils/api';
 import styles from './profile-page.module.css';
+import NavigationProfilePage from './navigation-profile-page';
 
 interface PropInitialUserDataProps {
   email: string;
@@ -18,7 +17,6 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [initialUserDataState, setInitialUserData] = useState<PropInitialUserDataProps>({ email: '', name: '' });
   const [isChanged, setIsChanged] = useState<boolean>(false); 
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (initialUserData) {
@@ -65,9 +63,7 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
 
     try {
       const updatedUserData = { email, name, password };
-
       const result = await updateUserData(updatedUserData);
-
       setSuccessMessage('Данные успешно обновлены');
       setInitialUserData(result.user);
       setError('');
@@ -85,37 +81,10 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
     setIsChanged(false);
   };
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      navigate('/login');
-    } catch (error) {
-      alert('Ошибка при выходе. Попробуйте позже.');
-    }
-  };
-
   return (
-    <div className={styles.loginLayoutProfile}>
-      <div>
-        <div className={styles.container}>
-          <div className={styles.profileForm}>
-            <nav className={styles.profileChoice}>
-              <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
-                Профиль
-              </NavLink>
-
-              <NavLink to="/" className={({ isActive }) => isActive ? `${styles.chioceOption} text text_type_main-medium` : `${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive`}>
-                История заказов
-              </NavLink>
-
-              <h1 className={`${styles.chioceOptionInactive} text text_type_main-medium text_color_inactive mb-20`} onClick={handleLogout}>
-                Выход
-              </h1>
-              <p className={`${styles.chioceOptionInactiveInfo} text text_type_main-small text_color_inactive`}>
-                В этом разделе вы можете изменить свои персональные данные
-              </p>
-            </nav>
-
+    <div className={styles.container}>
+      <div className={styles.profileForm}>
+          <NavigationProfilePage />
             <form className={styles.form} onSubmit={handleSubmit}>
               <Input
                 type="text"
@@ -159,10 +128,8 @@ const ProfilePage: React.FC<{ initialUserData?: PropInitialUserDataProps }> = ({
                 </div>
               )}
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+            </div>
   );
 };
 

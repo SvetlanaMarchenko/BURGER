@@ -44,16 +44,16 @@
  .ingredientsList {
   display: flex; 
   justify-content: space-between;
-  overflow-y: auto;          
-  flex-wrap: wrap;           
   gap: 24px;   
   box-sizing: border-box; 
+  overflow-y: scroll;
+  max-height: 300px;
+  overflow-x: hidden;
 }
 
  .ingredientsItem {
   display: flex;   
   flex-direction: column;     
-  /* height: 208px; */
   width: 272px;
   position: relative;
 }
@@ -72,11 +72,15 @@
 
 .backgroundImgColor {
   background-color: transparent;
-  padding: 4px; /* Опционально, чтобы выделить картинку */
-  border-radius: 8px; /* При желании, чтобы сгладить углы */
+  padding: 4px;
+  border-radius: 8px;
 }
 
-
+.scrollContainer{
+  overflow-y: scroll;
+  max-height: 730px;
+  overflow-x: hidden;
+}
 
 
 

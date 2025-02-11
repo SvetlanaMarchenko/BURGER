@@ -1,0 +1,154 @@
+
+
+.appLayout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.p{
+  margin-bottom: 0;
+}
+
+.ingredientsBox {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow-y: hidden;
+}
+
+.orderSection{
+  background-color: #1C1C21;
+  width: 830px;
+  padding: 24px 24px 24px 24px;
+  border-radius: 40px;
+
+}
+
+
+.orderNumber{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.profileOrder{
+  display: flex;
+}
+
+.orderDetailsMain{
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  position: relative;
+}
+
+.moduleOrderLayout{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderName{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.statusOrder{
+  color: #00CCCC;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.orderIngredient{
+  display: flex;
+  justify-content: flex-start;
+  width: 608px;
+
+}
+
+.orderIngredientName{
+  width: 414px;
+}
+
+.orderResult{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 830px;
+  align-items: center;
+}
+
+.orderTime{
+  width: 556px;
+}
+
+
+.orderIngredientOptions{
+  max-height: 376px;
+}
+
+.orderName{
+  width: 830px;;
+}
+
+.orderImage{
+  position: relative;
+  display: flex;
+  margin: -9px;
+  z-index: 2;
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 1; 
+  object-fit: cover; 
+  background: black;
+}
+
+.blurImage{
+  position: relative;
+  background: black;
+  margin: -9px;
+  z-index: 2;
+  border-radius: 50%;
+  height: 71px;
+  width: 77px;
+  border: 2px solid #4C4CFF;
+  opacity: 0.4;
+  object-fit: cover;
+}
+
+.orderListAndCost{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 696px;
+}
+
+.extraIngredients{
+  display: flex;
+  justify-content: center;
+  margin: -10px;
+  z-index: 2; 
+}
+
+.ingredientsSection{
+  overflow-y: scroll;
+  max-height: 730px;
+  overflow-x: hidden;
+}
+
+.priceOrder{
+  display: flex;
+
+
+}
+
+
