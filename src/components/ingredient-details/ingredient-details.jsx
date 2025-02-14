@@ -1,4 +1,5 @@
 
+import { useAppSelector } from '../../utils/types/hook';
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = () => {
