@@ -1,15 +1,13 @@
-import { SET_CURRENT_INGREDIENT } from '../actions/current-ingredient-actions';
+import { CLEAR_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../actions/current-ingredient-actions';
 
 describe('currentIngredientsReducer', () => {
   
-  // Test 1: Initial state
-  it('should return the initial state (null)', async () => {
+  it('should return the initial state', async () => {
     const { default: currentIngredientsReducer } = await import('./current-ingredient-reducer');
     
     expect(currentIngredientsReducer(undefined, { type: '' })).toBeNull();
   });
 
-  // Test 2: SET_CURRENT_INGREDIENT case
   it('should handle SET_CURRENT_INGREDIENT case', async () => {
     const { default: currentIngredientsReducer } = await import('./current-ingredient-reducer');
     
@@ -36,5 +34,15 @@ describe('currentIngredientsReducer', () => {
     };
 
     expect(currentIngredientsReducer(null, action)).toEqual(mockIngredient);
+  });
+
+  it('should handle CLEAR_CURRENT_INGREDIENT case', async () => {
+    const { default: currentIngredientsReducer } = await import('./current-ingredient-reducer');
+
+    const action = {
+        type: CLEAR_CURRENT_INGREDIENT,
+      };
+    
+    expect(currentIngredientsReducer(undefined, action)).toBeNull();
   });
 });
