@@ -14,7 +14,6 @@
     "test:debug": "jest --inspect-brk --runInBand --no-cache"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/runtime": "^7.25.6",
     "@reduxjs/toolkit": "^2.5.0",
@@ -36,6 +35,9 @@
     "typescript": "^5.7.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.15.0",
     "@eslint/js": "^9.9.0",
     "@testing-library/react": "^16.2.0",
     "@types/express": "^5.0.0",
@@ -44,6 +46,7 @@
     "@types/react": "^18.3.14",
     "@types/react-dom": "^18.3.2",
     "@vitejs/plugin-react": "^4.3.1",
+    "babel-jest": "^29.7.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
