@@ -1,6 +1,11 @@
-describe('todos reducer', () => {
-    it('halo test', () => {
-        expect((1+2)).toEqual(3)
+describe('currentIngredientsReducer', () => {
+    it('should return the initial state', async () => {
+      const { default: currentIngredientsReducer } = await import('./current-ingredient-reducer');
+      
+      // Test the initial state, which should be `null`
+      expect(currentIngredientsReducer(undefined, {
+          type: ''
+      })).toBeNull();
     });
-    
-});
+  });
+  
