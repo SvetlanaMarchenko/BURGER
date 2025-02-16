@@ -5,14 +5,12 @@ interface RawOrdersState {
   orders: RawOrders | [];
   loading: boolean;
   error: string | null;
-  // currentOrder: Orders | null;
 }
 
 const initialState: RawOrdersState = {
   orders: [],
   loading: false,
   error: null,
-  // currentOrder: null,
 };
 
 export const ordersReducer = (state = initialState, action: AppActions): RawOrdersState => {
@@ -38,12 +36,6 @@ export const ordersReducer = (state = initialState, action: AppActions): RawOrde
         loading: false,
         error: action.payload, 
       };
-
-    // case 'SET_CURRENT_ORDER': 
-    //   return {
-    //     ...state,
-    //     currentOrder: action.payload,
-    //   };
 
     default:
       return state;
