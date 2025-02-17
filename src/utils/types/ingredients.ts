@@ -7,6 +7,11 @@ export interface Ingredient {
   image: string;
   key: any;
   _id: string;
+  fat: number,
+  carbohydrates: number,
+  calories: number,
+  image_mobile: string,
+  image_large: string
   
 }
 

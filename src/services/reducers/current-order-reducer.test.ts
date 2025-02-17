@@ -1,5 +1,5 @@
 import { FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actions/current-order-actions';
-import { ordersReducer } from './current-order-reducer'; // Import the reducer directly
+import { ordersReducer } from './current-order-reducer';
 
 describe('ordersReducer', () => {
   const initialState = {
@@ -9,7 +9,6 @@ describe('ordersReducer', () => {
   };
 
   it('should return the initial state when passed an undefined state and an unknown action', () => {
-    // Testing with undefined state and an unrecognized action type
     expect(ordersReducer(undefined, { type: '' })).toEqual(initialState);
   });
 
@@ -76,25 +75,4 @@ describe('ordersReducer', () => {
 
 });
 
-
-
-
-
-
-//   it('should handle FETCH_ORDERS_FAILURE action', () => {
-//     const errorMessage = 'Error fetching orders';
-
-//     const action = {
-//       type: FETCH_ORDERS_FAILURE,
-//       payload: errorMessage,
-//     };
-
-//     const expectedState = {
-//       ...initialState,
-//       loading: false,
-//       error: errorMessage,
-//     };
-
-//     expect(ordersReducer(initialState, action)).toEqual(expectedState);
-//   });
 

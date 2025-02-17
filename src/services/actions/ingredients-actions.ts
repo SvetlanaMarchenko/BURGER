@@ -1,8 +1,9 @@
-import {requestFromApi} from '../../utils/api.js'
-import {setCurrentIngredient} from './current-ingredient-actions.js'
+
 import { Ingredients } from '../../utils/types/ingredients';
 import { Action } from 'redux';
 import { AppDispatch } from '../store.js';
+// import {requestFromApi} from '../../utils/api.js'
+// import {setCurrentIngredient} from './current-ingredient-actions.js'
 
 export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
 export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
