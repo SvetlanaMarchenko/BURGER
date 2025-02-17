@@ -4,7 +4,7 @@ jest.mock('../../utils/api', () => ({
 }));
 
 import { Ingredient } from '../../utils/types/ingredients';
-import { FETCH_INGREDIENTS_REQUEST, FETCH_INGREDIENTS_SUCCESS } from '../actions/ingredients-actions';
+import { FETCH_INGREDIENTS_FAILURE, FETCH_INGREDIENTS_REQUEST, FETCH_INGREDIENTS_SUCCESS } from '../actions/ingredients-actions';
 import ingredientsReducer from './ingredients-reducer';
 
 describe('IngredientsReducer', () => {
@@ -13,21 +13,19 @@ describe('IngredientsReducer', () => {
     error: null,
     isLoading: true,
   };
-
   it('should return the initial state', () => {
     expect(ingredientsReducer(undefined, { type: '' })).toEqual(initialState);
   });
 
   it('should handle FETCH_INGREDIENTS_REQUEST case', () => {
-
     const action = {
       type: FETCH_INGREDIENTS_REQUEST,
     };
 
-
     expect(ingredientsReducer(initialState, action)).toEqual({
       ...initialState,
-      isLoading: true, error: null
+      isLoading: true, 
+      error: null,
     });
   });
 
@@ -48,39 +46,33 @@ describe('IngredientsReducer', () => {
         image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png"
       },
     ];
-  
+
     const action = {
       type: FETCH_INGREDIENTS_SUCCESS,
       payload: mockIngredients,
     };
-  
+
     expect(ingredientsReducer(initialState, action)).toEqual({
       ...initialState,
       isLoading: false,
       allIngredients: mockIngredients,
     });
   });
-  
-  
 
+  it('should handle FETCH_INGREDIENTS_FAILURE case', () => {
+    const errorMessage = 'Oooooops errroooorrr';
+
+    const action = {
+      type: FETCH_INGREDIENTS_FAILURE,
+      payload: errorMessage,
+    };
+
+    const expectedState = {
+      ...initialState,
+      isLoading: false,
+      error: errorMessage, 
+    };
+
+    expect(ingredientsReducer(initialState, action)).toEqual(expectedState);
+  });
 });
-
-
-
-
-
-//   case FETCH_INGREDIENTS_REQUEST:
-//     return { ...state, isLoading: true, error: null };
-
-  // it('should handle CLEAR_CURRENT_INGREDIENT case', () => {
-  //   const action = {
-  //     type: CLEAR_CURRENT_INGREDIENT,
-  //   };
-
-  //   // Testing the reducer when the action type is CLEAR_CURRENT_INGREDIENT
-  //   expect(ingredientsReducer(initialState, action)).toEqual({
-  //     ...initialState,
-  //     allIngredients: [], // It should clear the ingredients
-  //   });
-  // });
-
