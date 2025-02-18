@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
+import { ADD_INGREDIENT, REMOVE_BUN, REMOVE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
 import constructorReducer from "./сonstructor-reducer";
 
 describe('constructorReducer', () => {
@@ -68,19 +68,23 @@ describe('constructorReducer', () => {
     expect(constructorReducer(initialState, action)).toEqual(expectedState);
   });
 
-// it('should handle WS_CONNECTION_CLOSE case', () => {
-
-//     const action = {
-//         type: WS_CONNECTION_CLOSE,
-        
-//         };
-//     const expectedState = {
-//         ...initialState,
-//         error: undefined,
-//         wsConnected: false,
-//     }
-//     expect(wsReducer(initialState, action)).toEqual(expectedState);
-//     });
+  it('should handle REMOVE_BUN case', () => {
+    const state = {
+      bun: bun1,
+      ingredients: []
+    };
+  
+    const action = {
+      type: REMOVE_BUN,
+    };
+  
+    const expectedState = {
+      bun: null,
+      ingredients: [] 
+    };
+  
+    expect(constructorReducer(state, action)).toEqual(expectedState);
+  });
 
 //     it('should handle WS_GET_MESSAGE', () => {
 //         const action = {
