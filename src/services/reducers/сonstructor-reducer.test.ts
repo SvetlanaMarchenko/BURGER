@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, REMOVE_BUN, REMOVE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
+import { ADD_INGREDIENT, CLEAR_CONSTRUCTOR, REMOVE_BUN, REMOVE_INGREDIENT, REPLACE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
 import constructorReducer from "./сonstructor-reducer";
 
 describe('constructorReducer', () => {
@@ -7,11 +7,10 @@ describe('constructorReducer', () => {
     ingredients: []
   };
 
-  const ingredient1 = { id: 1, name: 'Cucumber' };
-  const ingredient2 = { id: 2, name: 'Tomato' };
-  const ingredient3 = { id: 3, name: 'meat' }
+  const ingredient_1 = { id: 1, name: 'Cucumber' };
+  const ingredient_2 = { id: 2, name: 'Tomato' };
+  const ingredient_3 = { id: 3, name: 'meat' }
   const bun1 = { id: 4, name: 'bulka' }
-  const bun2 = { id: 5, name: 'hlebushek' }
 
 
   it('should return the initial state', () => {
@@ -23,12 +22,12 @@ describe('constructorReducer', () => {
 
     const action = {
       type: ADD_INGREDIENT,
-      payload: ingredient1
+      payload: ingredient_1
     }
     
     const expectedState = {
         bun: null,
-        ingredients: [ingredient1]
+        ingredients: [ingredient_1]
     };
     expect(constructorReducer(initialState, action)).toEqual(expectedState);
   });
@@ -37,7 +36,7 @@ describe('constructorReducer', () => {
   it('should handle REMOVE_INGREDIENT case', () => {
     const state = {
       bun: null,
-      ingredients: [ingredient1, ingredient2]
+      ingredients: [ingredient_1, ingredient_2]
     };
   
     const action = {
@@ -47,7 +46,7 @@ describe('constructorReducer', () => {
   
     const expectedState = {
       bun: null,
-      ingredients: [ingredient2] 
+      ingredients: [ingredient_2] 
     };
   
     expect(constructorReducer(state, action)).toEqual(expectedState);
@@ -86,35 +85,41 @@ describe('constructorReducer', () => {
     expect(constructorReducer(state, action)).toEqual(expectedState);
   });
 
-//     it('should handle WS_GET_MESSAGE', () => {
-//         const action = {
-//           type: WS_GET_MESSAGE,
-//           payload: {
-//             orders: [{ id: 1, name: 'Order 1' }, { id: 2, name: 'Order 2' }],
-//             total: 100,
-//             totalToday: 50,
-//           },
-//         };
-//         const expectedState = {
-//           ...initialState,
-//           orders: action.payload.orders,
-//           total: action.payload.total,
-//           totalToday: action.payload.totalToday,
-//           error: undefined
-//         };
-//         expect(wsReducer(initialState, action)).toEqual(expectedState);
-//       });
+  it('should handle CLEAR_CONSTRUCTOR', () => {
+    const action = {
+      type: CLEAR_CONSTRUCTOR,
+    };
+    const expectedState = {
+      ...initialState,
+    };
+    expect(constructorReducer(initialState, action)).toEqual(expectedState);
+  });
 
-//       it('should handle WS_CLEAR_ORDERS', () => {
-//         const action = {
-//           type: WS_CLEAR_ORDERS,
-//         };
-//         const expectedState = {
-//           ...initialState,
-//           wsConnected: false
-//         };
-//         expect(wsReducer(initialState, action)).toEqual(expectedState);
-//       });
+  it('should handle REPLACE_INGREDIENT when moving forward by one spot', () => {
+    const state = {
+      bun: null,
+      ingredients: [ingredient_1, ingredient_2, ingredient_3]
+    };
+  
+    const action = {
+      type: REPLACE_INGREDIENT,
+      fromIndex: 0,  
+      toIndex: 1    
+    };
+  
+    const expectedState = {
+      bun: null,
+      ingredients: [ingredient_2, ingredient_1, ingredient_3] 
+    };
+  
+    expect(constructorReducer(state, action)).toEqual(expectedState);
+  });
+  
+  
 });
+
+
+
+
 
 
