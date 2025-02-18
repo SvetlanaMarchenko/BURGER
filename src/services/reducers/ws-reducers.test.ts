@@ -1,5 +1,6 @@
-import { WS_PERS_CLEAR_ORDERS, WS_PERS_CONNECTION_CLOSE, WS_PERS_CONNECTION_CLOSED, WS_PERS_CONNECTION_ERROR, WS_PERS_CONNECTION_SUCCESS, WS_PERS_GET_MESSAGE } from '../actions/ws-personal-action-types';
-import { wsPersonalReducer } from './ws-personal-reducers';
+
+import { WS_CLEAR_ORDERS, WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from '../actions/ws-action-types';
+import { wsReducer } from './ws-reducers';
 
 describe('wsPersonalReducer', () => {
   const initialState = {
@@ -10,12 +11,12 @@ describe('wsPersonalReducer', () => {
   };
 
   it('should return the initial state', () => {
-    expect(wsPersonalReducer(undefined, { type: '' })).toEqual(initialState);
+    expect(wsReducer(undefined, { type: '' })).toEqual(initialState);
   });
 
-  it('should handle WS_PERS_CONNECTION_SUCCESS case', () => {
+  it('should handle WS_CONNECTION_SUCCESS case', () => {
     const action = {
-      type: WS_PERS_CONNECTION_SUCCESS,
+      type: WS_CONNECTION_SUCCESS,
     };
     
     const expectedState = {
@@ -23,14 +24,14 @@ describe('wsPersonalReducer', () => {
       error: undefined, 
         wsConnected: true,
     };
-    expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+    expect(wsReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle WS_PERS_CONNECTION_ERROR case', () => {
+  it('should handle WS_CONNECTION_ERROR case', () => {
     const error = new Event('error');
 
     const action = {
-        type: WS_PERS_CONNECTION_ERROR,
+        type: WS_CONNECTION_ERROR,
         payload: error,
         
       };
@@ -39,13 +40,13 @@ describe('wsPersonalReducer', () => {
         error: error, 
         wsConnected: false,
     }
-    expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+    expect(wsReducer(initialState, action)).toEqual(expectedState);
     });
 
-it('should handle WS_PERS_CONNECTION_CLOSED case', () => {
+it('should handle WS_CONNECTION_CLOSED case', () => {
 
     const action = {
-        type: WS_PERS_CONNECTION_CLOSED,
+        type: WS_CONNECTION_CLOSED,
         
         };
     const expectedState = {
@@ -53,13 +54,13 @@ it('should handle WS_PERS_CONNECTION_CLOSED case', () => {
         error: undefined,
         wsConnected: false,
     }
-    expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+    expect(wsReducer(initialState, action)).toEqual(expectedState);
     });
 
-it('should handle WS_PERS_CONNECTION_CLOSE case', () => {
+it('should handle WS_CONNECTION_CLOSE case', () => {
 
     const action = {
-        type: WS_PERS_CONNECTION_CLOSE,
+        type: WS_CONNECTION_CLOSE,
         
         };
     const expectedState = {
@@ -67,12 +68,12 @@ it('should handle WS_PERS_CONNECTION_CLOSE case', () => {
         error: undefined,
         wsConnected: false,
     }
-    expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+    expect(wsReducer(initialState, action)).toEqual(expectedState);
     });
 
-    it('should handle WS_PERS_GET_MESSAGE', () => {
+    it('should handle WS_GET_MESSAGE', () => {
         const action = {
-          type: WS_PERS_GET_MESSAGE,
+          type: WS_GET_MESSAGE,
           payload: {
             orders: [{ id: 1, name: 'Order 1' }, { id: 2, name: 'Order 2' }],
             total: 100,
@@ -86,18 +87,18 @@ it('should handle WS_PERS_CONNECTION_CLOSE case', () => {
           totalToday: action.payload.totalToday,
           error: undefined
         };
-        expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+        expect(wsReducer(initialState, action)).toEqual(expectedState);
       });
 
-      it('should handle WS_PERS_CLEAR_ORDERS', () => {
+      it('should handle WS_CLEAR_ORDERS', () => {
         const action = {
-          type: WS_PERS_CLEAR_ORDERS,
+          type: WS_CLEAR_ORDERS,
         };
         const expectedState = {
           ...initialState,
           wsConnected: false
         };
-        expect(wsPersonalReducer(initialState, action)).toEqual(expectedState);
+        expect(wsReducer(initialState, action)).toEqual(expectedState);
       });
 });
 
