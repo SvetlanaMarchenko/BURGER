@@ -11,7 +11,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage .",
-    "test:debug": "jest --inspect-brk --runInBand --no-cache"
+    "test:debug": "jest --inspect-brk --runInBand --no-cache",
+    "cypress:open": "./node_modules/.bin/cypress open"
   },
   "dependencies": {
     "@babel/preset-react": "^7.25.9",
@@ -21,6 +22,7 @@
     "axios": "^1.7.7",
     "babel-loader": "^9.2.1",
     "core-js": "^3.38.1",
+    "cypress": "^14.0.3",
     "jest-environment-jsdom": "^29.7.0",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
@@ -48,6 +50,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "babel-jest": "^29.7.0",
     "eslint": "^9.9.0",
+    "eslint-plugin-cypress": "^4.1.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
