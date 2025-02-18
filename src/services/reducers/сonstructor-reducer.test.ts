@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT } from "../actions/constructor-actions";
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
 import constructorReducer from "./сonstructor-reducer";
 
 describe('constructorReducer', () => {
@@ -10,6 +10,9 @@ describe('constructorReducer', () => {
   const ingredient1 = { id: 1, name: 'Cucumber' };
   const ingredient2 = { id: 2, name: 'Tomato' };
   const ingredient3 = { id: 3, name: 'meat' }
+  const bun1 = { id: 4, name: 'bulka' }
+  const bun2 = { id: 5, name: 'hlebushek' }
+
 
   it('should return the initial state', () => {
     expect(constructorReducer(undefined, { type: '' })).toEqual(initialState);
@@ -31,35 +34,39 @@ describe('constructorReducer', () => {
   });
 
 
-//   it('should handle WS_CONNECTION_ERROR case', () => {
-//     const error = new Event('error');
+  it('should handle REMOVE_INGREDIENT case', () => {
+    const state = {
+      bun: null,
+      ingredients: [ingredient1, ingredient2]
+    };
+  
+    const action = {
+      type: REMOVE_INGREDIENT,
+      payload: 0
+    };
+  
+    const expectedState = {
+      bun: null,
+      ingredients: [ingredient2] 
+    };
+  
+    expect(constructorReducer(state, action)).toEqual(expectedState);
+  });
+  
+  it('should handle SET_BUN case', () => {
 
-//     const action = {
-//         type: WS_CONNECTION_ERROR,
-//         payload: error,
-        
-//       };
-//     const expectedState = {
-//         ...initialState,
-//         error: error, 
-//         wsConnected: false,
-//     }
-//     expect(wsReducer(initialState, action)).toEqual(expectedState);
-//     });
 
-// it('should handle WS_CONNECTION_CLOSED case', () => {
-
-//     const action = {
-//         type: WS_CONNECTION_CLOSED,
-        
-//         };
-//     const expectedState = {
-//         ...initialState,
-//         error: undefined,
-//         wsConnected: false,
-//     }
-//     expect(wsReducer(initialState, action)).toEqual(expectedState);
-//     });
+    const action = {
+      type: SET_BUN,
+      payload: bun1
+    }
+    
+    const expectedState = {
+        bun: bun1,
+        ingredients: []
+    };
+    expect(constructorReducer(initialState, action)).toEqual(expectedState);
+  });
 
 // it('should handle WS_CONNECTION_CLOSE case', () => {
 
