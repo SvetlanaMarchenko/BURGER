@@ -44,7 +44,7 @@ const DraggableIngredient: React.FC<DraggableIngredientProps> = ({ ingredient, i
   return (
     <div
       ref={(node) => drag(drop(node))}
-      className={`${styles.constructorElementBlock} ${isDragging ? styles.dragging : ''}`}
+      className={`${styles.constructorElementBlock} ${isDragging ? styles.dragging : ''}`} 
     >
       <div className={styles.dragIconWrapper}>
         <DragIcon type="primary"  />
@@ -112,8 +112,8 @@ const BurgerConstructor: React.FC = () => {
   };
 
   return (
-    <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`}>
-      <div className={`${styles.constructorElementBlock} ml-8`}>
+    <div ref={dropTarget} className={`${styles.ingredientConstructor} mt-25 ml-10 mr-4`} data-cy="constructorDropTarget">
+      <div className={`${styles.constructorElementBlock} ml-8`} data-cy="constructor" >
         {bun ? (
           <ConstructorElement
             key="top-bun"
@@ -137,7 +137,7 @@ const BurgerConstructor: React.FC = () => {
         )}
       </div>
 
-      <div className={styles.innerIngredients}>
+      <div className={styles.innerIngredients} >
         {ingredients.length > 0 ? (
           ingredients.map((ingredient, index) => (
             <DraggableIngredient
@@ -184,6 +184,7 @@ const BurgerConstructor: React.FC = () => {
           type="primary"
           size="medium"
           onClick={handleCreateOrder} 
+          data-cy="orderCreation"
         >
           Оформить заказ
         </Button>

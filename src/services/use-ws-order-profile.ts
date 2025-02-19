@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { RootState } from '../services/store';
-import { fetchDataIngredients } from '../services/actions/ingredients-actions';
 import { Ingredient } from '../utils/types/ingredients';
 import { RawOrder } from '../utils/types/raw-orders';
 import { createSelector } from 'reselect';
 import { useAppDispatch, useAppSelector } from '../utils/types/hook';
+import { fetchDataIngredients } from './actions/data-ingredients';
 
 const useWebSocketOrders = (pathname: string) => {
   const dispatch = useAppDispatch()

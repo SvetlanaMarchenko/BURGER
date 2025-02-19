@@ -37,6 +37,7 @@ const IngredientItem: React.FC<IngredientItemProps> = ({ item, onClick }) => {
           key={item._id}
           className={`${styles.ingredientsItem} text text_type_main-small ml-4`}
           onClick={handleClick}
+          data-cy="ingredient-details"
         >
           {ingredientInConstructorCount > 0 && (
             <Counter

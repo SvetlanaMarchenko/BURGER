@@ -51,12 +51,14 @@ export function LoginPage() {
               name={'email'}
               isIcon={false}
               extraClass="mb-6"
+              data-cy="E-mail"
             />
             <PasswordInput
               onChange={handlePasswordChange}
               value={password}
               name="password"
               extraClass="mb-6"
+              data-cy="password"
             />
             {error && <p className="text text_type_main-default text_color_inactive">{error}</p>}
             <Button
@@ -65,6 +67,7 @@ export function LoginPage() {
               size="medium"
               extraClass="mb-20"
               disabled={isSubmitting}
+              data-cy="enter"
             >
               Войти
             </Button>

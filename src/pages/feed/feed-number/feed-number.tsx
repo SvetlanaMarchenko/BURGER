@@ -8,8 +8,8 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../../services/store';
 import { fetchDataOrdersAndSetCurrent } from '../../../services/actions/current-order-actions';
-import { fetchDataIngredients } from '../../../services/actions/ingredients-actions';
 import { useAppDispatch, useAppSelector } from '../../../utils/types/hook';
+import { fetchDataIngredients } from '../../../services/actions/data-ingredients';
 
 interface FeedNumberProps {
   orderNumber: string | undefined;

@@ -20,7 +20,7 @@ const OrderDetails: React.FC = () => {
          return (
             <div className={styles.orderDetailsFrame}>
                <p className={`${styles.countResult} mt-30 text text_type_digits-large`}>{orderId}</p>
-               <p className={`${styles.orderDetailsID} mt-8 mb-15 text text_type_main-medium`}>Идентификатор заказа</p>
+               <p className={`${styles.orderDetailsID} mt-8 mb-15 text text_type_main-medium`} data-cy="order-number">Идентификатор заказа</p>
                <img src={doneImage} alt="OK" className={`${styles.modalImage}`} />
                <p className={`${styles.orderDetailsStatus} mb-2 mt-15 text text_type_main-default`}>Ваш заказ начали готовить</p>
                <p className={`${styles.orderDetailsWaiting} mb-30 text text_type_main-default`}>Дождитесь готовности на орбитальной станции</p>

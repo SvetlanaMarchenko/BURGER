@@ -33,7 +33,7 @@ const IngredientDetails = () => {
         </div>
 
         <div className={`${styles.orderNutrition} mb-15 text text_type_main-default text_color_inactive`}>
-          <div className={styles.nutritionFact}>
+          <div className={styles.nutritionFact} data-cy="nutrition-fact">
             <p>Калории, ккал</p>
             <p className="text text_type_digits-default">{selectedData.calories}</p>
           </div>

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
 import style from './ingredients-id-page.module.css';
 import { useAppDispatch } from '../../utils/types/hook';
+import { fetchDataIngredientsAndSetCurrent } from '../../services/actions/data-ingredients';
 
 
 const IngredientsIdPage = () => {

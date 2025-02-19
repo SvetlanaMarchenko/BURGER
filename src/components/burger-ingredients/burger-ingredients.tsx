@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchDataIngredients, fetchDataIngredientsAndSetCurrent } from '../../services/actions/ingredients-actions';
+
 import IngredientItem from './ingredient-item.jsx';
 import { setCurrentIngredient } from '../../services/actions/current-ingredient-actions';
 import {useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Ingredient } from '../../utils/types/ingredients';
 import { RootState } from '../../services/store';
 import { useAppDispatch, useAppSelector } from '../../utils/types/hook';
+import { fetchDataIngredients, fetchDataIngredientsAndSetCurrent } from '../../services/actions/data-ingredients';
 
   const BurgerIngredients: React.FC = () => {
   const [current, setCurrent] = useState('Булки');
@@ -84,11 +85,12 @@ import { useAppDispatch, useAppSelector } from '../../utils/types/hook';
             className={`${styles.ingredientsSection} mt-10`}
           >
             <h2 className={`${styles.mainTitle}`}>{value}</h2>
-            <div className={`${styles.ingredientsList}`}>
+            <div className={`${styles.ingredientsList}`} data-cy="ingredient_list">
               {filterIngredientsByType(type).map((item: Ingredient) => (
                 <IngredientItem
                   key={item._id}
                   item={item}
+                  data-cy="ingredient-details"
                   onClick={() => {
                     navigate(`/ingredients/${item._id}`, {state: {backgroundLocation: '/'}})
                     return openModal(item)
