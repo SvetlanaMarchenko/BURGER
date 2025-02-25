@@ -30,7 +30,7 @@ interface IngredientsState {
   isLoading: boolean;
 }
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   allIngredients: [],
   error: null,
   isLoading: true

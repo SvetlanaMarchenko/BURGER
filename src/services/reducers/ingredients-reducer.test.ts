@@ -6,13 +6,9 @@ jest.mock('../../utils/api', () => ({
 import { Ingredient } from '../../utils/types/ingredients';
 import { FETCH_INGREDIENTS_FAILURE, FETCH_INGREDIENTS_REQUEST, FETCH_INGREDIENTS_SUCCESS } from '../actions/ingredients-actions';
 import ingredientsReducer from './ingredients-reducer';
+import {initialState} from "./ingredients-reducer"
 
 describe('IngredientsReducer', () => {
-  const initialState = {
-    allIngredients: [],
-    error: null,
-    isLoading: true,
-  };
   it('should return the initial state', () => {
     expect(ingredientsReducer(undefined, { type: '' })).toEqual(initialState);
   });
