@@ -12,7 +12,7 @@ interface OrderReducerProps{
   isLoading: boolean;
   errorInOrder: boolean | null;
 }
-const initialState:OrderReducerProps = {
+export const initialState:OrderReducerProps = {
     isLoading: true,
     orderId: null,
     errorInOrder: false

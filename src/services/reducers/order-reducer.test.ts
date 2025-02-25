@@ -1,14 +1,8 @@
-import { FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actions/current-order-actions';
 import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS } from '../actions/order-actions';
 import  orderReducer  from './order-reducer';
+import  {initialState} from './order-reducer';
 
 describe('orderReducer', () => {
-  const initialState = {
-    isLoading: true,
-    orderId: null,
-    errorInOrder: false
-  };
-
   it('should return the initial state', () => {
     expect(orderReducer(undefined, { type: '' })).toEqual(initialState);
   });
@@ -26,9 +20,6 @@ describe('orderReducer', () => {
 
     expect(orderReducer(initialState, action)).toEqual(expectedState);
   });
-
-
-
 
   it('should handle CREATE_ORDER_SUCCESS case', () => {
     const mockOrders = {
