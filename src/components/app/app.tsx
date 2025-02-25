@@ -50,7 +50,7 @@ function App() {
   };
 
   return (
-    <div className={style.appLayout}>
+    <div className={style.appAppLayout}>
        <AppHeader />
 
        {state?.backgroundLocation && (
