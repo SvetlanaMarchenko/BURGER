@@ -1,17 +1,12 @@
 import { ADD_INGREDIENT, CLEAR_CONSTRUCTOR, REMOVE_BUN, REMOVE_INGREDIENT, REPLACE_INGREDIENT, SET_BUN } from "../actions/constructor-actions";
 import constructorReducer from "./сonstructor-reducer";
+import {initialState} from "./сonstructor-reducer";
 
 describe('constructorReducer', () => {
-  const initialState = {
-    bun: null,
-    ingredients: []
-  };
-
   const ingredient_1 = { id: 1, name: 'Cucumber' };
   const ingredient_2 = { id: 2, name: 'Tomato' };
   const ingredient_3 = { id: 3, name: 'meat' }
   const bun1 = { id: 4, name: 'bulka' }
-
 
   it('should return the initial state', () => {
     expect(constructorReducer(undefined, { type: '' })).toEqual(initialState);

@@ -15,7 +15,7 @@ import {
     ingredients: Ingredient[];
   }
   
-  const initialState: ConstructorState = {
+  export const initialState: ConstructorState = {
     bun: null,
     ingredients: []
   };
