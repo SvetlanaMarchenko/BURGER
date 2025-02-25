@@ -1,12 +1,7 @@
 import { FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actions/current-order-actions';
-import { ordersReducer } from './current-order-reducer';
+import { ordersReducer, initialState } from './current-order-reducer';
 
 describe('ordersReducer', () => {
-  const initialState = {
-    orders: [],
-    loading: false,
-    error: null,
-  };
 
   it('should return the initial state when passed an undefined state and an unknown action', () => {
     expect(ordersReducer(undefined, { type: '' })).toEqual(initialState);
