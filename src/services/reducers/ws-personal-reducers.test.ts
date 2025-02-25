@@ -1,13 +1,7 @@
 import { WS_PERS_CLEAR_ORDERS, WS_PERS_CONNECTION_CLOSE, WS_PERS_CONNECTION_CLOSED, WS_PERS_CONNECTION_ERROR, WS_PERS_CONNECTION_SUCCESS, WS_PERS_GET_MESSAGE } from '../actions/ws-personal-action-types';
-import { wsPersonalReducer } from './ws-personal-reducers';
+import { wsPersonalReducer, initialState } from './ws-personal-reducers';
 
 describe('wsPersonalReducer', () => {
-  const initialState = {
-    wsConnected: false,
-    orders: [],
-    total: 0,
-    totalToday: 0,
-  };
 
   it('should return the initial state', () => {
     expect(wsPersonalReducer(undefined, { type: '' })).toEqual(initialState);

@@ -1,14 +1,8 @@
 
 import { WS_CLEAR_ORDERS, WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from '../actions/ws-action-types';
-import { wsReducer } from './ws-reducers';
+import { wsReducer, initialState } from './ws-reducers';
 
 describe('wsPersonalReducer', () => {
-  const initialState = {
-    wsConnected: false,
-    orders: [],
-    total: 0,
-    totalToday: 0,
-  };
 
   it('should return the initial state', () => {
     expect(wsReducer(undefined, { type: '' })).toEqual(initialState);
