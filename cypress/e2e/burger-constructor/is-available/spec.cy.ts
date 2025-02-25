@@ -1,3 +1,5 @@
+
+
 describe('burger-constructor is working correctly', function() {
   const ingredientSelector = '[draggable="true"]'
   const closeButtonSelector = '[data-cy=on-close]'
@@ -10,8 +12,7 @@ describe('burger-constructor is working correctly', function() {
   const orderCreationButtonSelector = '[data-cy="orderCreation"]'
 
   before(function() {
-    cy.visit('http://localhost:5173');
-
+    cy.visit('/')
   });
 
   it('should drag ingredient to constructor and drop', function() {
