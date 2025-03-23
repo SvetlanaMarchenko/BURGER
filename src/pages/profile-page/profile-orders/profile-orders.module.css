@@ -141,7 +141,7 @@
 
 .ingredientsSection{
   overflow-y: scroll;
-  max-height: 730px;
+  max-height: 650px;
   overflow-x: hidden;
 }
 

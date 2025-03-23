@@ -75,20 +75,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start !important;
-  color: gray;
+  /* color: gray; */
   
 }
 
-.chioceOptionInactive:hover{
-  /* color: white; */
-}
-/* 
-.chioceOptionInactiveInfo{
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start !important;
-} */
 
 
 

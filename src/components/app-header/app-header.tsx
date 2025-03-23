@@ -10,7 +10,7 @@ const AppHeader = () => {
         <NavLink 
           to="/"
           className={({ isActive }) => 
-            isActive ? `${styles.active1} text text_type_main-default` : "text text_type_main-default text_color_inactive pr-5"
+            isActive ? `${styles.active1} text text_type_main-default pr-5` : "text text_type_main-default text_color_inactive pr-5"
           }> 
            Конструктор
         </NavLink>

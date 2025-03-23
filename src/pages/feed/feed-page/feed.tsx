@@ -65,10 +65,10 @@ export function Feed() {
             )}
           </div>
 
-          <h1 className="text text_type_main-medium mt-15">Выполнено за все время:</h1>
-          <h1 className="text text_type_digits-large mb-15">{total}</h1>
+          <h1 className="text text_type_main-medium mt-10">Выполнено за все время:</h1>
+          <h1 className="text text_type_digits-large mb-10">{total}</h1>
           <h1 className="text text_type_main-medium">Выполнено за сегодня:</h1>
-          <h1 className="text text_type_digits-large mb-15">{totalToday}</h1>
+          <h1 className="text text_type_digits-large mb-10">{totalToday}</h1>
         </div>
       </div>
     </div>
